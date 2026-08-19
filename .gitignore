@@ -38,3 +38,7 @@ yarn-error.log*
 
 # Vercel
 .vercel
+
+# agent stuff
+.agents
+.codegraph

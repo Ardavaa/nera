@@ -1,40 +1,40 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { TopAppBar } from "../components/common/TopAppBar";
 import { useFinancialStore } from "../context/FinancialStore";
-import { Card, Button, Modal } from "@nera/ui";
+import { Modal, Button } from "@nera/ui";
 import {
-  Sparkles,
-  ArrowRight,
-  TrendingUp,
+  FileText,
   Wallet,
   Lock,
+  QrCode,
+  ArrowUpRight,
+  WalletCards,
+  Home,
+  Coffee,
   ChevronRight,
-  RefreshCw,
-  PlusCircle,
-  Receipt,
-  Calendar,
+  CheckCircle2,
+  Sparkles,
 } from "lucide-react";
-import Link from "next/link";
 
 export default function HomePage() {
   const {
-    userName,
     dailyPocket,
     lockPocket,
     dailyBudgetSafe,
     runwayDays,
-    state,
-    nudges,
-    transactions,
-    isSweepModalOpen,
-    setSweepModalOpen,
-    executeEndOfMonthSweep,
+    score,
     addTransaction,
   } = useFinancialStore();
 
+  const [isPayKosOpen, setIsPayKosOpen] = useState(false);
   const [isQuickSpendOpen, setIsQuickSpendOpen] = useState(false);
+  const [activeActionModal, setActiveActionModal] = useState<string | null>(null);
+  const [isSuccessToastOpen, setIsSuccessToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+
   const [spendAmount, setSpendAmount] = useState("");
   const [spendTitle, setSpendTitle] = useState("");
 
@@ -44,6 +44,25 @@ export default function HomePage() {
       currency: "IDR",
       maximumFractionDigits: 0,
     }).format(val);
+
+  const triggerToast = (msg: string) => {
+    setToastMessage(msg);
+    setIsSuccessToastOpen(true);
+    setTimeout(() => setIsSuccessToastOpen(false), 3000);
+  };
+
+  const handlePayKos = () => {
+    const kosAmount = 500000;
+    addTransaction({
+      title: "Pembayaran Tagihan Kos Bulan Ini",
+      category: "other",
+      amount: kosAmount,
+      type: "expense",
+      source: "AUTO_DEBET",
+    });
+    setIsPayKosOpen(false);
+    triggerToast("Tagihan Kos Rp500.000 berhasil dibayar via BNI!");
+  };
 
   const handleQuickSpend = (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,239 +80,305 @@ export default function HomePage() {
     setSpendAmount("");
     setSpendTitle("");
     setIsQuickSpendOpen(false);
+    triggerToast(`Transaksi QRIS ${formatRupiah(amount)} berhasil dicatat!`);
   };
 
   return (
-    <div className="flex flex-col min-h-full">
+    <div className="flex flex-col min-h-full bg-[#F8FAFC]">
+      {/* 1. TOP APP BAR (Branding + Notification) */}
       <TopAppBar />
 
-      <main className="flex-1 px-4 py-4 space-y-4">
-        {/* HERO CARD: Daily Runway */}
-        <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#6C5CE7] via-[#5A48DE] to-[#3B28CC] text-white p-5 shadow-[0_8px_24px_rgba(108,92,231,0.25)]">
-          {/* Background Ambient Glow */}
-          <div className="absolute -top-12 -right-12 w-40 h-40 bg-[#4EA8FF]/30 rounded-full blur-2xl pointer-events-none" />
+      <main className="flex-1 px-4 pt-3.5 pb-6 space-y-4">
+        {/* 2. HERO CARD: DAILY RUNWAY & SMART POCKET */}
+        <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-b from-[#EDF5FF] via-[#F4F8FF] to-[#FFFFFF] border border-[#E2E8F0] p-4.5 shadow-[0_4px_20px_rgba(15,23,42,0.03)]">
+          {/* Subtle sparkles decoration */}
+          <span className="absolute top-5 right-28 text-[#8E80F5] text-xs select-none">✦</span>
+          <span className="absolute top-12 right-32 text-[#4EA8FF] text-[10px] select-none">✦</span>
 
-          <div className="relative z-10 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-white/80 flex items-center gap-1.5">
-                <Sparkles size={14} className="text-[#4EA8FF]" />
-                Runway Saldo Nera
-              </span>
-              <span className="text-xs bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full font-medium">
-                Kebutuhan Harian
-              </span>
-            </div>
-
-            <div>
-              <p className="text-sm text-white/80">Uangmu aman bertahan</p>
-              <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-4xl font-extrabold tracking-tight">
-                  {runwayDays}
-                </span>
-                <span className="text-lg font-medium text-white/90">hari lagi</span>
-              </div>
-            </div>
-
-            {/* Daily Safe Limit */}
-            <div className="pt-2 border-t border-white/15 flex items-center justify-between text-xs">
-              <div>
-                <span className="text-white/70 block text-[11px]">Batas Pengeluaran Aman</span>
-                <span className="font-semibold text-white text-sm">
-                  {formatRupiah(dailyBudgetSafe)} / hari
-                </span>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setIsQuickSpendOpen(true)}
-                className="bg-white/10 hover:bg-white/20 border-white/20 text-white text-xs h-8 rounded-full"
-              >
-                <PlusCircle size={14} className="mr-1" /> Catat Transaksi
-              </Button>
-            </div>
+          {/* Top-Left: Status Badge */}
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8F8EE] border border-[#22C55E]/30 text-[#15803D] text-xs font-bold shadow-2xs">
+            <span className="w-2 h-2 rounded-full bg-[#22C55E]" />
+            <span className="font-bold">Skor {score} · Kondisi Sehat</span>
           </div>
-        </div>
 
-        {/* POCKETS GRID: Kebutuhan Harian vs Tabungan Simpanan */}
-        <div className="grid grid-cols-2 gap-3">
-          {/* Pocket 1: Kebutuhan Harian */}
-          <Card className="p-4 space-y-2 relative overflow-hidden border-l-4 border-l-[#4EA8FF]">
-            <div className="flex items-center justify-between text-[#64748B]">
-              <span className="text-xs font-semibold">Kebutuhan Harian</span>
-              <Wallet size={16} className="text-[#4EA8FF]" />
-            </div>
-            <div>
-              <span className="text-base font-bold text-[#0F172A] block">
-                {formatRupiah(dailyPocket)}
-              </span>
-              <span className="text-[11px] text-[#64748B]">Siap dibelanjakan</span>
-            </div>
-          </Card>
-
-          {/* Pocket 2: BNI Life Goals */}
-          <Card className="p-4 space-y-2 relative overflow-hidden border-l-4 border-l-[#00747F]">
-            <div className="flex items-center justify-between text-[#64748B]">
-              <span className="text-xs font-semibold">Life Goals (Terkunci)</span>
-              <Lock size={16} className="text-[#00747F]" />
-            </div>
-            <div>
-              <span className="text-base font-bold text-[#0F172A] block">
-                {formatRupiah(lockPocket)}
-              </span>
-              <span className="text-[11px] text-[#00747F] font-medium">CASA Terproteksi</span>
-            </div>
-          </Card>
-        </div>
-
-        {/* SMART NUDGES SECTION */}
-        {nudges.length > 0 && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xs font-bold uppercase tracking-wider text-[#64748B]">
-                Smart Nudges wondr
-              </h2>
-              <span className="text-xs text-[#6C5CE7] font-medium">{nudges.length} Pengingat</span>
-            </div>
-
-            <div className="space-y-2">
-              {nudges.map((nudge) => (
-                <Card
-                  key={nudge.id}
-                  className="p-3.5 flex items-start justify-between gap-3 border-l-4 border-l-[#6C5CE7]"
-                >
-                  <div className="space-y-1 flex-1">
-                    <div className="flex items-center gap-1.5">
-                      <Receipt size={14} className="text-[#6C5CE7]" />
-                      <h4 className="text-xs font-bold text-[#0F172A]">{nudge.title}</h4>
-                    </div>
-                    <p className="text-xs text-[#64748B] leading-relaxed">
-                      {nudge.description}
-                    </p>
-                    {nudge.amount && (
-                      <span className="text-xs font-semibold text-[#00747F] block">
-                        {formatRupiah(nudge.amount)}
-                      </span>
-                    )}
-                  </div>
-                  <Button
-                    size="sm"
-                    variant={nudge.category === "SWEEP_LEFTOVER" ? "bni" : "primary"}
-                    onClick={() => {
-                      if (nudge.category === "SWEEP_LEFTOVER") {
-                        setSweepModalOpen(true);
-                      }
-                    }}
-                    className="text-xs h-8 px-3 rounded-full shrink-0"
-                  >
-                    {nudge.actionText}
-                  </Button>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ACTION SHORTCUTS / BANNER */}
-        <div className="grid grid-cols-2 gap-3 pt-1">
-          <Link href="/family-hub" className="block">
-            <Card className="p-3.5 hover:border-[#6C5CE7]/50 transition-all">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs font-bold text-[#0F172A]">Smart Splitter</span>
-                <ChevronRight size={14} className="text-[#64748B]" />
-              </div>
-              <p className="text-[11px] text-[#64748B]">Atur alokasi uang saku 80/20 dari orang tua</p>
-            </Card>
-          </Link>
-
-          <Link href="/risk-check" className="block">
-            <Card className="p-3.5 hover:border-[#6C5CE7]/50 transition-all">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs font-bold text-[#0F172A]">Risk Guardrail</span>
-                <ChevronRight size={14} className="text-[#64748B]" />
-              </div>
-              <p className="text-[11px] text-[#64748B]">Simulasi dampak cicilan & 24h timer</p>
-            </Card>
-          </Link>
-        </div>
-
-        {/* RECENT TRANSACTIONS */}
-        <div className="space-y-2 pt-2">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-[#64748B]">
-              Mutasi Rekening BNI
+          {/* Title & Runway Days */}
+          <div className="mt-2.5">
+            <p className="text-sm font-semibold text-[#0F172A]">Uangmu bertahan</p>
+            <h2 className="text-[30px] font-bold text-[#0F172A] tracking-tight leading-tight mt-0.5">
+              {runwayDays} Hari Lagi
             </h2>
-            <span className="text-xs text-[#00747F] font-medium">Taplus Muda</span>
+            <p className="text-xs font-medium text-[#64748B] mt-0.5">
+              Estimasi aman hingga 22 Okt
+            </p>
           </div>
 
-          <Card className="divide-y divide-[#E2E8F0] p-0">
-            {transactions.slice(0, 5).map((tx) => (
-              <div key={tx.id} className="p-3 flex items-center justify-between text-xs">
-                <div>
-                  <p className="font-semibold text-[#0F172A]">{tx.title}</p>
-                  <p className="text-[10px] text-[#64748B]">{tx.source} • {new Date(tx.timestamp).toLocaleDateString("id-ID")}</p>
-                </div>
-                <span
-                  className={`font-bold ${
-                    tx.type === "income" ? "text-[#22C55E]" : "text-[#0F172A]"
-                  }`}
-                >
-                  {tx.type === "income" ? "+" : "-"}
-                  {formatRupiah(tx.amount)}
-                </span>
+          {/* 3D Nera Mascot Illustration */}
+          <div className="absolute top-1 right-1 w-28 h-28 pointer-events-none select-none">
+            <Image
+              src="/images/nera-mascot.png"
+              alt="Nera Bot Mascot"
+              width={112}
+              height={112}
+              className="w-full h-full object-contain drop-shadow-sm"
+              priority
+            />
+          </div>
+
+          {/* Runway Progress Bar */}
+          <div className="flex items-center gap-2.5 mt-4">
+            <div className="flex-1 h-3 rounded-full bg-[#E2E8F0] overflow-hidden p-[1.5px]">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-[#4EA8FF] via-[#4EA8FF] to-[#6366F1] transition-all duration-500"
+                style={{ width: "68%" }}
+              />
+            </div>
+            <span className="text-xs font-bold text-[#0F172A]">68%</span>
+          </div>
+
+          {/* Recommendation Info Row */}
+          <div className="flex items-center gap-1.5 text-xs text-[#64748B] mt-2">
+            <FileText size={14} className="text-[#4EA8FF]" />
+            <span>
+              Rekomendasi budget:{" "}
+              <strong className="text-[#3B82F6] font-bold">
+                {formatRupiah(dailyBudgetSafe)}
+              </strong>{" "}
+              / hari
+            </span>
+          </div>
+
+          {/* Pockets Grid: Daily Pocket & Lock Pocket */}
+          <div className="grid grid-cols-2 gap-2.5 mt-3.5">
+            {/* Pocket 1: Daily Pocket */}
+            <div className="bg-white/90 border border-[#E2E8F0] rounded-[18px] p-3 flex items-center gap-2.5 shadow-xs">
+              <div className="w-9 h-9 rounded-xl bg-[#EBF5FF] flex items-center justify-center text-[#2563EB] shrink-0">
+                <Wallet size={18} />
               </div>
-            ))}
-          </Card>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-bold text-[#0F172A] leading-tight">Daily Pocket</p>
+                <span className="text-[10px] text-[#64748B] block mt-0.5">(Siap Pakai)</span>
+                <p className="text-sm font-bold text-[#0F172A] mt-0.5 truncate">
+                  {formatRupiah(dailyPocket)}
+                </p>
+              </div>
+            </div>
+
+            {/* Pocket 2: Lock Pocket */}
+            <div className="bg-white/90 border border-[#E2E8F0] rounded-[18px] p-3 flex items-center gap-2.5 shadow-xs">
+              <div className="w-9 h-9 rounded-xl bg-[#EEF2FF] flex items-center justify-center text-[#4F46E5] shrink-0">
+                <Lock size={18} />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-bold text-[#0F172A] leading-tight">Lock Pocket</p>
+                <span className="text-[10px] text-[#64748B] block mt-0.5">(BNI Life Goals)</span>
+                <p className="text-sm font-bold text-[#0F172A] mt-0.5 truncate">
+                  {formatRupiah(lockPocket)}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* 3. QUICK ACTION SECTION */}
+        <section className="space-y-2.5 pt-1">
+          <div className="flex items-center justify-between">
+            <h3 className="text-[15px] font-bold text-[#0F172A]">Quick Action</h3>
+            <button
+              onClick={() => setActiveActionModal("Semua Menu Quick Action")}
+              className="text-xs font-bold text-[#6C5CE7] hover:underline cursor-pointer"
+            >
+              Lihat Semua
+            </button>
+          </div>
+
+          {/* White Rounded Card Surface Container */}
+          <div className="bg-white border border-[#E2E8F0] rounded-[22px] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)]">
+            <div className="grid grid-cols-4 gap-2">
+              {/* 1. Scan QRIS */}
+              <button
+                onClick={() => setIsQuickSpendOpen(true)}
+                className="flex flex-col items-center gap-2 group cursor-pointer"
+              >
+                <div className="w-13 h-13 rounded-full bg-[#EDF6FF] text-[#2563EB] flex items-center justify-center shadow-xs transition-transform active:scale-95 group-hover:bg-[#E0EFFF]">
+                  <QrCode size={22} className="stroke-[2]" />
+                </div>
+                <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
+                  Scan QRIS
+                </span>
+              </button>
+
+              {/* 2. Transfer */}
+              <button
+                onClick={() => setActiveActionModal("Transfer Saldo BNI")}
+                className="flex flex-col items-center gap-2 group cursor-pointer"
+              >
+                <div className="w-13 h-13 rounded-full bg-[#EDF6FF] text-[#2563EB] flex items-center justify-center shadow-xs transition-transform active:scale-95 group-hover:bg-[#E0EFFF]">
+                  <ArrowUpRight size={22} className="stroke-[2.2]" />
+                </div>
+                <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
+                  Transfer
+                </span>
+              </button>
+
+              {/* 3. Bayar Tagihan */}
+              <button
+                onClick={() => setIsPayKosOpen(true)}
+                className="flex flex-col items-center gap-2 group cursor-pointer"
+              >
+                <div className="w-13 h-13 rounded-full bg-[#EDF6FF] text-[#2563EB] flex items-center justify-center shadow-xs transition-transform active:scale-95 group-hover:bg-[#E0EFFF]">
+                  <FileText size={22} className="stroke-[2]" />
+                </div>
+                <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
+                  Bayar<br />Tagihan
+                </span>
+              </button>
+
+              {/* 4. Top Up */}
+              <button
+                onClick={() => setActiveActionModal("Top Up Saldo Taplus Muda")}
+                className="flex flex-col items-center gap-2 group cursor-pointer"
+              >
+                <div className="w-13 h-13 rounded-full bg-[#EDF6FF] text-[#2563EB] flex items-center justify-center shadow-xs transition-transform active:scale-95 group-hover:bg-[#E0EFFF]">
+                  <WalletCards size={22} className="stroke-[2]" />
+                </div>
+                <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
+                  Top Up
+                </span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* 4. INSIGHT NERA SECTION */}
+        <section className="space-y-2.5 pt-1">
+          <h3 className="text-[15px] font-bold text-[#0F172A]">Insight Nera</h3>
+
+          <div className="space-y-3">
+            {/* Card 1: Kos Jatuh Tempo 3 Hari Lagi */}
+            <div className="bg-[#FEF9EE] border border-[#FDE68A]/80 rounded-[22px] p-4 flex gap-3.5 shadow-xs">
+              <div className="w-12 h-12 rounded-full bg-[#FDF0D5] text-[#D97706] flex items-center justify-center shrink-0 mt-0.5">
+                <Home size={22} className="stroke-[2.5]" />
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
+                    Kos Jatuh Tempo 3 Hari Lagi
+                  </h4>
+                  <ChevronRight size={18} className="text-[#64748B] stroke-[2.5] shrink-0 ml-1" />
+                </div>
+
+                <p className="text-xs font-semibold text-[#475569] leading-relaxed mt-1">
+                  Saldomu di Daily Pocket cukup (Rp630rb). Bayar sekarang agar runway tetap aman?
+                </p>
+
+                <div className="flex justify-end mt-2.5">
+                  <button
+                    onClick={() => setIsPayKosOpen(true)}
+                    className="bg-[#6C5CE7] hover:bg-[#5B4CD4] text-white text-xs font-bold px-4 py-2 rounded-full shadow-sm transition-all cursor-pointer active:scale-95"
+                  >
+                    Bayar via BNI
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2: Pengeluaran Jajan Naik */}
+            <div className="bg-[#F0F7FF] border border-[#E0EDFF] rounded-[22px] p-4 flex gap-3.5 shadow-xs">
+              <div className="w-12 h-12 rounded-full bg-[#E0EDFF] text-[#2563EB] flex items-center justify-center shrink-0 mt-0.5">
+                <Coffee size={22} className="stroke-[2.5]" />
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
+                    Pengeluaran Jajan Naik
+                  </h4>
+                  <ChevronRight size={18} className="text-[#64748B] stroke-[2.5] shrink-0 ml-1" />
+                </div>
+
+                <p className="text-xs font-semibold text-[#475569] leading-relaxed mt-1">
+                  Minggu ini jajan QRIS naik Rp85.000 dari rata-rata. Atur ritme belanjamu.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
-      {/* END OF MONTH SWEEP MODAL */}
+      {/* TOAST NOTIFICATION */}
+      {isSuccessToastOpen && (
+        <div className="fixed top-14 inset-x-0 mx-auto max-w-[390px] px-4 z-50 animate-in fade-in slide-in-from-top-4 duration-200">
+          <div className="bg-[#0F172A] text-white p-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-medium border border-white/10">
+            <CheckCircle2 size={18} className="text-[#22C55E] shrink-0" />
+            <span className="flex-1">{toastMessage}</span>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: BAYAR VIA BNI (TAGIHAN KOS) */}
       <Modal
-        isOpen={isSweepModalOpen}
-        onClose={() => setSweepModalOpen(false)}
-        title="End-of-Month Smart Sweep"
+        isOpen={isPayKosOpen}
+        onClose={() => setIsPayKosOpen(false)}
+        title="Pembayaran Tagihan Kos via BNI"
       >
         <div className="space-y-4">
-          <div className="p-4 bg-[#DDF0E6] rounded-2xl border border-[#22C55E]/30 text-center space-y-1">
-            <p className="text-xs text-[#15803D] font-medium">Sisa Saldo Kebutuhan Harian</p>
-            <p className="text-2xl font-black text-[#15803D]">{formatRupiah(dailyPocket)}</p>
+          <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] space-y-2">
+            <div className="flex items-center justify-between text-xs text-[#64748B]">
+              <span>Tujuan Pembayaran</span>
+              <span className="font-semibold text-[#0F172A]">Kos Griya Asri Tel-U</span>
+            </div>
+            <div className="flex items-center justify-between text-xs text-[#64748B]">
+              <span>Nomor Virtual Account</span>
+              <span className="font-mono font-medium text-[#0F172A]">8808 1301 2130 4501</span>
+            </div>
+            <div className="flex items-center justify-between text-xs text-[#64748B] pt-2 border-t border-[#E2E8F0]">
+              <span>Total Tagihan</span>
+              <span className="font-bold text-[#0F172A] text-base">Rp 500.000</span>
+            </div>
           </div>
-          <p className="text-xs text-[#64748B] leading-relaxed">
-            Nera mendeteksi sisa saldo yang belum terpakai di akhir periode. Mengalihkan sisa dana ke{" "}
-            <strong className="text-[#00747F]">BNI Life Goals</strong> akan melindungi tabunganmu dari belanja impulsif dan mempercepat target Tier 1!
-          </p>
-          <div className="flex gap-2">
+
+          <div className="p-3 bg-[#EBF5FF] rounded-xl border border-[#4EA8FF]/30 flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2">
+              <Wallet size={16} className="text-[#2563EB]" />
+              <span className="text-[#0F172A] font-medium">Daily Pocket</span>
+            </div>
+            <span className="font-bold text-[#2563EB]">Sisa {formatRupiah(dailyPocket)}</span>
+          </div>
+
+          <div className="flex gap-2 pt-1">
             <Button
               variant="outline"
               fullWidth
-              onClick={() => setSweepModalOpen(false)}
+              onClick={() => setIsPayKosOpen(false)}
             >
-              Nanti Saja
+              Batal
             </Button>
             <Button
-              variant="bni"
+              variant="primary"
               fullWidth
-              onClick={executeEndOfMonthSweep}
+              onClick={handlePayKos}
             >
-              Sapu ke Life Goals
+              Konfirmasi Bayar
             </Button>
           </div>
         </div>
       </Modal>
 
-      {/* QUICK SPEND MODAL */}
+      {/* MODAL: SCAN QRIS / CATAT TRANSAKSI */}
       <Modal
         isOpen={isQuickSpendOpen}
         onClose={() => setIsQuickSpendOpen(false)}
-        title="Catat Pengeluaran Harian"
+        title="Scan QRIS / Catat Transaksi"
       >
         <form onSubmit={handleQuickSpend} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold text-[#0F172A] mb-1">
-              Keterangan Transaksi
+              Nama Merchant / Keterangan
             </label>
             <input
               type="text"
-              placeholder="Contoh: Makan Siang / Fotokopi Buku"
+              placeholder="Contoh: Kopi Tuku / Makan Siang Kantin"
               value={spendTitle}
               onChange={(e) => setSpendTitle(e.target.value)}
               className="w-full px-3 py-2 text-sm border border-[#E2E8F0] rounded-xl focus:outline-none focus:border-[#6C5CE7]"
@@ -302,7 +387,7 @@ export default function HomePage() {
           </div>
           <div>
             <label className="block text-xs font-semibold text-[#0F172A] mb-1">
-              Nominal (Rp)
+              Nominal Transaksi (Rp)
             </label>
             <input
               type="number"
@@ -313,10 +398,44 @@ export default function HomePage() {
               required
             />
           </div>
+
+          <div className="p-3 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] text-xs text-[#64748B]">
+            Transaksi akan otomatis memotong <strong>Daily Pocket</strong> dan menyesuaikan <strong>Runway Hari</strong> secara real-time.
+          </div>
+
           <Button type="submit" variant="primary" fullWidth>
-            Simpan Transaksi
+            Bayar Transaksi
           </Button>
         </form>
+      </Modal>
+
+      {/* MODAL: GENERIC ACTION (Transfer, Top Up, dll) */}
+      <Modal
+        isOpen={!!activeActionModal}
+        onClose={() => setActiveActionModal(null)}
+        title={activeActionModal || "Fitur wondr"}
+      >
+        <div className="space-y-4 text-center py-2">
+          <div className="w-14 h-14 bg-[#EDF6FF] text-[#2563EB] rounded-2xl flex items-center justify-center mx-auto">
+            <Sparkles size={28} />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-[#0F172A]">{activeActionModal}</h4>
+            <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
+              Layanan perbankan wondr by BNI terintegrasi langsung dengan proteksi kecerdasan finansial Nera.
+            </p>
+          </div>
+          <Button
+            variant="primary"
+            fullWidth
+            onClick={() => {
+              setActiveActionModal(null);
+              triggerToast(`${activeActionModal} siap digunakan.`);
+            }}
+          >
+            Lanjutkan di wondr
+          </Button>
+        </div>
       </Modal>
     </div>
   );

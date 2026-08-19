@@ -3,22 +3,17 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useFinancialStore } from "../../context/FinancialStore";
 import {
   Home,
-  Users,
-  ShieldAlert,
-  TrendingUp,
-  BotMessageSquare,
-  LifeBuoy,
+  Zap,
+  Compass,
+  MessageCircle,
+  User,
 } from "lucide-react";
 import { cn } from "@nera/ui";
 
 export const BottomNav: React.FC = () => {
   const pathname = usePathname();
-  const { state } = useFinancialStore();
-
-  const isCritical = state === "KRITIS";
 
   const navItems = [
     {
@@ -27,26 +22,24 @@ export const BottomNav: React.FC = () => {
       icon: Home,
     },
     {
-      label: "Family Hub",
-      href: "/family-hub",
-      icon: Users,
-    },
-    {
-      label: "Risk Guard",
+      label: "Cek Baru",
       href: "/risk-check",
-      icon: ShieldAlert,
+      icon: Zap,
     },
     {
-      label: "Wealth",
+      label: "Alternatif",
+      href: "/family-hub",
+      icon: Compass,
+    },
+    {
+      label: "NerAI",
+      href: "/coach",
+      icon: MessageCircle,
+    },
+    {
+      label: "Profil",
       href: "/wealth-engine",
-      icon: TrendingUp,
-      disabled: state !== "AMAN",
-    },
-    {
-      label: isCritical ? "Recovery" : "NerAI",
-      href: isCritical ? "/recovery" : "/coach",
-      icon: isCritical ? LifeBuoy : BotMessageSquare,
-      highlight: isCritical,
+      icon: User,
     },
   ];
 
@@ -59,28 +52,33 @@ export const BottomNav: React.FC = () => {
 
           return (
             <Link
-              key={item.href}
-              href={item.disabled ? "#" : item.href}
+              key={item.label}
+              href={item.href}
               className={cn(
-                "flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all",
+                "flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all duration-150",
                 {
-                  "text-[#6C5CE7] font-semibold": isActive && !item.highlight,
-                  "text-[#64748B] hover:text-[#0F172A]": !isActive && !item.highlight && !item.disabled,
-                  "text-[#EF4444] font-bold animate-pulse": item.highlight && isActive,
-                  "text-[#EF4444]": item.highlight && !isActive,
-                  "opacity-40 cursor-not-allowed": item.disabled,
+                  "text-[#6C5CE7] font-bold": isActive,
+                  "text-[#64748B] hover:text-[#0F172A] font-medium": !isActive,
                 }
               )}
             >
               <div className="relative">
-                <Icon size={20} />
-                {item.disabled && (
-                  <span className="absolute -top-1 -right-1 text-[8px] bg-slate-200 text-slate-500 rounded-full px-1">
-                    🔒
-                  </span>
-                )}
+                <Icon
+                  size={22}
+                  className={cn("transition-transform duration-150", {
+                    "fill-[#6C5CE7]/15 stroke-[2.2]": isActive,
+                    "stroke-[1.8]": !isActive,
+                  })}
+                />
               </div>
-              <span className="text-[10px] mt-1">{item.label}</span>
+              <span
+                className={cn("text-[11px] mt-0.5 tracking-tight", {
+                  "font-bold text-[#6C5CE7]": isActive,
+                  "font-normal text-[#64748B]": !isActive,
+                })}
+              >
+                {item.label}
+              </span>
             </Link>
           );
         })}
@@ -88,3 +86,4 @@ export const BottomNav: React.FC = () => {
     </nav>
   );
 };
+
