@@ -17,7 +17,7 @@
     "expo-splash-screen": "~0.29.0",
     "expo-status-bar": "~2.0.0",
     "lucide-react-native": "^0.468.0",
-    "nativewind": "^4.1.23",
+    "nativewind": "4.1.23",
     "react": "18.3.1",
     "react-native": "0.76.5",
     "react-native-svg": "15.8.0",
@@ -29,5 +29,10 @@
     "babel-preset-expo": "~12.0.0",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.3.3"
+  },
+  "overrides": {
+    "metro": "0.81.5",
+    "metro-config": "0.81.5",
+    "metro-transform-worker": "0.81.5"
   }
 }
