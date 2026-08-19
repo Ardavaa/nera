@@ -1,0 +1,10 @@
+{
+  "extends": "@nera/config-typescript/base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "rootDir": "./",
+    "outDir": "./dist"
+  },
+  "include": ["src", "prisma"]
+}

@@ -1,76 +1,144 @@
-# `Nera`
+# 🚀 NERA Monorepo (wondr by BNI Financial Safety Module)
 
-![Banner GitHub](banner-github.png)
-
-**AI-powered Financial Safety Platform That Helps Young Adults Avoid Debt Traps**
-
----
-
-## Team
-
-| **Name**                      | **Role**                 |
-| ----------------------------- | ------------------------ |
-| Adrian Putra Pratama Badjideh | Lead, Product            |
-| Resan So                      | Mobile Developer & UI/UX |
-| Muhammad Karov Ardava Barus   | AI Engineer              |
+> **Tagline:** *Predict Risk. Borrow Smart. Live Free.*  
+> Platform kecerdasan finansial berbasis AI yang terintegrasi secara *native/embedded* di dalam aplikasi **wondr by BNI** untuk melindungi generasi muda dari jebakan pinjaman berisiko, mengunci tabungan simpanan (CASA), dan meningkatkan transaksi harian BNI.
 
 ---
 
-## 1. Problem: The Predatory Lending Trap
+## 🏛️ Monorepo Architecture
 
-In modern digital economies, users often fall into high-risk borrowing scenarios (like toxic online loans) due to a lack of financial oversight. The main obstacle is the absence of early detection systems that warn users before they make fatal financial commitments. **Nera** exists to democratize financial safety through an intelligent and proactive infrastructure.
+Struktur monorepo ini dirancang secara modular menggunakan **Turborepo** dan **pnpm/npm workspaces**:
 
-## 2. Solution: Edge AI & Smart Decision Support
+```
+bni-ventures/
+├── .agents-context/               # Spesifikasi produk & state machine logic
+│   ├── PROJECT_CONTEXT.md
+│   └── STATE_MACHINE.md
+│
+├── apps/
+│   ├── web/                       # Next.js 14+ PWA (Nera Mobile Web in wondr frame)
+│   │   ├── src/app/
+│   │   │   ├── page.tsx           # Flow B: Beranda + Runway Hero Card + Smart Nudges
+│   │   │   ├── family-hub/        # Flow A: Onboarding, Pairing Ortu-Anak & Smart Splitter
+│   │   │   ├── risk-check/        # Flow C: AI Risk Intelligence & 24h Guardrail
+│   │   │   ├── recovery/          # Flow D: AI Recovery Consultant & Debt Snowball
+│   │   │   ├── wealth-engine/     # Flow E: 3-Tier Staged Wealth Ladder
+│   │   │   └── coach/             # NerAI Interactive Chat Consultant
+│   │   ├── src/context/           # Zustand Store (FinancialStore.ts)
+│   │   └── src/components/common/ # TopAppBar, BottomNav, MobileFrame
+│   │
+│   └── api/                       # Express / Node API Gateway & AI Microservice
+│       └── src/
+│           ├── routes/            # /api/risk, /api/simulation, /api/coach, /api/bni
+│           └── server.ts          # API Server
+│
+├── packages/
+│   ├── core/                      # Domain logic, state machine & financial formulas
+│   │   ├── src/state-machine/     # Risk scoring engine (0-100: AMAN, WASPADA, KRITIS)
+│   │   ├── src/formulas/          # DTI, Runway, Loan Deficit, Debt Snowball
+│   │   ├── src/types/             # TypeScript schemas & Zod validators
+│   │   └── src/constants/         # Mock data & brand constants
+│   │
+│   ├── ui/                        # Shared UI Components & Design System
+│   │   ├── src/components/        # Button, Card, RiskGauge, StatusBadge, Modal
+│   │   └── src/tokens/            # Strict Nera Color & Typography Tokens
+│   │
+│   ├── ai/                        # AI Prompts & MAIA Router Client
+│   │   ├── src/client.ts          # MAIA AI / OpenAI Gateway with offline fallback
+│   │   └── src/prompts/           # Prompt Engineering for NerAI Coach
+│   │
+│   ├── database/                  # Prisma ORM & Database Layer
+│   │   ├── prisma/schema.prisma   # PostgreSQL Schema (Neon)
+│   │   └── prisma/seed.ts         # Seed script for Budi (Tel-U)
+│   │
+│   ├── config-tailwind/           # Shared Tailwind CSS preset & theme tokens
+│   └── config-typescript/         # Shared tsconfig base configurations
+│
+├── pnpm-workspace.yaml            # Workspace definitions
+├── turbo.json                     # Turborepo task pipeline
+└── package.json                   # Root package & scripts
+```
 
-**Nera** is a premium mobile solution that combines financial intelligence with state-of-the-art AI technology:
+---
 
-- **Privacy-First Architecture:** All AI inference for threat detection runs locally on the device (Edge Computing), ensuring sensitive notification data is never sent to the cloud.
-- **Automated Risk Profiling:** Calculates a Survival Check score to determine the exact threshold of a user's safe leverage.
-- **Micro-Scholarship Engine:** An automated engine that queries and processes accessible funding alternatives to minimize toxic loan dependency.
+## 🎨 Design System Tokens (Strict Usage)
 
-## 3. Tech Stack & Engineering Excellence
+| Token | Hex Code | Purpose |
+| :--- | :--- | :--- |
+| **Primary Purple** | `#6C5CE7` | CTA Utama, Tab Aktif, Badge Highlight |
+| **Secondary Blue** | `#4EA8FF` | Progress Bar Runway, Pocket Harian |
+| **BNI Teal** | `#00747F` | Elemen Native BNI / Life Goals |
+| **Status Safe (Aman)** | `#22C55E` (`#DDF0E6` soft) | Skor 0–39 (Stabil & Sehat) |
+| **Status Warning (Waspada)** | `#FBBF24` (`#FBF0D9` soft) | Skor 40–69 (Perlu Perhatian) |
+| **Status Critical (Kritis)** | `#EF4444` (`#FBE4DE` soft) | Skor 70–100 (Darurat Cicilan) |
+| **Canvas Background** | `#F8FAFC` | Latar Belakang Layar PWA |
+| **Card Surface** | `#FFFFFF` | Rounded `20px`, Border `#E2E8F0`, Shadow Subtil |
 
-We use a monorepo architecture optimized for a seamless end-to-end ecosystem:
+---
 
-| Component       | Technology              | Role                                                         |
-| :-------------- | :---------------------- | :----------------------------------------------------------- |
-| **Mobile App**  | **Expo (React Native)** | Premium cross-platform UI/UX with smooth interactions.       |
-| **Backend**     | **Next.js 14**          | Analytical dashboard and asynchronous REST APIs.             |
-| **AI Engine**   | **ONNX Runtime**        | Embedded `.onnx` model (threat_detection) running on-device. |
-| **API Layer**   | **tRPC**                | Type-safe APIs bridging the client and server.               |
-| **Database**    | **Prisma ORM & SQLite** | Reliable relational database blueprints.                     |
-| **E2E Testing** | **Maestro**             | Automated UI workflows simulating live borrowing scenarios.  |
+## 🔄 5 Core User Flows
 
-## 4. Key Features
+1. **FLOW A: Onboarding & Family Hub (`/family-hub`)**
+   - Transparansi izin mutasi rekening.
+   - Pairing akun Orang Tua dan Anak via QR code / link.
+   - Smart Allowance Splitter (80% Kebutuhan Harian / 20% Tabungan Wajib BNI Life Goals).
 
-### A. Edge AI Threat Detection
+2. **FLOW B: Daily Runway & Smart Pocket (`/`)**
+   - Hero Runway Card: *"Uangmu bertahan X hari lagi"* (Safe spend: Rp45rb/hari).
+   - Smart Nudges tagihan kampus (UKT/Kos).
+   - End-of-Month Sweep Modal ke BNI Life Goals.
 
-Instantaneous risk classification and predictive anomalies that detect aggressive loan communication patterns directly from Android notifications using a local `.onnx` model.
+3. **FLOW C: AI Risk Intelligence & 24h Guardrail (`/risk-check`)**
+   - Simulasi pinjaman & kalkulasi defisit riil dalam Rupiah.
+   - 24-Hour Cooling-Off Timer untuk mencegah keputusan impulsif.
+   - Rekomendasi alternatif aman kampus (Kopma 0% bunga, BNI Fleksi Pendidikan).
 
-### B. Safety Dashboard & Survival Check
+4. **FLOW D: AI Recovery Consultant (`/recovery`)**
+   - Otomatis aktif saat terdeteksi *stacking* / status **KRITIS**.
+   - Strategi pelunasan terstruktur dengan metode **Debt Snowball**.
+   - Penawaran investasi otomatis dikunci total selama masa krisis.
 
-Comprehensive score assessment determining the exact threshold of a user's safe leverage and overall financial health.
+5. **FLOW E: Adaptive Wealth Engine (`/wealth-engine`)**
+   - Tangga kemapanan finansial berjenjang 3-Tier.
+   - Tier 1: Dana Darurat 3x pengeluaran (BNI Life Goals) - Wajib 100%.
+   - Tier 2: Reksa Dana Pasar Uang wondr (Mulai Rp10.000, ~5.2% p.a.).
+   - Tier 3: SBN / Sukuk Tabungan wondr.
 
-### C. AI Decision Support
+---
 
-Integration with a smart automated Next.js/tRPC analytical backend to query alternative financial relief options.
+## ⚡ Quick Start & Development
 
-### D. Micro-Scholarship Scraper
+### 1. Install Dependencies
+```bash
+pnpm install
+# atau
+npm install
+```
 
-Automated engine that queries and processes accessible funding alternatives to minimize dependency on high-interest loans.
+### 2. Konfigurasi Environment Variables
+Salin `.env.example` ke `.env`:
+```bash
+cp .env.example .env
+```
 
-## 5. Getting Started (Local Development)
+### 3. Menjalankan Server Development
+```bash
+# Menjalankan seluruh aplikasi (Web PWA + API)
+pnpm dev
 
-### Backend:
+# Atau jalankan aplikasi web PWA saja (Port 3000)
+pnpm dev:web
 
-1. `cd backend`
-2. `cp .env.example .env`
-3. `npm install`
-4. `npx prisma db push`
-5. `npm run dev`
+# Atau jalankan backend API service saja (Port 4000)
+pnpm dev:api
+```
 
-### Mobile App:
+Buka **http://localhost:3000** pada browser untuk melihat tampilan PWA mobile frame Nera.
 
-1. `cd mobile-app`
-2. `npm install`
-3. `npx expo start`
+---
+
+## 🧪 Build & Typecheck
+```bash
+pnpm build
+pnpm typecheck
+```

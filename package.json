@@ -1,0 +1,28 @@
+{
+  "name": "nera-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NERA - AI Financial Safety Module embedded in wondr by BNI (BNI Hackathon)",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:web": "turbo --filter @nera/web dev",
+    "dev:api": "turbo --filter @nera/api dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "clean": "turbo clean"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.4",
+    "prettier": "^3.5.0",
+    "typescript": "^5.8.0"
+  },
+  "packageManager": "pnpm@10.29.3",
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}

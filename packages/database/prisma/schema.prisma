@@ -1,0 +1,129 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum FinancialStatus {
+  AMAN
+  WASPADA
+  KRITIS
+}
+
+enum AccountType {
+  BNI_TAPLUS_ANAK
+  BNI_TAPLUS_MUDA
+  BNI_TAPLUS_BISNIS
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+  SWEEP_TRANSFER
+  LOCK_SAVING
+}
+
+model User {
+  id                 String          @id @default(cuid())
+  email              String          @unique
+  name               String
+  campus             String?
+  nim                String?
+  phone              String?
+  avatarUrl          String?
+  isPairedWithParent Boolean         @default(false)
+  parentName         String?
+  parentPhone        String?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  accounts           Account[]
+  riskProfile        RiskProfile?
+  loans              LoanRecord[]
+  lifeGoals          LifeGoal[]
+  nudges             SmartNudge[]
+}
+
+model Account {
+  id              String          @id @default(cuid())
+  userId          String
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountNumber   String          @unique
+  accountType     AccountType     @default(BNI_TAPLUS_MUDA)
+  totalBalance    Float           @default(0)
+  dailyPocket     Float           @default(0)
+  lockPocket      Float           @default(0) // BNI Life Goals
+  monthlyAllowance Float          @default(2000000)
+  safeDailyBudget Float           @default(45000)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  transactions    Transaction[]
+}
+
+model Transaction {
+  id              String          @id @default(cuid())
+  accountId       String
+  account         Account         @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  title           String
+  category        String
+  amount          Float
+  type            TransactionType
+  source          String          @default("BNI_TAPLUS")
+  createdAt       DateTime        @default(now())
+}
+
+model RiskProfile {
+  id                    String          @id @default(cuid())
+  userId                String          @unique
+  user                  User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  score                 Int             @default(34)
+  status                FinancialStatus @default(AMAN)
+  dtiPercent            Float           @default(0)
+  runwayDays            Int             @default(14)
+  consecutiveSafeMonths Int             @default(2)
+  updatedAt             DateTime        @updatedAt
+}
+
+model LoanRecord {
+  id                  String          @id @default(cuid())
+  userId              String
+  user                User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  platformName        String
+  principal           Float
+  monthlyInstallment  Float
+  remainingTenorMonths Int
+  interestRateMonthly Float
+  createdAt           DateTime        @default(now())
+}
+
+model LifeGoal {
+  id              String          @id @default(cuid())
+  userId          String
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tier            Int
+  title           String
+  targetAmount    Float
+  currentAmount   Float           @default(0)
+  isUnlocked      Boolean         @default(false)
+  isCompleted     Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model SmartNudge {
+  id          String          @id @default(cuid())
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String
+  category    String
+  amount      Float?
+  dueDate     DateTime?
+  actionText  String
+  isResolved  Boolean         @default(false)
+  createdAt   DateTime        @default(now())
+}

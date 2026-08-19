@@ -1,0 +1,17 @@
+{
+  "name": "@nera/ai",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@nera/config-typescript": "workspace:*",
+    "typescript": "^5.8.0"
+  },
+  "dependencies": {
+    "@nera/core": "workspace:*"
+  }
+}

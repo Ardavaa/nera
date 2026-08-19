@@ -1,57 +1,40 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-# Monorepo: patterns below are unanchored (no leading slash) so they apply inside
-# every sub-project folder, not just the repo root.
-
-# dependencies (all sub-projects)
+# Dependencies
 node_modules/
 .pnp
 .pnp.js
 
-# local env files — do not commit any .env files, except .env.example
+# Turbo & Build outputs
+.turbo/
+dist/
+build/
+.next/
+out/
+
+# Environment files
 .env
 .env.local
 .env*.local
 
-# backend (Next.js / Prisma)
-backend/.next/
-backend/out/
-backend/next-env.d.ts
-backend/generated/prisma/
-backend/*.tsbuildinfo
+# Database
+generated/
+*.db
+*.sqlite
 
-# mobile-app (Expo / React Native)
-mobile-app/.expo/
-mobile-app/ios/Pods/
-mobile-app/android/build/
+# TypeScript
+*.tsbuildinfo
 
-# whatsapp-service (Node.js / Baileys / Prisma)
-whatsapp-service/dist/
-whatsapp-service/generated/prisma/
-whatsapp-service/*.tsbuildinfo
-
-# testing
+# Testing & Coverage
 coverage/
 
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Logs & OS artifacts
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-
-# idea files
+.DS_Store
+*.pem
 .idea
+.vscode
 
-
-# agent stuff
-.codegraph
-.agents
+# Vercel
+.vercel
