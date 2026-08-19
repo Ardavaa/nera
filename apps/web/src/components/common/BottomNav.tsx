@@ -44,7 +44,7 @@ export const BottomNav: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 z-40 w-full max-w-[430px] bg-white/95 backdrop-blur-md border-t border-[#E2E8F0] px-2 py-2 shadow-lg">
+    <nav className="absolute bottom-0 inset-x-0 z-40 w-full bg-white/95 backdrop-blur-md border-t border-[#E2E8F0] px-2 pt-1.5 pb-2 shadow-[0_-4px_20px_rgba(15,23,42,0.04)]">
       <div className="flex items-center justify-around">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
@@ -83,6 +83,8 @@ export const BottomNav: React.FC = () => {
           );
         })}
       </div>
+      {/* iOS Home Indicator Bar */}
+      <div className="w-32 h-1 bg-[#CBD5E1] rounded-full mx-auto mt-1" />
     </nav>
   );
 };

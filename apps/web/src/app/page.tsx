@@ -90,10 +90,10 @@ export default function HomePage() {
 
       <main className="flex-1 px-4 pt-3.5 pb-6 space-y-4">
         {/* 2. HERO CARD: DAILY RUNWAY & SMART POCKET */}
-        <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-b from-[#EDF5FF] via-[#F4F8FF] to-[#FFFFFF] border border-[#E2E8F0] p-4.5 shadow-[0_4px_20px_rgba(15,23,42,0.03)]">
-          {/* Subtle sparkles decoration */}
-          <span className="absolute top-5 right-28 text-[#8E80F5] text-xs select-none">✦</span>
-          <span className="absolute top-12 right-32 text-[#4EA8FF] text-[10px] select-none">✦</span>
+        <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-b from-[#EBF4FF] via-[#FAF6FE]/40 to-[#FFFFFF] p-4 shadow-xs">
+          {/* Subtle sparkles decoration matching design reference */}
+          <span className="absolute top-6 right-28 text-[#6C5CE7] text-xs select-none">✦</span>
+          <span className="absolute top-13 right-32 text-[#4EA8FF] text-[9px] select-none">✦</span>
 
           {/* Top-Left: Status Badge */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8F8EE] border border-[#22C55E]/30 text-[#15803D] text-xs font-bold shadow-2xs">
@@ -102,78 +102,82 @@ export default function HomePage() {
           </div>
 
           {/* Title & Runway Days */}
-          <div className="mt-2.5">
+          <div className="mt-2.5 max-w-[210px] relative z-10">
             <p className="text-sm font-semibold text-[#0F172A]">Uangmu bertahan</p>
             <h2 className="text-[30px] font-bold text-[#0F172A] tracking-tight leading-tight mt-0.5">
               {runwayDays} Hari Lagi
             </h2>
-            <p className="text-xs font-medium text-[#64748B] mt-0.5">
+            <p className="text-xs text-[#64748B] mt-0.5">
               Estimasi aman hingga 22 Okt
             </p>
           </div>
 
-          {/* 3D Nera Mascot Illustration */}
-          <div className="absolute top-1 right-1 w-28 h-28 pointer-events-none select-none">
+          {/* Official Nera Mascot (mascot-okay.svg) - Overlaid behind the white inner card */}
+          <div className="absolute top-2 -right-1 w-36 h-36 pointer-events-none select-none z-0">
             <Image
-              src="/images/nera-mascot.png"
+              src="/mascots/mascot-okay.svg"
               alt="Nera Bot Mascot"
-              width={112}
-              height={112}
-              className="w-full h-full object-contain drop-shadow-sm"
+              width={144}
+              height={144}
+              className="w-full h-full object-contain"
               priority
             />
           </div>
 
-          {/* Runway Progress Bar */}
-          <div className="flex items-center gap-2.5 mt-4">
-            <div className="flex-1 h-3 rounded-full bg-[#E2E8F0] overflow-hidden p-[1.5px]">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-[#4EA8FF] via-[#4EA8FF] to-[#6366F1] transition-all duration-500"
-                style={{ width: "68%" }}
-              />
-            </div>
-            <span className="text-xs font-bold text-[#0F172A]">68%</span>
-          </div>
-
-          {/* Recommendation Info Row */}
-          <div className="flex items-center gap-1.5 text-xs text-[#64748B] mt-2">
-            <FileText size={14} className="text-[#4EA8FF]" />
-            <span>
-              Rekomendasi budget:{" "}
-              <strong className="text-[#3B82F6] font-bold">
-                {formatRupiah(dailyBudgetSafe)}
-              </strong>{" "}
-              / hari
-            </span>
-          </div>
-
-          {/* Pockets Grid: Daily Pocket & Lock Pocket */}
-          <div className="grid grid-cols-2 gap-2.5 mt-3.5">
-            {/* Pocket 1: Daily Pocket */}
-            <div className="bg-white/90 border border-[#E2E8F0] rounded-[18px] p-3 flex items-center gap-2.5 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-[#EBF5FF] flex items-center justify-center text-[#2563EB] shrink-0">
-                <Wallet size={18} />
+          {/* Pure White Rounded Surface Card (wraps Progress Bar + Recommendation + Pockets) */}
+          <div className="relative z-10 mt-3.5 -mx-1.5 bg-white rounded-[24px] p-4 space-y-3">
+            {/* Runway Progress Bar */}
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-3.5 rounded-full bg-[#E5F0FF] overflow-hidden p-[1.5px]">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-[#4EA8FF] to-[#3B82F6] transition-all duration-500"
+                  style={{ width: "68%" }}
+                />
               </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-bold text-[#0F172A] leading-tight">Daily Pocket</p>
-                <span className="text-[10px] text-[#64748B] block mt-0.5">(Siap Pakai)</span>
-                <p className="text-sm font-bold text-[#0F172A] mt-0.5 truncate">
-                  {formatRupiah(dailyPocket)}
-                </p>
-              </div>
+              <span className="text-xs font-bold text-[#0F172A]">68%</span>
             </div>
 
-            {/* Pocket 2: Lock Pocket */}
-            <div className="bg-white/90 border border-[#E2E8F0] rounded-[18px] p-3 flex items-center gap-2.5 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-[#EEF2FF] flex items-center justify-center text-[#4F46E5] shrink-0">
-                <Lock size={18} />
+            {/* Recommendation Info Row */}
+            <div className="flex items-center gap-1.5 text-xs text-[#64748B]">
+              <FileText size={14} className="text-[#3B82F6]" />
+              <span>
+                Rekomendasi budget:{" "}
+                <strong className="text-[#2563EB] font-bold">
+                  {formatRupiah(dailyBudgetSafe)}
+                </strong>{" "}
+                / hari
+              </span>
+            </div>
+
+            {/* Pockets Grid: Daily Pocket & Lock Pocket */}
+            <div className="grid grid-cols-2 gap-2.5 pt-0.5">
+              {/* Pocket 1: Daily Pocket */}
+              <div className="bg-white border border-[#E8F0FA] rounded-[20px] p-3.5 flex items-center gap-2.5 shadow-2xs">
+                <div className="w-10 h-10 rounded-full bg-[#EBF5FF] flex items-center justify-center text-[#2563EB] shrink-0">
+                  <Wallet size={18} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-bold text-[#0F172A] leading-tight">Daily Pocket</p>
+                  <span className="text-[10px] text-[#64748B] block mt-0.5">(Siap Pakai)</span>
+                  <p className="text-sm font-bold text-[#0F172A] mt-0.5 truncate">
+                    {formatRupiah(dailyPocket)}
+                  </p>
+                </div>
               </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-bold text-[#0F172A] leading-tight">Lock Pocket</p>
-                <span className="text-[10px] text-[#64748B] block mt-0.5">(BNI Life Goals)</span>
-                <p className="text-sm font-bold text-[#0F172A] mt-0.5 truncate">
-                  {formatRupiah(lockPocket)}
-                </p>
+
+              {/* Pocket 2: Lock Pocket */}
+              <div className="bg-white border border-[#F0E8FA] rounded-[20px] p-3.5 flex items-center gap-2.5 shadow-2xs">
+                <div className="w-10 h-10 rounded-full bg-[#F3E8FF] flex items-center justify-center text-[#7C3AED] shrink-0">
+                  <Lock size={18} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-bold text-[#0F172A] leading-tight">Lock Pocket</p>
+                  <span className="text-[10px] text-[#64748B] block mt-0.5">(BNI Life Goals)</span>
+                  <p className="text-sm font-bold text-[#0F172A] mt-0.5 flex items-center gap-1 truncate">
+                    <span>{formatRupiah(lockPocket)}</span>
+                    <Lock size={12} className="text-[#7C3AED] fill-[#7C3AED] shrink-0" />
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -255,7 +259,7 @@ export default function HomePage() {
 
           <div className="space-y-3">
             {/* Card 1: Kos Jatuh Tempo 3 Hari Lagi */}
-            <div className="bg-[#FEF9EE] border border-[#FDE68A]/80 rounded-[22px] p-4 flex gap-3.5 shadow-xs">
+            <div className="bg-[#FDF6E9] border border-[#FDE68A]/80 rounded-[22px] p-4 flex gap-3.5 shadow-xs">
               <div className="w-12 h-12 rounded-full bg-[#FDF0D5] text-[#D97706] flex items-center justify-center shrink-0 mt-0.5">
                 <Home size={22} className="stroke-[2.5]" />
               </div>
@@ -268,7 +272,7 @@ export default function HomePage() {
                   <ChevronRight size={18} className="text-[#64748B] stroke-[2.5] shrink-0 ml-1" />
                 </div>
 
-                <p className="text-xs font-semibold text-[#475569] leading-relaxed mt-1">
+                <p className="text-xs text-[#64748B] leading-relaxed mt-1">
                   Saldomu di Daily Pocket cukup (Rp630rb). Bayar sekarang agar runway tetap aman?
                 </p>
 
@@ -284,7 +288,7 @@ export default function HomePage() {
             </div>
 
             {/* Card 2: Pengeluaran Jajan Naik */}
-            <div className="bg-[#F0F7FF] border border-[#E0EDFF] rounded-[22px] p-4 flex gap-3.5 shadow-xs">
+            <div className="bg-[#ECF1FD] border border-[#D9E4FA] rounded-[22px] p-4 flex gap-3.5 shadow-xs">
               <div className="w-12 h-12 rounded-full bg-[#E0EDFF] text-[#2563EB] flex items-center justify-center shrink-0 mt-0.5">
                 <Coffee size={22} className="stroke-[2.5]" />
               </div>
@@ -297,7 +301,7 @@ export default function HomePage() {
                   <ChevronRight size={18} className="text-[#64748B] stroke-[2.5] shrink-0 ml-1" />
                 </div>
 
-                <p className="text-xs font-semibold text-[#475569] leading-relaxed mt-1">
+                <p className="text-xs text-[#64748B] leading-relaxed mt-1">
                   Minggu ini jajan QRIS naik Rp85.000 dari rata-rata. Atur ritme belanjamu.
                 </p>
               </div>
