@@ -261,8 +261,8 @@ export default function HomePage() {
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-bold text-[#0F172A] leading-tight">Daily Pocket</p>
                   <span className="text-[10px] text-[#64748B] block mt-0.5">(Siap Pakai)</span>
-                  <p className="text-sm font-bold text-[#0F172A] mt-0.5 truncate">
-                    {formatRupiah(dailyPocket)}
+                  <p className="text-sm font-bold text-[#0F172A] mt-0.5" title={formatRupiah(dailyPocket)}>
+                    {formatRupiahShort(dailyPocket)}
                   </p>
                 </div>
               </div>
@@ -275,8 +275,8 @@ export default function HomePage() {
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-bold text-[#0F172A] leading-tight">Lock Pocket</p>
                   <span className="text-[10px] text-[#64748B] block mt-0.5">(BNI Life Goals)</span>
-                  <p className="text-sm font-bold text-[#0F172A] mt-0.5 flex items-center gap-1 truncate">
-                    <span>{formatRupiah(lockPocket)}</span>
+                  <p className="text-sm font-bold text-[#0F172A] mt-0.5 flex items-center gap-1" title={formatRupiah(lockPocket)}>
+                    <span>{formatRupiahShort(lockPocket)}</span>
                     <Lock size={12} className="text-[#7C3AED] fill-[#7C3AED] shrink-0" />
                   </p>
                 </div>

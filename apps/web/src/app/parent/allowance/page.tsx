@@ -36,7 +36,7 @@ export default function ParentAllowancePage() {
       <main className="flex-1 px-4 pt-3.5 pb-6 space-y-4">
         <Card className="p-4 space-y-4">
           <div className="flex items-center gap-2">
-            <Sliders size={16} className="text-[#00747F]" />
+            <Sliders size={16} className="text-[#6C5CE7]" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
               Transfer Uang Saku Bulanan
             </h3>
@@ -50,7 +50,7 @@ export default function ParentAllowancePage() {
               type="number"
               value={allowanceInput}
               onChange={(e) => setAllowanceInput(Number(e.target.value))}
-              className="w-full px-3 py-2 text-sm font-bold text-[#0F172A] border border-[#E2E8F0] rounded-xl focus:outline-none focus:border-[#00747F]"
+              className="w-full px-3 py-2 text-sm font-bold text-[#0F172A] border border-[#E2E8F0] rounded-xl focus:outline-none focus:border-[#6C5CE7]"
             />
           </div>
 
@@ -66,13 +66,13 @@ export default function ParentAllowancePage() {
               step="5"
               value={splitRatio}
               onChange={(e) => setSplitRatio(Number(e.target.value))}
-              className="w-full accent-[#00747F] cursor-pointer"
+              className="w-full accent-[#6C5CE7] cursor-pointer"
             />
           </div>
 
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-[10px] text-[#64748B] font-semibold uppercase tracking-wider">
-              <Sparkles size={10} className="text-[#00747F]" /> Pratinjau Alokasi Real-Time
+              <Sparkles size={10} className="text-[#6C5CE7]" /> Pratinjau Alokasi Real-Time
             </div>
 
             <div className="p-3 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] flex items-center gap-2.5">
@@ -102,7 +102,7 @@ export default function ParentAllowancePage() {
             </div>
           </div>
 
-          <Button variant="bni" fullWidth onClick={handleSave} className="rounded-xl mt-2">
+          <Button variant="primary" fullWidth onClick={handleSave} className="rounded-xl mt-2">
             {isSaved ? (
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 size={16} /> Tersimpan Otomatis!

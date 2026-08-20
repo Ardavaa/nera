@@ -28,7 +28,7 @@ export const ParentBottomNav: React.FC = () => {
               className={cn(
                 "flex flex-col items-center justify-center py-1 px-6 rounded-xl transition-all duration-150",
                 {
-                  "text-[#00747F] font-bold": isActive,
+                  "text-[#6C5CE7] font-bold": isActive,
                   "text-[#64748B] hover:text-[#0F172A] font-medium": !isActive,
                 }
               )}
@@ -36,13 +36,13 @@ export const ParentBottomNav: React.FC = () => {
               <Icon
                 size={22}
                 className={cn("transition-transform duration-150", {
-                  "fill-[#00747F]/15 stroke-[2.2]": isActive,
+                  "fill-[#6C5CE7]/15 stroke-[2.2]": isActive,
                   "stroke-[1.8]": !isActive,
                 })}
               />
               <span
                 className={cn("text-[11px] mt-0.5 tracking-tight", {
-                  "font-bold text-[#00747F]": isActive,
+                  "font-bold text-[#6C5CE7]": isActive,
                   "font-normal text-[#64748B]": !isActive,
                 })}
               >

@@ -27,7 +27,7 @@ export const TrustBanner: React.FC<TrustBannerProps> = ({
   return (
     <div
       className={cn(
-        "bg-gradient-to-br from-[#00747F] to-[#0C4A6E] text-white relative overflow-hidden",
+        "bg-gradient-to-br from-[#00747F] to-[#0C4A6E] text-white relative overflow-hidden rounded-t-[20px]",
         eyebrow || title ? "p-5" : "p-4 flex items-start gap-3",
         className
       )}
