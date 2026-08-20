@@ -134,6 +134,64 @@ export interface ChatMessage {
   };
 }
 
+export interface PredatoryPattern {
+  id: string;
+  platformNameKeywords: string[];
+  typicalAmountRange: [number, number];
+  typicalInterestMonthly: number;
+  riskLabel: string;
+}
+
+export interface AnomalyAlert {
+  id: string;
+  transactionId: string;
+  matchedPattern: PredatoryPattern;
+  detectedAmount: number;
+  detectedSource: string;
+  timestamp: string;
+  severity: "warning" | "critical";
+  isAcknowledged: boolean;
+  realDeficitPerMonth: number;
+}
+
+export interface RecoveryMilestone {
+  id: string;
+  label: string;
+  description: string;
+  isCompleted: boolean;
+  completedAt?: string;
+  order: number;
+}
+
+export type PersonaId =
+  | "konsisten_nabung"
+  | "pejuang_runway"
+  | "anak_rantau"
+  | "calon_mapan"
+  | "wirausaha_kampus"
+  | "pejuang_pemulihan";
+
+export interface PersonaMatch {
+  id: PersonaId;
+  label: string;
+  tagline: string;
+  matchReasons: string[];
+}
+
+export interface BniOffer {
+  id: string;
+  personaId: PersonaId;
+  productName: string;
+  category: "Tabungan" | "Investasi" | "Kartu Kredit" | "Proteksi" | "Pinjaman Resmi" | "Wirausaha";
+  benefit: string;
+  eligibilityNote: string;
+  sourceLabel: string;
+  badge: string;
+  actionLabel: string;
+  actionType: "wondr" | "external";
+  actionUrl?: string;
+}
+
 // Zod Schemas for validation
 export const LoanSimulationInputSchema = z.object({
   loanAmount: z.number().positive(),

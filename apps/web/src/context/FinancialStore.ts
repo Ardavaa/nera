@@ -8,10 +8,16 @@ import {
   SmartNudge,
   WealthTier,
   DebtSnowballItem,
+  AnomalyAlert,
+  RecoveryMilestone,
+  PersonaId,
   DEFAULT_MOCK_STATE,
   INITIAL_WEALTH_TIERS,
+  INITIAL_RECOVERY_MILESTONES,
+  DEMO_PERSONA_SCENARIOS,
   evaluateFinancialState,
   calculateDebtSnowball,
+  detectPredatoryTransfers,
 } from "@nera/core";
 
 export interface FinancialStoreState extends FinancialStateData {
@@ -19,6 +25,8 @@ export interface FinancialStoreState extends FinancialStateData {
   nudges: SmartNudge[];
   wealthTiers: WealthTier[];
   activeDebts: DebtSnowballItem[];
+  anomalyAlerts: AnomalyAlert[];
+  recoveryMilestones: RecoveryMilestone[];
   coolingOffTargetTime: number | null; // epoch timestamp
   isSweepModalOpen: boolean;
 
@@ -34,7 +42,11 @@ export interface FinancialStoreState extends FinancialStateData {
   payOffDebt: (debtId: string) => void;
   depositToLifeGoals: (amount: number) => void;
   resolveNudge: (nudgeId: string) => void;
+  detectAnomalies: () => void;
+  acknowledgeAnomaly: (alertId: string) => void;
+  updateRecoveryMilestones: () => void;
   resetToDefault: () => void;
+  applyPersonaDemoScenario: (personaId: PersonaId) => void;
 }
 
 const INITIAL_TRANSACTIONS: Transaction[] = [
@@ -74,9 +86,55 @@ const INITIAL_TRANSACTIONS: Transaction[] = [
     timestamp: "2026-08-18T12:30:00Z",
     source: "QRIS_BNI",
   },
+  {
+    id: "tx_5",
+    title: "Kopi Tuku via QRIS",
+    category: "food",
+    amount: 29000,
+    type: "expense",
+    timestamp: "2026-08-17T15:20:00Z",
+    source: "QRIS_BNI",
+  },
+  {
+    id: "tx_6",
+    title: "Ojek Online ke Kampus",
+    category: "transport",
+    amount: 15000,
+    type: "expense",
+    timestamp: "2026-08-17T07:30:00Z",
+    source: "QRIS_BNI",
+  },
+  {
+    id: "tx_7",
+    title: "Fotokopi Materi Kuliah",
+    category: "education",
+    amount: 12000,
+    type: "expense",
+    timestamp: "2026-08-16T10:15:00Z",
+    source: "QRIS_BNI",
+  },
+  {
+    id: "tx_8",
+    title: "Makan Malam Warteg",
+    category: "food",
+    amount: 18000,
+    type: "expense",
+    timestamp: "2026-08-16T19:00:00Z",
+    source: "QRIS_BNI",
+  },
 ];
 
 const INITIAL_NUDGES: SmartNudge[] = [
+  {
+    id: "nudge_kos",
+    title: "Tagihan Kos Jatuh Tempo",
+    description: "Kos Griya Asri jatuh tempo dalam 3 hari. Saldomu cukup — bayar sekarang agar runway tetap aman.",
+    category: "BILL_KOS",
+    amount: 500000,
+    dueDate: "2026-08-23",
+    actionText: "Bayar via BNI",
+    priority: "high",
+  },
   {
     id: "nudge_ukt",
     title: "Tagihan UKT Semester Ganjil",
@@ -90,7 +148,7 @@ const INITIAL_NUDGES: SmartNudge[] = [
   {
     id: "nudge_sweep",
     title: "End-of-Month Smart Sweep",
-    description: "Sisa saldo harian dapat disapu otomatis ke BNI Life Goals agar tidak boros.",
+    description: "Sisa saldo harian dapat disapu otomatis ke BNI Life Goals agar tidak boros di akhir bulan.",
     category: "SWEEP_LEFTOVER",
     amount: 45000,
     actionText: "Sapu Saldo Sekarang",
@@ -106,6 +164,8 @@ export const useFinancialStore = create<FinancialStoreState>()(
       nudges: INITIAL_NUDGES,
       wealthTiers: INITIAL_WEALTH_TIERS,
       activeDebts: [],
+      anomalyAlerts: [],
+      recoveryMilestones: INITIAL_RECOVERY_MILESTONES,
       coolingOffTargetTime: null,
       isSweepModalOpen: false,
 
@@ -124,6 +184,9 @@ export const useFinancialStore = create<FinancialStoreState>()(
           state: evalResult.state,
           runwayDays: evalResult.runwayDays,
         });
+
+        // Auto-update recovery milestones
+        get().updateRecoveryMilestones();
       },
 
       setAllowanceSplit: (allowance: number, pocketPct: number) => {
@@ -161,6 +224,10 @@ export const useFinancialStore = create<FinancialStoreState>()(
         });
 
         get().recalculateState();
+        // Auto-scan for anomalies on new income transactions
+        if (tx.type === "income") {
+          get().detectAnomalies();
+        }
       },
 
       executeEndOfMonthSweep: () => {
@@ -268,6 +335,72 @@ export const useFinancialStore = create<FinancialStoreState>()(
         }));
       },
 
+      detectAnomalies: () => {
+        const { transactions, monthlyAllowance } = get();
+        const alerts = detectPredatoryTransfers(transactions, monthlyAllowance);
+        set({ anomalyAlerts: alerts });
+      },
+
+      acknowledgeAnomaly: (alertId: string) => {
+        set((s) => ({
+          anomalyAlerts: s.anomalyAlerts.map((a) =>
+            a.id === alertId ? { ...a, isAcknowledged: true } : a
+          ),
+        }));
+      },
+
+      updateRecoveryMilestones: () => {
+        const s = get();
+        const dtiPercent = s.monthlyAllowance > 0
+          ? (s.totalMonthlyInstallments / s.monthlyAllowance) * 100
+          : 0;
+
+        set({
+          recoveryMilestones: s.recoveryMilestones.map((m) => {
+            if (m.id === "rm_1" && s.activeDebts.length > 0) {
+              return { ...m, isCompleted: true, completedAt: new Date().toISOString() };
+            }
+            if (m.id === "rm_3" && s.activeDebts.length < (s.loanCount || 1)) {
+              return { ...m, isCompleted: true, completedAt: new Date().toISOString() };
+            }
+            if (m.id === "rm_4" && dtiPercent < 40) {
+              return { ...m, isCompleted: true, completedAt: new Date().toISOString() };
+            }
+            if (m.id === "rm_5" && s.state === "AMAN") {
+              return { ...m, isCompleted: true, completedAt: new Date().toISOString() };
+            }
+            return m;
+          }),
+        });
+      },
+
+      applyPersonaDemoScenario: (personaId: PersonaId) => {
+        const scenario = DEMO_PERSONA_SCENARIOS[personaId];
+        if (!scenario) return;
+
+        set({
+          monthlyAllowance: scenario.monthlyAllowance,
+          dailyPocket: scenario.dailyPocket,
+          lockPocket: scenario.lockPocket,
+          dailyBudgetSafe: scenario.dailyBudgetSafe,
+          totalMonthlyInstallments: scenario.totalMonthlyInstallments,
+          loanCount: scenario.loanCount,
+          activeLoanSources: scenario.activeLoanSources,
+          safeConsecutiveMonths: scenario.safeConsecutiveMonths,
+          transactions: scenario.transactions,
+          nudges: scenario.nudges,
+          activeDebts: scenario.activeDebts,
+          anomalyAlerts: [],
+          recoveryMilestones: INITIAL_RECOVERY_MILESTONES,
+          coolingOffTargetTime: null,
+          isSweepModalOpen: false,
+        });
+
+        // Score/state and the matched persona are re-derived by the existing
+        // state machine + classifier from the numbers set above — never set directly.
+        get().recalculateState();
+      },
+
       resetToDefault: () => {
         set({
           ...DEFAULT_MOCK_STATE,
@@ -275,6 +408,8 @@ export const useFinancialStore = create<FinancialStoreState>()(
           nudges: INITIAL_NUDGES,
           wealthTiers: INITIAL_WEALTH_TIERS,
           activeDebts: [],
+          anomalyAlerts: [],
+          recoveryMilestones: INITIAL_RECOVERY_MILESTONES,
           coolingOffTargetTime: null,
           isSweepModalOpen: false,
         });

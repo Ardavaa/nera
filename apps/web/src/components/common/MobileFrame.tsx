@@ -1,5 +1,6 @@
 import React from "react";
 import { Wifi, Battery } from "lucide-react";
+import { BottomNav } from "./BottomNav";
 
 export interface MobileFrameProps {
   children: React.ReactNode;
@@ -38,9 +39,13 @@ export const MobileFrame: React.FC<MobileFrameProps> = ({ children }) => {
         </div>
         
         {/* Scrollable Main Screen Container */}
-        <div className="flex-1 flex flex-col overflow-y-auto pb-24 select-none">
-          {children}
+        <div className="flex-1 overflow-y-auto select-none">
+          <div className="flex flex-col min-h-full pb-[calc(6rem+env(safe-area-inset-bottom))]">
+            {children}
+          </div>
         </div>
+
+        <BottomNav />
       </div>
     </div>
   );

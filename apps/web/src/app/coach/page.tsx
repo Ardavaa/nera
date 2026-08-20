@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { TopAppBar } from "../../components/common/TopAppBar";
 import { useFinancialStore } from "../../context/FinancialStore";
 import { Card, Button } from "@nera/ui";
@@ -86,7 +87,7 @@ export default function CoachPage() {
 
   return (
     <div className="flex flex-col min-h-full">
-      <TopAppBar title="NerAI Safety Coach" />
+      <TopAppBar title="NerAI Safety Coach" showBack />
 
       <main className="flex-1 px-4 py-3 flex flex-col justify-between space-y-3">
         {/* CHAT BUBBLES CONTAINER */}

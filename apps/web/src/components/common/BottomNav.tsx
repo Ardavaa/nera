@@ -5,10 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Home,
-  Zap,
-  Compass,
-  MessageCircle,
-  User,
+  ShieldAlert,
+  Users,
+  LifeBuoy,
+  TrendingUp,
 } from "lucide-react";
 import { cn } from "@nera/ui";
 
@@ -22,29 +22,29 @@ export const BottomNav: React.FC = () => {
       icon: Home,
     },
     {
-      label: "Cek Baru",
+      label: "Cek Risiko",
       href: "/risk-check",
-      icon: Zap,
+      icon: ShieldAlert,
     },
     {
-      label: "Alternatif",
+      label: "Keluarga",
       href: "/family-hub",
-      icon: Compass,
+      icon: Users,
     },
     {
-      label: "NerAI",
-      href: "/coach",
-      icon: MessageCircle,
+      label: "Pemulihan",
+      href: "/recovery",
+      icon: LifeBuoy,
     },
     {
-      label: "Profil",
+      label: "Investasi",
       href: "/wealth-engine",
-      icon: User,
+      icon: TrendingUp,
     },
   ];
 
   return (
-    <nav className="absolute bottom-0 inset-x-0 z-40 w-full bg-white/95 backdrop-blur-md border-t border-[#E2E8F0] px-2 pt-1.5 pb-2 shadow-[0_-4px_20px_rgba(15,23,42,0.04)]">
+    <nav className="absolute bottom-0 inset-x-0 z-40 w-full bg-white/95 backdrop-blur-md border-t border-[#E2E8F0] px-2 pt-1.5 shadow-[0_-4px_20px_rgba(15,23,42,0.04)] pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
       <div className="flex items-center justify-around">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
@@ -88,4 +88,3 @@ export const BottomNav: React.FC = () => {
     </nav>
   );
 };
-

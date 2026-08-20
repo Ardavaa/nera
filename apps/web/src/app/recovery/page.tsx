@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { TopAppBar } from "../../components/common/TopAppBar";
 import { useFinancialStore } from "../../context/FinancialStore";
-import { Card, Button, StatusBadge } from "@nera/ui";
-import { calculateDebtSnowball, DebtSnowballItem } from "@nera/core";
+import { Card, Button, StatusBadge, StepProgress } from "@nera/ui";
+import { calculateDebtSnowball } from "@nera/core";
 import {
   LifeBuoy,
   AlertOctagon,
@@ -15,13 +15,22 @@ import {
   PhoneCall,
   ShieldCheck,
   Lock,
+  Ban,
+  TrendingUp,
+  ArrowRight,
+  MessageCircle,
+  Heart,
 } from "lucide-react";
 
 export default function RecoveryPage() {
   const {
     userName,
     state,
+    score,
     activeDebts,
+    recoveryMilestones,
+    totalMonthlyInstallments,
+    monthlyAllowance,
     addDebtItem,
     payOffDebt,
   } = useFinancialStore();
@@ -33,6 +42,7 @@ export default function RecoveryPage() {
   const [tenorMonths, setTenorMonths] = useState<number>(3);
 
   const snowballPlan = calculateDebtSnowball(activeDebts);
+  const dtiPct = monthlyAllowance > 0 ? ((totalMonthlyInstallments / monthlyAllowance) * 100).toFixed(0) : "0";
 
   const formatRupiah = (val: number) =>
     new Intl.NumberFormat("id-ID", {
@@ -59,49 +69,107 @@ export default function RecoveryPage() {
     setIsAddDebtOpen(false);
   };
 
+  // Map recovery milestones to StepProgress format
+  const stepItems = recoveryMilestones.map((m, idx) => ({
+    id: m.id,
+    label: m.label,
+    description: m.description,
+    isCompleted: m.isCompleted,
+    isActive: !m.isCompleted && (idx === 0 || recoveryMilestones[idx - 1]?.isCompleted),
+  }));
+
+  const isKritis = state === "KRITIS";
+
   return (
     <div className="flex flex-col min-h-full">
-      <TopAppBar title="AI Recovery Consultant" />
+      <TopAppBar title="AI Recovery Consultant" showBack />
 
       <main className="flex-1 px-4 py-4 space-y-4">
-        {/* CRISIS BANNER & INVESTMENT LOCK NOTIFICATION */}
-        <Card className="p-4 bg-[#FBE4DE] border-[#EF4444]/40 space-y-2">
-          <div className="flex items-center gap-2 text-[#EF4444]">
-            <AlertOctagon size={20} />
-            <h3 className="text-xs font-bold uppercase tracking-wider">
-              Mode Pemulihan Darurat Aktif
-            </h3>
+        {/* CRISIS BANNER & INVESTMENT LOCK */}
+        <Card className="p-0 overflow-hidden">
+          <div className={`p-4 ${isKritis ? "bg-gradient-to-r from-[#EF4444] to-[#DC2626]" : "bg-gradient-to-r from-[#FBBF24] to-[#F59E0B]"} text-white space-y-2`}>
+            <div className="flex items-center gap-2">
+              <AlertOctagon size={20} />
+              <h3 className="text-xs font-bold uppercase tracking-wider">
+                {isKritis ? "Mode Pemulihan Darurat Aktif" : "Mode Pemulihan Aktif"}
+              </h3>
+            </div>
+            <p className="text-[11px] text-white/90 leading-relaxed">
+              Demi melindungi kesehatan finansialmu, <strong>semua penawaran produk investasi BNI dikunci total</strong> hingga siklus cicilan selesai dilunasi.
+            </p>
           </div>
-          <p className="text-xs text-[#0F172A] leading-relaxed">
-            Demi melindungi kesehatan finansialmu, <strong>semua penawaran produk investasi BNI dikunci total</strong> hingga siklus cicilan selesai dilunasi.
-          </p>
+
+          {/* Reputation Protection Lock */}
+          <div className="p-4 space-y-2 bg-[#FBE4DE]/20">
+            <div className="flex items-center gap-2 text-[#64748B]">
+              <Ban size={14} />
+              <span className="text-[10px] font-bold uppercase tracking-wider">Proteksi Reputasi BNI</span>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              {["Reksa Dana", "SBN / Sukuk", "KPR / KKB"].map((product) => (
+                <div key={product} className="flex items-center gap-1.5 px-2 py-1.5 bg-[#F1F5F9] rounded-lg">
+                  <Lock size={10} className="text-[#EF4444]" />
+                  <span className="text-[10px] text-[#64748B] font-medium">{product}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </Card>
 
-        {/* RECOVERY SUMMARY */}
+        {/* RECOVERY SUMMARY STATS */}
         <Card className="p-4 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-[#64748B]">
               Ringkasan Kewajiban
             </span>
-            <span className="text-xs font-bold text-[#EF4444]">
-              {activeDebts.length} Pos Cicilan
-            </span>
+            <StatusBadge status={state} />
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-              <span className="text-[11px] text-[#64748B]">Total Sisa Pokok:</span>
-              <p className="text-base font-black text-[#EF4444]">
+          <div className="grid grid-cols-3 gap-2">
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+              <span className="text-[10px] text-[#64748B] block">Total Sisa</span>
+              <p className="text-sm font-black text-[#EF4444] mt-0.5">
                 {formatRupiah(snowballPlan.totalOutstanding)}
               </p>
             </div>
-            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-              <span className="text-[11px] text-[#64748B]">Beban per Bulan:</span>
-              <p className="text-base font-black text-[#0F172A]">
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+              <span className="text-[10px] text-[#64748B] block">Beban/Bulan</span>
+              <p className="text-sm font-black text-[#0F172A] mt-0.5">
                 {formatRupiah(snowballPlan.totalMonthlyBurn)}
               </p>
             </div>
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+              <span className="text-[10px] text-[#64748B] block">DTI Ratio</span>
+              <p className={`text-sm font-black mt-0.5 ${Number(dtiPct) > 40 ? "text-[#EF4444]" : "text-[#FBBF24]"}`}>
+                {dtiPct}%
+              </p>
+            </div>
           </div>
+
+          {/* Savings after clear */}
+          {snowballPlan.totalMonthlyBurn > 0 && (
+            <div className="p-3 bg-[#DDF0E6] rounded-xl border border-[#22C55E]/30 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <TrendingUp size={14} className="text-[#15803D]" />
+                <span className="text-xs text-[#15803D] font-medium">Hemat setelah lunas</span>
+              </div>
+              <span className="text-xs font-bold text-[#15803D]">
+                +{formatRupiah(snowballPlan.monthlySavingsAfterClear)}/bln
+              </span>
+            </div>
+          )}
+        </Card>
+
+        {/* RECOVERY MILESTONES (Step Progress) */}
+        <Card className="p-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <LifeBuoy size={16} className="text-[#6C5CE7]" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
+              Milestone Pemulihan
+            </h3>
+          </div>
+
+          <StepProgress steps={stepItems} accentColor="#6C5CE7" />
         </Card>
 
         {/* DEBT SNOWBALL PRIORITIZATION LIST */}
@@ -129,7 +197,7 @@ export default function RecoveryPage() {
                   placeholder="Nama Platform (misal: EasyDana / PayLater)"
                   value={platformName}
                   onChange={(e) => setPlatformName(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border rounded-xl"
+                  className="w-full px-3 py-2 text-xs border rounded-xl focus:outline-none focus:border-[#6C5CE7]"
                   required
                 />
                 <div className="grid grid-cols-2 gap-2">
@@ -138,7 +206,7 @@ export default function RecoveryPage() {
                     placeholder="Sisa Pokok (Rp)"
                     value={principal}
                     onChange={(e) => setPrincipal(Number(e.target.value))}
-                    className="w-full px-3 py-2 text-xs border rounded-xl"
+                    className="w-full px-3 py-2 text-xs border rounded-xl focus:outline-none focus:border-[#6C5CE7]"
                     required
                   />
                   <input
@@ -146,7 +214,7 @@ export default function RecoveryPage() {
                     placeholder="Cicilan / bln"
                     value={monthlyInstallment}
                     onChange={(e) => setMonthlyInstallment(Number(e.target.value))}
-                    className="w-full px-3 py-2 text-xs border rounded-xl"
+                    className="w-full px-3 py-2 text-xs border rounded-xl focus:outline-none focus:border-[#6C5CE7]"
                     required
                   />
                 </div>
@@ -183,7 +251,7 @@ export default function RecoveryPage() {
                     </div>
                     {idx === 0 && (
                       <span className="text-[10px] bg-[#6C5CE7] text-white font-bold px-2 py-0.5 rounded-full">
-                        Target Pelunasan #1
+                        Target #1
                       </span>
                     )}
                   </div>
@@ -193,6 +261,11 @@ export default function RecoveryPage() {
                     <span className="font-bold text-[#0F172A]">
                       {formatRupiah(debt.monthlyInstallment)} / bulan
                     </span>
+                  </div>
+
+                  {/* Estimated payoff */}
+                  <div className="flex items-center justify-between text-[11px] text-[#64748B] pt-1 border-t border-slate-100">
+                    <span>Estimasi lunas: ~{debt.remainingTenorMonths} bulan</span>
                   </div>
 
                   <Button
@@ -206,6 +279,21 @@ export default function RecoveryPage() {
                   </Button>
                 </Card>
               ))}
+
+              {/* Snowball recommended steps */}
+              <Card className="p-4 space-y-2 bg-[#F8FAFC]">
+                <h4 className="text-xs font-bold text-[#0F172A] flex items-center gap-1.5">
+                  <ArrowRight size={12} className="text-[#6C5CE7]" /> Langkah Rekomendasi
+                </h4>
+                <ul className="space-y-1.5">
+                  {snowballPlan.recommendedSteps.map((step, i) => (
+                    <li key={i} className="text-[11px] text-[#64748B] leading-relaxed flex gap-2">
+                      <span className="text-[#6C5CE7] font-bold shrink-0">{i + 1}.</span>
+                      {step}
+                    </li>
+                  ))}
+                </ul>
+              </Card>
             </div>
           )}
         </div>
@@ -213,15 +301,15 @@ export default function RecoveryPage() {
         {/* CAMPUS COUNSELING REFERRAL */}
         <Card className="p-4 space-y-3 bg-[#EAF4FF] border-[#4EA8FF]/40">
           <div className="flex items-center gap-2 text-[#00747F]">
-            <GraduationCap size={18} />
+            <Heart size={18} />
             <h3 className="text-xs font-bold uppercase tracking-wider">
-              Rujukan Konseling Finansial Kampus
+              Rujukan Konseling Kampus
             </h3>
           </div>
           <p className="text-xs text-[#0F172A] leading-relaxed">
-            Jika kamu merasa tertekan oleh tagihan pinjaman, jangan ragu untuk berkonsultasi secara rahasia dan gratis dengan Tim Advokasi Mahasiswa Telkom University.
+            Jika kamu merasa tertekan oleh tagihan pinjaman, jangan ragu untuk berkonsultasi secara <strong>rahasia dan gratis</strong> dengan Tim Advokasi Mahasiswa Telkom University.
           </p>
-          <div className="pt-1">
+          <div className="grid grid-cols-2 gap-2">
             <Button
               variant="bni"
               size="sm"
@@ -229,7 +317,16 @@ export default function RecoveryPage() {
               onClick={() => alert("Menghubungkan ke Pusat Bantuan Mahasiswa Tel-U...")}
               className="text-xs h-9 rounded-xl gap-1.5"
             >
-              <PhoneCall size={14} /> Hubungi Konseling Kampus (Gratis)
+              <PhoneCall size={14} /> Telepon
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              fullWidth
+              onClick={() => alert("Membuka chat konseling kampus...")}
+              className="text-xs h-9 rounded-xl gap-1.5"
+            >
+              <MessageCircle size={14} /> Chat
             </Button>
           </div>
         </Card>

@@ -1,4 +1,4 @@
-import { FinancialStateData, UserProfile, WealthTier, SaferAlternative } from "../types";
+import { FinancialStateData, UserProfile, WealthTier, SaferAlternative, PredatoryPattern, RecoveryMilestone, PersonaId, BniOffer } from "../types";
 
 export const DEFAULT_MOCK_STATE: FinancialStateData = {
   userName: "Budi",
@@ -123,5 +123,201 @@ export const INITIAL_WEALTH_TIERS: WealthTier[] = [
     minMonthlyReturnPct: 6.4,
     description: "Dijamin 100% oleh Negara Republik Indonesia. Kupon pasti masuk rekening BNI setiap bulan.",
     badgeText: "Dijamin Negara",
+  },
+];
+
+export const PREDATORY_LENDER_PATTERNS: PredatoryPattern[] = [
+  {
+    id: "pinjol_a",
+    platformNameKeywords: ["easydana", "rupiah cepat", "pinjam kilat", "cash express"],
+    typicalAmountRange: [500000, 3000000],
+    typicalInterestMonthly: 3.5,
+    riskLabel: "Pinjaman Online Ilegal Terdeteksi",
+  },
+  {
+    id: "pinjol_b",
+    platformNameKeywords: ["dana flash", "kredit go", "uang teman", "pinjam aja"],
+    typicalAmountRange: [1000000, 5000000],
+    typicalInterestMonthly: 5.0,
+    riskLabel: "Platform Lending Bunga Tinggi",
+  },
+  {
+    id: "paylater_risk",
+    platformNameKeywords: ["paylater", "pay later", "cicil", "kredivo"],
+    typicalAmountRange: [200000, 10000000],
+    typicalInterestMonthly: 2.5,
+    riskLabel: "PayLater Berpotensi Stacking",
+  },
+];
+
+export const PERSONA_LABELS: Record<PersonaId, { label: string; tagline: string }> = {
+  konsisten_nabung: {
+    label: "Si Konsisten Nabung",
+    tagline: "Rutin menyisihkan ke Life Goals dan menjaga skor Aman.",
+  },
+  pejuang_runway: {
+    label: "Pejuang Runway",
+    tagline: "Disiplin menjaga pengeluaran harian tetap di bawah budget aman.",
+  },
+  anak_rantau: {
+    label: "Anak Rantau",
+    tagline: "Tinggal jauh dari keluarga dengan tagihan kos rutin tiap bulan.",
+  },
+  calon_mapan: {
+    label: "Calon Mapan",
+    tagline: "Pemasukan cenderung naik dan beban cicilan tetap rendah.",
+  },
+  wirausaha_kampus: {
+    label: "Wirausaha Kampus",
+    tagline: "Punya pemasukan tambahan di luar uang saku rutin.",
+  },
+  pejuang_pemulihan: {
+    label: "Pejuang Pemulihan",
+    tagline: "Sedang fokus melunasi cicilan dan mengembalikan skor ke zona Aman.",
+  },
+};
+
+// Katalog benefit BNI per persona, disusun dari riset produk resmi BNI (Agustus 2026).
+// Setiap offer mencantumkan sourceLabel sebagai jejak riset, bukan angka karangan.
+export const BNI_OFFERS: BniOffer[] = [
+  {
+    id: "offer_taplus_muda",
+    personaId: "pejuang_runway",
+    productName: "BNI Taplus Muda Co-Brand",
+    category: "Tabungan",
+    benefit: "Kartu debit + QRIS cashback merchant partner, admin ringan Rp5.000/bulan.",
+    eligibilityNote: "Cocok untuk kamu yang rutin menjaga runway ≥14 hari.",
+    sourceLabel: "bni.co.id — BNI Taplus Muda",
+    badge: "Setoran awal Rp100rb",
+    actionLabel: "Aktifkan di wondr",
+    actionType: "wondr",
+  },
+  {
+    id: "offer_reksadana",
+    personaId: "konsisten_nabung",
+    productName: "BNI-AM Reksa Dana Pasar Uang",
+    category: "Investasi",
+    benefit: "75+ produk reksa dana dari 10+ manajer investasi terverifikasi, mulai Rp10.000.",
+    eligibilityNote: "Terbuka karena Dana Darurat (Tier 1) kamu sudah berjalan konsisten.",
+    sourceLabel: "wondr by BNI — Fitur Investasi",
+    badge: "Mulai Rp10.000",
+    actionLabel: "Lihat di wondr",
+    actionType: "wondr",
+  },
+  {
+    id: "offer_sukuk",
+    personaId: "konsisten_nabung",
+    productName: "Sukuk Ritel / SBN via wondr",
+    category: "Investasi",
+    benefit: "Dijamin negara, kupon bulanan masuk rekening, minimal beli Rp1 juta, bebas biaya transaksi.",
+    eligibilityNote: "Cocok untuk streak Aman 2 bulan berturut-turut.",
+    sourceLabel: "Infobanknews — Sukuk Ritel SR024 via wondr by BNI",
+    badge: "Dijamin negara",
+    actionLabel: "Cek promo aktif",
+    actionType: "external",
+    actionUrl: "https://www.bni.co.id/id-id/individu/lainnya/reksa-dana",
+  },
+  {
+    id: "offer_proteksi_kos",
+    personaId: "anak_rantau",
+    productName: "BNI Life — Proteksi Kecelakaan Diri",
+    category: "Proteksi",
+    benefit: "Santunan kecelakaan diri, premi mulai Rp150.000/bulan, bisa autodebet dari Daily Pocket.",
+    eligibilityNote: "Direkomendasikan karena kamu rutin membayar tagihan kos sendiri.",
+    sourceLabel: "Cermati.com — Asuransi BNI Life",
+    badge: "Mulai Rp150rb/bln",
+    actionLabel: "Pelajari proteksi",
+    actionType: "external",
+    actionUrl: "https://www.bni.co.id/id-id",
+  },
+  {
+    id: "offer_kartu_kredit",
+    personaId: "calon_mapan",
+    productName: "Kartu Kredit BNI (Kelas Pemula)",
+    category: "Kartu Kredit",
+    benefit: "Limit awal Rp3–10 juta, iuran tahun pertama bisa gratis lewat promo pemula.",
+    eligibilityNote: "Terbuka karena pemasukanmu cenderung naik dengan DTI tetap rendah.",
+    sourceLabel: "Kontan — Kartu Kredit BNI untuk Pemula",
+    badge: "Limit dari Rp3jt",
+    actionLabel: "Simulasikan pengajuan",
+    actionType: "external",
+    actionUrl: "https://www.bni.co.id/id-id/individu/kartu/kartukredit",
+  },
+  {
+    id: "offer_griya_gue",
+    personaId: "calon_mapan",
+    productName: "BNI Griya Gue (KPR Milenial)",
+    category: "Pinjaman Resmi",
+    benefit: "Bunga mulai 4,74%/tahun, DP ringan, tenor hingga 30 tahun — untuk usia 21–35 tahun.",
+    eligibilityNote: "Konten edukasi perencanaan jangka panjang, bukan ajakan mengambil cicilan sekarang.",
+    sourceLabel: "Kontan — KPR Griya Gue segmen milenial",
+    badge: "Edukasi",
+    actionLabel: "Pelajari BNI Griya",
+    actionType: "external",
+    actionUrl: "https://www.bni.co.id/id-id/individu/pinjaman/bnigriya",
+  },
+  {
+    id: "offer_xpora",
+    personaId: "wirausaha_kampus",
+    productName: "BNI Xpora — Ekosistem UMKM",
+    category: "Wirausaha",
+    benefit: "Pelatihan, kurasi produk, akses kredit modal kerja/investasi, terintegrasi wondr & TapCash.",
+    eligibilityNote: "Terdeteksi dari pemasukan tambahan di luar uang saku rutin.",
+    sourceLabel: "BNI Experience — Xpora Solusi Digital UKM",
+    badge: "UMKM pemula",
+    actionLabel: "Gabung Xpora",
+    actionType: "external",
+    actionUrl: "https://bniexperience.bni.co.id/artikel/detail/xpora-solusi-digital-ukm-bni",
+  },
+  {
+    id: "offer_fleksi_pendidikan",
+    personaId: "pejuang_pemulihan",
+    productName: "BNI Fleksi Pendidikan",
+    category: "Pinjaman Resmi",
+    benefit: "Bunga resmi 0,73% eff/bulan, ada grace period — alternatif restrukturisasi legal dari pinjol.",
+    eligibilityNote: "Ditawarkan sebagai jalan keluar resmi, bukan produk investasi/upselling.",
+    sourceLabel: "BNI Experience — BNI Fleksi Pendidikan",
+    badge: "Resmi & diawasi OJK",
+    actionLabel: "Konsultasi opsi ini",
+    actionType: "external",
+    actionUrl: "https://www.bni.co.id/id-id/individu/pinjaman/bni-fleksi",
+  },
+];
+
+export const INITIAL_RECOVERY_MILESTONES: RecoveryMilestone[] = [
+  {
+    id: "rm_1",
+    label: "Identifikasi Semua Kewajiban",
+    description: "Catat seluruh pos pinjaman aktif ke dalam sistem pemulihan Nera.",
+    isCompleted: false,
+    order: 1,
+  },
+  {
+    id: "rm_2",
+    label: "Hentikan Pinjaman Baru",
+    description: "Tidak mengambil pinjaman baru selama proses pemulihan berlangsung.",
+    isCompleted: false,
+    order: 2,
+  },
+  {
+    id: "rm_3",
+    label: "Lunasi Prioritas #1",
+    description: "Selesaikan pelunasan pinjaman terkecil untuk momentum psikologis.",
+    isCompleted: false,
+    order: 3,
+  },
+  {
+    id: "rm_4",
+    label: "DTI di Bawah 40%",
+    description: "Turunkan rasio cicilan terhadap pemasukan di bawah batas bahaya.",
+    isCompleted: false,
+    order: 4,
+  },
+  {
+    id: "rm_5",
+    label: "Kembali ke Status Aman",
+    description: "Skor risiko kembali ke zona hijau (0–39). Selamat, kamu pulih!",
+    isCompleted: false,
+    order: 5,
   },
 ];
