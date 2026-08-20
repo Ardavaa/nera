@@ -6,6 +6,7 @@ import {
   CAMPUS_SEMESTER_TREND,
   CAMPUS_SCORE_DISTRIBUTION,
 } from "@nera/core";
+import { Card } from "@nera/ui";
 import { Users, TrendingUp, AlertTriangle } from "lucide-react";
 import {
   LineChart,
@@ -45,7 +46,7 @@ function MetricCard({
   accent: string;
 }) {
   return (
-    <div className="bg-white border border-[#E2E8F0] rounded-2xl p-5 shadow-sm">
+    <Card>
       <div
         className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
         style={{ backgroundColor: `${accent}15`, color: accent }}
@@ -54,20 +55,19 @@ function MetricCard({
       </div>
       <p className="text-2xl font-black text-[#0F172A]">{value}</p>
       <p className="text-xs text-[#64748B] mt-1">{label}</p>
-    </div>
+    </Card>
   );
 }
 
 function CardSkeleton() {
-  return <div className="bg-white border border-[#E2E8F0] rounded-2xl p-5 h-[110px] animate-pulse" />;
+  return <Card className="h-[110px] animate-pulse">{null}</Card>;
 }
 
 function ChartSkeleton({ height }: { height: number }) {
   return (
-    <div
-      className="bg-white border border-[#E2E8F0] rounded-2xl animate-pulse"
-      style={{ height }}
-    />
+    <Card className="animate-pulse" style={{ height }}>
+      {null}
+    </Card>
   );
 }
 
@@ -122,7 +122,7 @@ export default function CampusOverviewPage() {
           {isLoading ? (
             <ChartSkeleton height={340} />
           ) : (
-            <div className="bg-white border border-[#E2E8F0] rounded-2xl p-5">
+            <Card>
               <h3 className="text-sm font-bold text-[#0F172A] mb-4">
                 Tren Skor Rata-rata Sepanjang Semester
               </h3>
@@ -142,7 +142,7 @@ export default function CampusOverviewPage() {
                   />
                 </LineChart>
               </ResponsiveContainer>
-            </div>
+            </Card>
           )}
         </div>
 
@@ -150,7 +150,7 @@ export default function CampusOverviewPage() {
           {isLoading ? (
             <ChartSkeleton height={340} />
           ) : (
-            <div className="bg-white border border-[#E2E8F0] rounded-2xl p-5">
+            <Card>
               <h3 className="text-sm font-bold text-[#0F172A] mb-4">Distribusi Skor</h3>
               <ResponsiveContainer width="100%" height={220}>
                 <PieChart>
@@ -173,7 +173,7 @@ export default function CampusOverviewPage() {
                   />
                 </PieChart>
               </ResponsiveContainer>
-            </div>
+            </Card>
           )}
         </div>
       </div>

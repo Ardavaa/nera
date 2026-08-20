@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { TopAppBar } from "../../../components/common/TopAppBar";
 import { useFinancialStore } from "../../../context/FinancialStore";
-import { Card, Button, Modal } from "@nera/ui";
+import { Card, Button, Modal, TrustBanner } from "@nera/ui";
 import { classifyPersonas, BNI_OFFERS } from "@nera/core";
 import {
   Sparkles,
@@ -90,12 +90,9 @@ export default function PrivilegesPage() {
       <main className="flex-1 px-4 py-4 space-y-4">
         {/* TRANSPARENCY / CONSENT BANNER */}
         <Card className="p-0 overflow-hidden">
-          <div className="bg-gradient-to-br from-[#00747F] to-[#0C4A6E] p-4 text-white flex items-start gap-3">
-            <ShieldCheck size={20} className="text-white/85 shrink-0 mt-0.5" />
-            <p className="text-[11px] text-white/85 leading-relaxed">
-              Skor dan pola transaksimu dipakai <strong className="text-white">read-only</strong> untuk mencocokkan manfaat ini. Tidak ada data yang dibagikan ke pihak luar tanpa persetujuanmu.
-            </p>
-          </div>
+          <TrustBanner icon={<ShieldCheck size={20} />}>
+            Skor dan pola transaksimu dipakai <strong className="text-white">read-only</strong> untuk mencocokkan manfaat ini. Tidak ada data yang dibagikan ke pihak luar tanpa persetujuanmu.
+          </TrustBanner>
         </Card>
 
         {state !== "AMAN" && (

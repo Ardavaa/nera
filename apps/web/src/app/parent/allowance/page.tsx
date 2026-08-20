@@ -33,7 +33,7 @@ export default function ParentAllowancePage() {
     <div className="flex flex-col min-h-full">
       <TopAppBar title="Atur Transfer Otomatis" showBack />
 
-      <main className="flex-1 px-4 py-4 space-y-4">
+      <main className="flex-1 px-4 pt-3.5 pb-6 space-y-4">
         <Card className="p-4 space-y-4">
           <div className="flex items-center gap-2">
             <Sliders size={16} className="text-[#00747F]" />

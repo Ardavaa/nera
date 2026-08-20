@@ -141,9 +141,10 @@ Sumber data: `packages/core/src/constants/campus-mock-data.ts` (`CAMPUS_OVERVIEW
 
 ## 9. Menu Demo & Role Switcher
 
-Ikon "?" di `TopAppBar` (dipakai di semua halaman Student & Parent) membuka satu dropdown gabungan (`DemoControlPanel.tsx`) berisi dua bagian:
+Ikon "?" di `TopAppBar` (dipakai di semua halaman Student & Parent) membuka satu dropdown gabungan (`DemoControlPanel.tsx`) berisi tiga bagian:
 
 - **Lihat Sebagai** — 3 tautan role: Tampilan Mahasiswa (`/`), Tampilan Orang Tua (`/parent`), Tampilan Kampus (`/campus`). Campus tidak punya `TopAppBar` (pakai sidebar sendiri), jadi tautan setara ada di footer `CampusSidebar`.
+- **Warna Latar Mockup** — color picker (swatch `<input type="color">` + input teks hex yang bisa diketik manual, saling sinkron) untuk mengganti warna kanvas di sisi-sisi mockup HP (area gelap di sekitar frame iPhone). Tersimpan di store terpisah `UiPreferencesStore.ts` (key `nera-ui-preferences`, persist ke localStorage), dibaca langsung oleh `MobileFrame.tsx`. Ada tombol reset ke default (`#0F172A`). Hanya berlaku untuk Student & Parent (yang pakai `MobileFrame`) — Campus punya shell desktop sendiri jadi tidak relevan.
 - **Ganti Persona (Mahasiswa)** — 6 skenario demo, detail lihat §11.
 
 Ini murni alat bantu demo/navigasi untuk prototipe tanpa sistem login sungguhan — bukan representasi auth production.

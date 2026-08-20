@@ -2,6 +2,7 @@
 
 import React from "react";
 import { CAMPUS_INTERVENTION_ALERTS } from "@nera/core";
+import { Card } from "@nera/ui";
 import { AlertOctagon, AlertTriangle, Info, ArrowRight } from "lucide-react";
 
 const SEVERITY_CONFIG = {
@@ -30,10 +31,7 @@ export default function CampusAlertsPage() {
           });
 
           return (
-            <div
-              key={alert.id}
-              className={`bg-white border rounded-2xl p-5 space-y-3 ${config.border}`}
-            >
+            <Card key={alert.id} className={`space-y-3 ${config.border}`}>
               <div className="flex items-center justify-between">
                 <div className={`flex items-center gap-2 ${config.text}`}>
                   <div className={`w-8 h-8 rounded-full ${config.bg} flex items-center justify-center`}>
@@ -51,7 +49,7 @@ export default function CampusAlertsPage() {
                 <ArrowRight size={12} className="text-[#00747F] shrink-0" />
                 <span className="text-[#0F172A] font-medium">{alert.recommendedAction}</span>
               </div>
-            </div>
+            </Card>
           );
         })}
       </div>

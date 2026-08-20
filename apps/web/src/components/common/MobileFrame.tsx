@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import { Wifi, Battery } from "lucide-react";
 import { BottomNav } from "./BottomNav";
+import { useUiPreferencesStore } from "../../context/UiPreferencesStore";
 
 export interface MobileFrameProps {
   children: React.ReactNode;
@@ -8,8 +11,13 @@ export interface MobileFrameProps {
 }
 
 export const MobileFrame: React.FC<MobileFrameProps> = ({ children, bottomNav }) => {
+  const mockupCanvasColor = useUiPreferencesStore((s) => s.mockupCanvasColor);
+
   return (
-    <div className="min-h-screen bg-[#0F172A] flex justify-center items-start sm:py-6">
+    <div
+      className="min-h-screen flex justify-center items-start sm:py-6"
+      style={{ backgroundColor: mockupCanvasColor }}
+    >
       <div className="w-full max-w-[430px] min-h-screen sm:min-h-[890px] sm:max-h-[920px] bg-[#F8FAFC] flex flex-col relative sm:rounded-[36px] sm:border-[8px] sm:border-[#1E293B] shadow-2xl overflow-hidden">
         
         {/* iOS Status Bar */}

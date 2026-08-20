@@ -18,11 +18,28 @@ export const CampusSidebar: React.FC = () => {
 
   return (
     <aside className="w-64 shrink-0 min-h-screen bg-white border-r border-[#E2E8F0] flex flex-col">
-      <div className="p-5 flex items-center gap-2.5 border-b border-[#E2E8F0]">
-        <Image src="/logos/nera-logo.png" alt="Nera" width={90} height={28} className="h-6 w-auto object-contain" />
-        <div className="h-5 w-px bg-[#E2E8F0]" />
-        <span className="text-xs font-bold text-[#0F172A] leading-tight">
-          Campus<br />Financial Safety
+      <div className="p-5 border-b border-[#E2E8F0] space-y-2.5">
+        <div className="flex items-center gap-3">
+          <Image
+            src="/logos/nera-logo.png"
+            alt="Nera Logo"
+            width={100}
+            height={32}
+            className="h-7 w-auto object-contain"
+            priority
+          />
+          <div className="h-5 w-[1.5px] bg-[#CBD5E1]" />
+          <Image
+            src="/logos/wondr-bni.svg"
+            alt="wondr by BNI"
+            width={105}
+            height={28}
+            className="h-6 w-auto object-contain"
+            priority
+          />
+        </div>
+        <span className="block text-[10px] font-bold uppercase tracking-wider text-[#64748B]">
+          Campus Financial Safety
         </span>
       </div>
 

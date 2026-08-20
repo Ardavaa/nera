@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { TopAppBar } from "../../../components/common/TopAppBar";
 import { useFinancialStore } from "../../../context/FinancialStore";
-import { Card, Button, Modal } from "@nera/ui";
+import { Card, Button, Modal, TrustBanner } from "@nera/ui";
 import {
   Users,
   ShieldCheck,
@@ -63,24 +63,14 @@ export default function FamilyHubPage() {
       <main className="flex-1 px-4 py-4 space-y-4">
         {/* SECTION 1: PERMISSION & ONBOARDING — "Batasan Sebelum Manfaat" */}
         <Card className="p-0 overflow-hidden">
-          <div className="bg-gradient-to-br from-[#00747F] to-[#0C4A6E] p-5 text-white relative overflow-hidden">
-            {/* Decorative sparkles */}
-            <span className="absolute top-4 right-8 text-white/20 text-lg animate-pulse">✦</span>
-            <span className="absolute bottom-6 right-16 text-white/10 text-sm">✦</span>
-
-            <div className="flex items-center gap-2 mb-2">
-              <Fingerprint size={18} className="text-white/80" />
-              <h3 className="text-xs font-bold uppercase tracking-wider text-white/90">
-                Izin Akses Transparan
-              </h3>
-            </div>
-            <h4 className="text-sm font-bold leading-snug">
-              &quot;Batasan Sebelum Manfaat&quot;
-            </h4>
-            <p className="text-[11px] text-white/75 leading-relaxed mt-1.5">
-              Nera hanya membaca <strong className="text-white">kategori mutasi masuk/keluar</strong> untuk kalkulasi runway & proteksi cicilan berisiko. Tidak pernah membaca detail nomor rekening, nama penerima, atau data pribadi lainnya.
-            </p>
-          </div>
+          <TrustBanner
+            icon={<Fingerprint size={18} />}
+            eyebrow="Izin Akses Transparan"
+            title={<>&quot;Batasan Sebelum Manfaat&quot;</>}
+            showSparkles
+          >
+            Nera hanya membaca <strong className="text-white">kategori mutasi masuk/keluar</strong> untuk kalkulasi runway & proteksi cicilan berisiko. Tidak pernah membaca detail nomor rekening, nama penerima, atau data pribadi lainnya.
+          </TrustBanner>
 
           <div className="p-4 space-y-3">
             {/* Permission toggles */}

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { CAMPUS_COHORT_RISK } from "@nera/core";
+import { Card } from "@nera/ui";
 import { ShieldCheck } from "lucide-react";
 
 export default function CampusCohortsPage() {
@@ -21,7 +22,7 @@ export default function CampusCohortsPage() {
         </p>
       </div>
 
-      <div className="bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden">
+      <Card className="p-0 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-slate-50 text-left text-[11px] font-bold uppercase tracking-wider text-[#64748B]">
@@ -55,7 +56,7 @@ export default function CampusCohortsPage() {
             ))}
           </tbody>
         </table>
-      </div>
+      </Card>
     </div>
   );
 }
