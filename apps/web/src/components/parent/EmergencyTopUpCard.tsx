@@ -55,7 +55,7 @@ export const EmergencyTopUpCard: React.FC<EmergencyTopUpCardProps> = ({ request 
             Abaikan
           </Button>
           <Button
-            variant="bni"
+            variant="primary"
             size="sm"
             fullWidth
             onClick={() => resolveEmergencyTopUp(request.id, "approved")}
