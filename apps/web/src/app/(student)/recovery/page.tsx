@@ -87,7 +87,7 @@ export default function RecoveryPage() {
       <main className="flex-1 px-4 py-4 space-y-4">
         {/* CRISIS BANNER & INVESTMENT LOCK */}
         <Card className="p-0 overflow-hidden">
-          <div className={`p-4 ${isKritis ? "bg-gradient-to-r from-[#EF4444] to-[#DC2626]" : "bg-gradient-to-r from-[#FBBF24] to-[#F59E0B]"} text-white space-y-2`}>
+          <div className={`p-4 rounded-t-[20px] ${isKritis ? "bg-gradient-to-r from-[#EF4444] to-[#DC2626]" : "bg-gradient-to-r from-[#FBBF24] to-[#F59E0B]"} text-white space-y-2`}>
             <div className="flex items-center gap-2">
               <AlertOctagon size={20} />
               <h3 className="text-xs font-bold uppercase tracking-wider">

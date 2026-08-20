@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Card, Button } from "@nera/ui";
+import { Card, Button, TrustBanner } from "@nera/ui";
 import { KeyRound, CheckCircle2, ShieldCheck } from "lucide-react";
 import { useFinancialStore } from "../../context/FinancialStore";
 
@@ -53,19 +53,14 @@ export const ParentPairingCard: React.FC = () => {
             transition={{ duration: 0.3 }}
           >
             <Card className="p-0 overflow-hidden">
-              <div className="bg-gradient-to-br from-[#00747F] to-[#0C4A6E] p-5 text-white space-y-2">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck size={18} className="text-white/80" />
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-white/90">
-                    Nera Family Hub
-                  </h3>
-                </div>
-                <h4 className="text-sm font-bold leading-snug">Hubungkan Akun Keluarga</h4>
-                <p className="text-[11px] text-white/75 leading-relaxed">
-                  Masukkan kode pairing yang dibagikan anakmu, atau terima undangan lewat link WhatsApp.
-                  Nera hanya membaca <strong className="text-white">kategori mutasi</strong> — tidak pernah membaca detail transaksi.
-                </p>
-              </div>
+              <TrustBanner
+                icon={<ShieldCheck size={18} />}
+                eyebrow="Nera Family Hub"
+                title="Hubungkan Akun Keluarga"
+              >
+                Masukkan kode pairing yang dibagikan anakmu, atau terima undangan lewat link WhatsApp.
+                Nera hanya membaca <strong className="text-white">kategori mutasi</strong> — tidak pernah membaca detail transaksi.
+              </TrustBanner>
 
               <form onSubmit={handleAccept} className="p-4 space-y-3">
                 <div>

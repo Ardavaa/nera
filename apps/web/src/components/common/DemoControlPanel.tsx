@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { HelpCircle, X, GraduationCap, Users, Building2 } from "lucide-react";
+import { HelpCircle, X, GraduationCap, Users, Building2, RotateCcw } from "lucide-react";
 import { PERSONA_LABELS, DEMO_PERSONA_SCENARIOS, PersonaId } from "@nera/core";
 import { useFinancialStore } from "../../context/FinancialStore";
+import { useUiPreferencesStore } from "../../context/UiPreferencesStore";
 
 const PERSONA_ORDER: PersonaId[] = [
   "konsisten_nabung",
@@ -15,6 +16,8 @@ const PERSONA_ORDER: PersonaId[] = [
   "pejuang_pemulihan",
 ];
 
+const HEX_COLOR_PATTERN = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
+
 const VIEW_LINKS = [
   { href: "/", label: "Tampilan Mahasiswa", icon: GraduationCap },
   { href: "/parent", label: "Tampilan Orang Tua", icon: Users },
@@ -24,6 +27,23 @@ const VIEW_LINKS = [
 export const DemoControlPanel: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const applyPersonaDemoScenario = useFinancialStore((s) => s.applyPersonaDemoScenario);
+  const mockupCanvasColor = useUiPreferencesStore((s) => s.mockupCanvasColor);
+  const setMockupCanvasColor = useUiPreferencesStore((s) => s.setMockupCanvasColor);
+  const resetMockupCanvasColor = useUiPreferencesStore((s) => s.resetMockupCanvasColor);
+
+  const [hexInputValue, setHexInputValue] = useState(mockupCanvasColor);
+
+  useEffect(() => {
+    setHexInputValue(mockupCanvasColor);
+  }, [mockupCanvasColor]);
+
+  const handleHexInputChange = (value: string) => {
+    const normalized = value.startsWith("#") ? value : `#${value}`;
+    setHexInputValue(normalized);
+    if (HEX_COLOR_PATTERN.test(normalized)) {
+      setMockupCanvasColor(normalized);
+    }
+  };
 
   const handleSelect = (personaId: PersonaId) => {
     applyPersonaDemoScenario(personaId);
@@ -73,6 +93,40 @@ export const DemoControlPanel: React.FC = () => {
               <span className="text-xs font-semibold text-[#0F172A]">{label}</span>
             </Link>
           ))}
+
+          <div className="h-px bg-[#E2E8F0] my-1" />
+
+          {/* Mockup Canvas Color Picker */}
+          <div className="px-2 pb-1">
+            <span className="text-[9px] font-bold uppercase tracking-wider text-[#94A3B8]">
+              Warna Latar Mockup
+            </span>
+          </div>
+          <div className="flex items-center gap-2 px-2.5 py-1.5">
+            <input
+              type="color"
+              value={mockupCanvasColor}
+              onChange={(e) => setMockupCanvasColor(e.target.value)}
+              className="w-8 h-8 rounded-lg border border-[#E2E8F0] cursor-pointer p-0.5 bg-white"
+              aria-label="Pilih warna latar mockup"
+            />
+            <input
+              type="text"
+              value={hexInputValue}
+              onChange={(e) => handleHexInputChange(e.target.value)}
+              spellCheck={false}
+              className="w-24 text-xs font-mono text-[#64748B] flex-1 border border-transparent hover:border-[#E2E8F0] focus:border-[#6C5CE7] focus:text-[#0F172A] rounded-lg px-1.5 py-1 outline-none transition-colors"
+              aria-label="Ketik kode warna hex"
+            />
+            <button
+              onClick={resetMockupCanvasColor}
+              className="text-[#94A3B8] hover:text-[#0F172A] transition-colors"
+              aria-label="Reset warna latar"
+              title="Reset ke warna default"
+            >
+              <RotateCcw size={14} />
+            </button>
+          </div>
 
           <div className="h-px bg-[#E2E8F0] my-1" />
 
