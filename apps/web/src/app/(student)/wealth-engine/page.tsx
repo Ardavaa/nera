@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { TopAppBar } from "../../components/common/TopAppBar";
-import { useFinancialStore } from "../../context/FinancialStore";
+import { TopAppBar } from "../../../components/common/TopAppBar";
+import { useFinancialStore } from "../../../context/FinancialStore";
 import { Card, Button, Modal, StatusBadge, ProgressRing } from "@nera/ui";
 import {
   TrendingUp,

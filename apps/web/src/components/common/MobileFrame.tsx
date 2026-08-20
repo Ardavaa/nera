@@ -4,9 +4,10 @@ import { BottomNav } from "./BottomNav";
 
 export interface MobileFrameProps {
   children: React.ReactNode;
+  bottomNav?: React.ReactNode;
 }
 
-export const MobileFrame: React.FC<MobileFrameProps> = ({ children }) => {
+export const MobileFrame: React.FC<MobileFrameProps> = ({ children, bottomNav }) => {
   return (
     <div className="min-h-screen bg-[#0F172A] flex justify-center items-start sm:py-6">
       <div className="w-full max-w-[430px] min-h-screen sm:min-h-[890px] sm:max-h-[920px] bg-[#F8FAFC] flex flex-col relative sm:rounded-[36px] sm:border-[8px] sm:border-[#1E293B] shadow-2xl overflow-hidden">
@@ -45,7 +46,7 @@ export const MobileFrame: React.FC<MobileFrameProps> = ({ children }) => {
           </div>
         </div>
 
-        <BottomNav />
+        {bottomNav ?? <BottomNav />}
       </div>
     </div>
   );

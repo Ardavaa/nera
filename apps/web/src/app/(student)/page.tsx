@@ -3,8 +3,8 @@
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { TopAppBar } from "../components/common/TopAppBar";
-import { useFinancialStore } from "../context/FinancialStore";
+import { TopAppBar } from "../../components/common/TopAppBar";
+import { useFinancialStore } from "../../context/FinancialStore";
 import { Modal, Button } from "@nera/ui";
 import { classifyPersonas } from "@nera/core";
 import {

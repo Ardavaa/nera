@@ -11,6 +11,7 @@ import {
   AnomalyAlert,
   RecoveryMilestone,
   PersonaId,
+  EmergencyTopUpRequest,
   DEFAULT_MOCK_STATE,
   INITIAL_WEALTH_TIERS,
   INITIAL_RECOVERY_MILESTONES,
@@ -29,6 +30,8 @@ export interface FinancialStoreState extends FinancialStateData {
   recoveryMilestones: RecoveryMilestone[];
   coolingOffTargetTime: number | null; // epoch timestamp
   isSweepModalOpen: boolean;
+  isParentPaired: boolean;
+  emergencyTopUpRequests: EmergencyTopUpRequest[];
 
   // Actions
   recalculateState: () => void;
@@ -47,6 +50,8 @@ export interface FinancialStoreState extends FinancialStateData {
   updateRecoveryMilestones: () => void;
   resetToDefault: () => void;
   applyPersonaDemoScenario: (personaId: PersonaId) => void;
+  completeParentPairing: () => void;
+  resolveEmergencyTopUp: (id: string, action: "approved" | "dismissed") => void;
 }
 
 const INITIAL_TRANSACTIONS: Transaction[] = [
@@ -156,6 +161,18 @@ const INITIAL_NUDGES: SmartNudge[] = [
   },
 ];
 
+// Reason text is derived from the same default mock numbers used elsewhere in
+// this file (dailyPocket/runwayDays), not an unrelated hardcoded string.
+const INITIAL_EMERGENCY_TOPUP_REQUESTS: EmergencyTopUpRequest[] = [
+  {
+    id: "topup_1",
+    reasonText: `Saldo Daily Pocket Budi tersisa Rp${DEFAULT_MOCK_STATE.dailyPocket.toLocaleString("id-ID")} dengan estimasi runway ${DEFAULT_MOCK_STATE.runwayDays} hari. Pengeluaran buku kuliah minggu ini di atas rata-rata.`,
+    suggestedAmount: 150000,
+    requestedAt: "2026-08-19T10:00:00Z",
+    status: "pending",
+  },
+];
+
 export const useFinancialStore = create<FinancialStoreState>()(
   persist(
     (set, get) => ({
@@ -168,6 +185,8 @@ export const useFinancialStore = create<FinancialStoreState>()(
       recoveryMilestones: INITIAL_RECOVERY_MILESTONES,
       coolingOffTargetTime: null,
       isSweepModalOpen: false,
+      isParentPaired: false,
+      emergencyTopUpRequests: INITIAL_EMERGENCY_TOPUP_REQUESTS,
 
       recalculateState: () => {
         const state = get();
@@ -401,6 +420,27 @@ export const useFinancialStore = create<FinancialStoreState>()(
         get().recalculateState();
       },
 
+      completeParentPairing: () => {
+        set({ isParentPaired: true });
+      },
+
+      resolveEmergencyTopUp: (id: string, action: "approved" | "dismissed") => {
+        const request = get().emergencyTopUpRequests.find((r) => r.id === id);
+        if (!request) return;
+
+        set((s) => ({
+          emergencyTopUpRequests: s.emergencyTopUpRequests.map((r) =>
+            r.id === id ? { ...r, status: action } : r
+          ),
+          dailyPocket:
+            action === "approved" ? s.dailyPocket + request.suggestedAmount : s.dailyPocket,
+        }));
+
+        if (action === "approved") {
+          get().recalculateState();
+        }
+      },
+
       resetToDefault: () => {
         set({
           ...DEFAULT_MOCK_STATE,
@@ -412,6 +452,8 @@ export const useFinancialStore = create<FinancialStoreState>()(
           recoveryMilestones: INITIAL_RECOVERY_MILESTONES,
           coolingOffTargetTime: null,
           isSweepModalOpen: false,
+          isParentPaired: false,
+          emergencyTopUpRequests: INITIAL_EMERGENCY_TOPUP_REQUESTS,
         });
       },
     }),

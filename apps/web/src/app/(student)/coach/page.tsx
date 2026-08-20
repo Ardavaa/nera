@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { TopAppBar } from "../../components/common/TopAppBar";
-import { useFinancialStore } from "../../context/FinancialStore";
+import { TopAppBar } from "../../../components/common/TopAppBar";
+import { useFinancialStore } from "../../../context/FinancialStore";
 import { Card, Button } from "@nera/ui";
 import { maiaClient } from "@nera/ai";
 import {

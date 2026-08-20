@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Bell, ArrowLeft, MessageCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { PersonaDemoSwitcher } from "./PersonaDemoSwitcher";
+import { DemoControlPanel } from "./DemoControlPanel";
 
 export interface TopAppBarProps {
   title?: string;
@@ -74,8 +74,8 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false })
             <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#6C5CE7] ring-2 ring-white" />
           </button>
 
-          {/* Demo-only: switch persona scenario (judge/demo aid) */}
-          <PersonaDemoSwitcher />
+          {/* Demo-only: role switcher + persona scenario switcher (judge/demo aid) */}
+          <DemoControlPanel />
         </div>
       </div>
     </header>

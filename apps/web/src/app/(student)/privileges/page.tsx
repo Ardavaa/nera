@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { TopAppBar } from "../../components/common/TopAppBar";
-import { useFinancialStore } from "../../context/FinancialStore";
+import { TopAppBar } from "../../../components/common/TopAppBar";
+import { useFinancialStore } from "../../../context/FinancialStore";
 import { Card, Button, Modal } from "@nera/ui";
 import { classifyPersonas, BNI_OFFERS } from "@nera/core";
 import {

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { TopAppBar } from "../../components/common/TopAppBar";
-import { useFinancialStore } from "../../context/FinancialStore";
+import { TopAppBar } from "../../../components/common/TopAppBar";
+import { useFinancialStore } from "../../../context/FinancialStore";
 import { Card, Button, StatusBadge, StepProgress } from "@nera/ui";
 import { calculateDebtSnowball } from "@nera/core";
 import {

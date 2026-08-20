@@ -192,6 +192,49 @@ export interface BniOffer {
   actionUrl?: string;
 }
 
+export interface EmergencyTopUpRequest {
+  id: string;
+  reasonText: string;
+  suggestedAmount: number;
+  requestedAt: string;
+  status: "pending" | "approved" | "dismissed";
+}
+
+export interface CampusOverviewMetrics {
+  totalMonitoredStudents: number;
+  avgScore: number;
+  criticalPercentage: number;
+}
+
+export interface CampusTrendPoint {
+  week: string;
+  avgScore: number;
+}
+
+export interface CampusScoreDistributionItem {
+  status: FinancialStatus;
+  count: number;
+}
+
+export interface CampusCohortRisk {
+  id: string;
+  faculty: string;
+  cohortYear: number;
+  totalStudents: number;
+  amanPct: number;
+  waspadaPct: number;
+  kritisPct: number;
+}
+
+export interface CampusInterventionAlert {
+  id: string;
+  severity: "info" | "warning" | "critical";
+  title: string;
+  description: string;
+  recommendedAction: string;
+  detectedAt: string;
+}
+
 // Zod Schemas for validation
 export const LoanSimulationInputSchema = z.object({
   loanAmount: z.number().positive(),
