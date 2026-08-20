@@ -226,6 +226,33 @@ export interface CampusCohortRisk {
   kritisPct: number;
 }
 
+export interface CampusMetricCard {
+  id: string;
+  label: string;
+  value: string;
+  trendPct: number; // signed, e.g. 6.2 or -1.3
+  trendIsPositive: boolean; // whether this direction of change is good news
+  sparkline: number[];
+  accent: "purple" | "teal" | "critical";
+}
+
+export interface CampusHealthIndicator {
+  id: string;
+  label: string;
+  valuePct: number;
+  accent: "purple" | "teal" | "amber" | "critical";
+}
+
+export interface CampusKeyInsight {
+  title: string;
+  description: string;
+}
+
+export interface CampusProfile {
+  name: string;
+  institution: string;
+}
+
 export interface CampusInterventionAlert {
   id: string;
   severity: "info" | "warning" | "critical";
