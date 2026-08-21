@@ -15,10 +15,10 @@ export const MobileFrame: React.FC<MobileFrameProps> = ({ children, bottomNav })
 
   return (
     <div
-      className="min-h-screen flex justify-center items-start sm:py-6"
+      className="h-dvh sm:h-auto sm:min-h-screen flex justify-center items-start sm:py-6"
       style={{ backgroundColor: mockupCanvasColor }}
     >
-      <div className="w-full max-w-[430px] min-h-screen sm:min-h-[890px] sm:max-h-[920px] bg-[#F8FAFC] flex flex-col relative sm:rounded-[36px] sm:border-[8px] sm:border-[#1E293B] shadow-2xl overflow-hidden">
+      <div className="w-full max-w-[430px] h-dvh sm:h-auto sm:min-h-[890px] sm:max-h-[920px] bg-[#F8FAFC] flex flex-col relative sm:rounded-[36px] sm:border-[8px] sm:border-[#1E293B] shadow-2xl overflow-hidden">
         
         {/* iOS Status Bar */}
         <div className="w-full bg-white/95 backdrop-blur-md px-6 pt-3 pb-1 flex items-center justify-between z-50 select-none">
