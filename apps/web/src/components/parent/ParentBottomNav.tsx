@@ -3,44 +3,15 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Home,
-  ShieldAlert,
-  Users,
-  LifeBuoy,
-  TrendingUp,
-} from "lucide-react";
+import { LayoutDashboard, SlidersHorizontal } from "lucide-react";
 import { cn } from "@nera/ui";
 
-export const BottomNav: React.FC = () => {
+export const ParentBottomNav: React.FC = () => {
   const pathname = usePathname();
 
   const navItems = [
-    {
-      label: "Beranda",
-      href: "/",
-      icon: Home,
-    },
-    {
-      label: "Cek Risiko",
-      href: "/risk-check",
-      icon: ShieldAlert,
-    },
-    {
-      label: "Keluarga",
-      href: "/family-hub",
-      icon: Users,
-    },
-    {
-      label: "Pemulihan",
-      href: "/recovery",
-      icon: LifeBuoy,
-    },
-    {
-      label: "Investasi",
-      href: "/wealth-engine",
-      icon: TrendingUp,
-    },
+    { label: "Ringkasan", href: "/parent", icon: LayoutDashboard },
+    { label: "Alokasi", href: "/parent/allowance", icon: SlidersHorizontal },
   ];
 
   return (
@@ -55,22 +26,20 @@ export const BottomNav: React.FC = () => {
               key={item.label}
               href={item.href}
               className={cn(
-                "flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all duration-150",
+                "flex flex-col items-center justify-center py-1 px-6 rounded-xl transition-all duration-150",
                 {
                   "text-[#6C5CE7] font-bold": isActive,
                   "text-[#64748B] hover:text-[#0F172A] font-medium": !isActive,
                 }
               )}
             >
-              <div className="relative">
-                <Icon
-                  size={22}
-                  className={cn("transition-transform duration-150", {
-                    "fill-[#6C5CE7]/15 stroke-[2.2]": isActive,
-                    "stroke-[1.8]": !isActive,
-                  })}
-                />
-              </div>
+              <Icon
+                size={22}
+                className={cn("transition-transform duration-150", {
+                  "fill-[#6C5CE7]/15 stroke-[2.2]": isActive,
+                  "stroke-[1.8]": !isActive,
+                })}
+              />
               <span
                 className={cn("text-[11px] mt-0.5 tracking-tight", {
                   "font-bold text-[#6C5CE7]": isActive,
@@ -83,7 +52,6 @@ export const BottomNav: React.FC = () => {
           );
         })}
       </div>
-      {/* iOS Home Indicator Bar */}
       <div className="w-32 h-1 bg-[#CBD5E1] rounded-full mx-auto mt-1" />
     </nav>
   );

@@ -1,14 +1,24 @@
+"use client";
+
 import React from "react";
 import { Wifi, Battery } from "lucide-react";
+import { BottomNav } from "./BottomNav";
+import { useUiPreferencesStore } from "../../context/UiPreferencesStore";
 
 export interface MobileFrameProps {
   children: React.ReactNode;
+  bottomNav?: React.ReactNode;
 }
 
-export const MobileFrame: React.FC<MobileFrameProps> = ({ children }) => {
+export const MobileFrame: React.FC<MobileFrameProps> = ({ children, bottomNav }) => {
+  const mockupCanvasColor = useUiPreferencesStore((s) => s.mockupCanvasColor);
+
   return (
-    <div className="min-h-screen bg-[#0F172A] flex justify-center items-start sm:py-6">
-      <div className="w-full max-w-[430px] min-h-screen sm:min-h-[890px] sm:max-h-[920px] bg-[#F8FAFC] flex flex-col relative sm:rounded-[36px] sm:border-[8px] sm:border-[#1E293B] shadow-2xl overflow-hidden">
+    <div
+      className="h-dvh sm:h-auto sm:min-h-screen flex justify-center items-start sm:py-6"
+      style={{ backgroundColor: mockupCanvasColor }}
+    >
+      <div className="w-full max-w-[430px] h-dvh sm:h-auto sm:min-h-[890px] sm:max-h-[920px] bg-[#F8FAFC] flex flex-col relative sm:rounded-[36px] sm:border-[8px] sm:border-[#1E293B] shadow-2xl overflow-hidden">
         
         {/* iOS Status Bar */}
         <div className="w-full bg-white/95 backdrop-blur-md px-6 pt-3 pb-1 flex items-center justify-between z-50 select-none">
@@ -38,9 +48,13 @@ export const MobileFrame: React.FC<MobileFrameProps> = ({ children }) => {
         </div>
         
         {/* Scrollable Main Screen Container */}
-        <div className="flex-1 flex flex-col overflow-y-auto pb-24 select-none">
-          {children}
+        <div className="flex-1 overflow-y-auto select-none">
+          <div className="flex flex-col min-h-full pb-[calc(6rem+env(safe-area-inset-bottom))]">
+            {children}
+          </div>
         </div>
+
+        {bottomNav ?? <BottomNav />}
       </div>
     </div>
   );

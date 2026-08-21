@@ -1,4 +1,5 @@
-import { FinancialStatus, FinancialStateData } from "../types";
+import { FinancialStatus, FinancialStateData, Transaction, AnomalyAlert, PredatoryPattern } from "../types";
+import { PREDATORY_LENDER_PATTERNS } from "../constants";
 
 export interface RiskEvaluationResult {
   score: number;
@@ -115,4 +116,56 @@ export function evaluateFinancialState(data: {
     recommendedFlow,
     allowInvestmentUpsell,
   };
+}
+
+/**
+ * Scans a list of transactions for incoming transfers that match
+ * known predatory lender profiles (pinjol / PayLater stacking).
+ */
+export function detectPredatoryTransfers(
+  transactions: Transaction[],
+  monthlyAllowance: number
+): AnomalyAlert[] {
+  const alerts: AnomalyAlert[] = [];
+
+  for (const tx of transactions) {
+    if (tx.type !== "income") continue;
+
+    const titleLower = tx.title.toLowerCase();
+    const sourceLower = (tx.source || "").toLowerCase();
+
+    for (const pattern of PREDATORY_LENDER_PATTERNS) {
+      const isMatch = pattern.platformNameKeywords.some(
+        (kw) => titleLower.includes(kw) || sourceLower.includes(kw)
+      );
+
+      const isAmountSuspicious =
+        tx.amount >= pattern.typicalAmountRange[0] &&
+        tx.amount <= pattern.typicalAmountRange[1];
+
+      if (isMatch || (isAmountSuspicious && isMatch)) {
+        // Calculate estimated monthly deficit from this loan
+        const estimatedMonthlyInstallment =
+          (tx.amount * (1 + pattern.typicalInterestMonthly / 100)) / 3; // assume 3-month tenor
+        const realDeficit = Math.max(
+          0,
+          estimatedMonthlyInstallment - monthlyAllowance * 0.15
+        );
+
+        alerts.push({
+          id: `anomaly_${tx.id}_${pattern.id}`,
+          transactionId: tx.id,
+          matchedPattern: pattern,
+          detectedAmount: tx.amount,
+          detectedSource: tx.title,
+          timestamp: tx.timestamp,
+          severity: pattern.typicalInterestMonthly >= 3.5 ? "critical" : "warning",
+          isAcknowledged: false,
+          realDeficitPerMonth: Math.round(realDeficit),
+        });
+      }
+    }
+  }
+
+  return alerts;
 }

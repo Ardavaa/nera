@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Image from "next/image";
-import { TopAppBar } from "../components/common/TopAppBar";
-import { useFinancialStore } from "../context/FinancialStore";
+import Link from "next/link";
+import { TopAppBar } from "../../components/common/TopAppBar";
+import { useFinancialStore } from "../../context/FinancialStore";
 import { Modal, Button } from "@nera/ui";
+import { classifyPersonas } from "@nera/core";
 import {
   FileText,
   Wallet,
@@ -17,7 +19,37 @@ import {
   ChevronRight,
   CheckCircle2,
   Sparkles,
+  TrendingDown,
+  CalendarClock,
+  ArrowDownLeft,
+  ArrowUpFromLine,
+  GraduationCap,
+  Bus,
+  ShoppingBag,
+  Banknote,
+  PiggyBank,
+  Gift,
 } from "lucide-react";
+
+const CATEGORY_ICONS: Record<string, React.ElementType> = {
+  allowance: ArrowDownLeft,
+  food: Coffee,
+  transport: Bus,
+  education: GraduationCap,
+  loan: Banknote,
+  saving: PiggyBank,
+  other: ShoppingBag,
+};
+
+const CATEGORY_COLORS: Record<string, string> = {
+  allowance: "#22C55E",
+  food: "#F59E0B",
+  transport: "#3B82F6",
+  education: "#6C5CE7",
+  loan: "#EF4444",
+  saving: "#00747F",
+  other: "#64748B",
+};
 
 export default function HomePage() {
   const {
@@ -26,7 +58,18 @@ export default function HomePage() {
     dailyBudgetSafe,
     runwayDays,
     score,
+    state,
+    transactions,
+    nudges,
+    monthlyAllowance,
+    safeConsecutiveMonths,
+    totalMonthlyInstallments,
+    activeDebts,
+    isSweepModalOpen,
+    setSweepModalOpen,
+    executeEndOfMonthSweep,
     addTransaction,
+    resolveNudge,
   } = useFinancialStore();
 
   const [isPayKosOpen, setIsPayKosOpen] = useState(false);
@@ -45,6 +88,62 @@ export default function HomePage() {
       maximumFractionDigits: 0,
     }).format(val);
 
+  const formatRupiahShort = (val: number) => {
+    if (val >= 1000000) return `Rp${(val / 1000000).toFixed(1)}jt`;
+    if (val >= 1000) return `Rp${(val / 1000).toFixed(0)}rb`;
+    return `Rp${val}`;
+  };
+
+  // Compute estimated runway end date
+  const runwayEndDate = useMemo(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + runwayDays);
+    return d.toLocaleDateString("id-ID", { day: "numeric", month: "short" });
+  }, [runwayDays]);
+
+  // Compute runway percentage (assuming 30-day month)
+  const runwayPct = useMemo(() => {
+    return Math.min(100, Math.round((runwayDays / 30) * 100));
+  }, [runwayDays]);
+
+  // Last 5 transactions
+  const recentTransactions = transactions.slice(0, 5);
+
+  // Top matched persona for the "Manfaat BNI Untukmu" entry point
+  const topPersona = useMemo(() => {
+    const matches = classifyPersonas({
+      transactions,
+      nudges,
+      score,
+      state,
+      monthlyAllowance,
+      lockPocket,
+      runwayDays,
+      safeConsecutiveMonths,
+      totalMonthlyInstallments,
+      activeDebtsCount: activeDebts.length,
+    });
+    return matches[0] || null;
+  }, [
+    transactions,
+    nudges,
+    score,
+    state,
+    monthlyAllowance,
+    lockPocket,
+    runwayDays,
+    safeConsecutiveMonths,
+    totalMonthlyInstallments,
+    activeDebts.length,
+  ]);
+
+  // State-based badge config
+  const stateBadge = {
+    AMAN: { label: `Skor ${score} · Kondisi Sehat`, bg: "bg-[#E8F8EE]", border: "border-[#22C55E]/30", text: "text-[#15803D]", dot: "bg-[#22C55E]" },
+    WASPADA: { label: `Skor ${score} · Waspada`, bg: "bg-[#FBF0D9]", border: "border-[#FBBF24]/30", text: "text-[#92400E]", dot: "bg-[#FBBF24]" },
+    KRITIS: { label: `Skor ${score} · Kritis`, bg: "bg-[#FBE4DE]", border: "border-[#EF4444]/30", text: "text-[#991B1B]", dot: "bg-[#EF4444]" },
+  }[state];
+
   const triggerToast = (msg: string) => {
     setToastMessage(msg);
     setIsSuccessToastOpen(true);
@@ -60,6 +159,7 @@ export default function HomePage() {
       type: "expense",
       source: "AUTO_DEBET",
     });
+    resolveNudge("nudge_kos");
     setIsPayKosOpen(false);
     triggerToast("Tagihan Kos Rp500.000 berhasil dibayar via BNI!");
   };
@@ -83,6 +183,8 @@ export default function HomePage() {
     triggerToast(`Transaksi QRIS ${formatRupiah(amount)} berhasil dicatat!`);
   };
 
+  const mascotSrc = state === "AMAN" ? "/mascots/mascot-okay.svg" : "/mascots/mascot-okay.svg";
+
   return (
     <div className="flex flex-col min-h-full bg-[#F8FAFC]">
       {/* 1. TOP APP BAR (Branding + Notification) */}
@@ -91,14 +193,14 @@ export default function HomePage() {
       <main className="flex-1 px-4 pt-3.5 pb-6 space-y-4">
         {/* 2. HERO CARD: DAILY RUNWAY & SMART POCKET */}
         <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-b from-[#EBF4FF] via-[#FAF6FE]/40 to-[#FFFFFF] p-4 shadow-xs">
-          {/* Subtle sparkles decoration matching design reference */}
-          <span className="absolute top-6 right-28 text-[#6C5CE7] text-xs select-none">✦</span>
-          <span className="absolute top-13 right-32 text-[#4EA8FF] text-[9px] select-none">✦</span>
+          {/* Subtle sparkles decoration */}
+          <span className="absolute top-6 right-28 text-[#6C5CE7] text-xs select-none animate-pulse">✦</span>
+          <span className="absolute top-13 right-32 text-[#4EA8FF] text-[9px] select-none animate-pulse delay-500">✦</span>
 
-          {/* Top-Left: Status Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8F8EE] border border-[#22C55E]/30 text-[#15803D] text-xs font-bold shadow-2xs">
-            <span className="w-2 h-2 rounded-full bg-[#22C55E]" />
-            <span className="font-bold">Skor {score} · Kondisi Sehat</span>
+          {/* Status Badge */}
+          <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${stateBadge.bg} border ${stateBadge.border} ${stateBadge.text} text-xs font-bold shadow-2xs`}>
+            <span className={`w-2 h-2 rounded-full ${stateBadge.dot}`} />
+            <span className="font-bold">{stateBadge.label}</span>
           </div>
 
           {/* Title & Runway Days */}
@@ -108,14 +210,14 @@ export default function HomePage() {
               {runwayDays} Hari Lagi
             </h2>
             <p className="text-xs text-[#64748B] mt-0.5">
-              Estimasi aman hingga 22 Okt
+              Estimasi aman hingga {runwayEndDate}
             </p>
           </div>
 
-          {/* Official Nera Mascot (mascot-okay.svg) - Overlaid behind the white inner card */}
+          {/* Nera Mascot */}
           <div className="absolute top-2 -right-1 w-36 h-36 pointer-events-none select-none z-0">
             <Image
-              src="/mascots/mascot-okay.svg"
+              src={mascotSrc}
               alt="Nera Bot Mascot"
               width={144}
               height={144}
@@ -124,17 +226,17 @@ export default function HomePage() {
             />
           </div>
 
-          {/* Pure White Rounded Surface Card (wraps Progress Bar + Recommendation + Pockets) */}
+          {/* White Inner Card */}
           <div className="relative z-10 mt-3.5 -mx-1.5 bg-white rounded-[24px] p-4 space-y-3">
             {/* Runway Progress Bar */}
             <div className="flex items-center gap-3">
               <div className="flex-1 h-3.5 rounded-full bg-[#E5F0FF] overflow-hidden p-[1.5px]">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-[#4EA8FF] to-[#3B82F6] transition-all duration-500"
-                  style={{ width: "68%" }}
+                  style={{ width: `${runwayPct}%` }}
                 />
               </div>
-              <span className="text-xs font-bold text-[#0F172A]">68%</span>
+              <span className="text-xs font-bold text-[#0F172A]">{runwayPct}%</span>
             </div>
 
             {/* Recommendation Info Row */}
@@ -149,7 +251,7 @@ export default function HomePage() {
               </span>
             </div>
 
-            {/* Pockets Grid: Daily Pocket & Lock Pocket */}
+            {/* Pockets Grid */}
             <div className="grid grid-cols-2 gap-2.5 pt-0.5">
               {/* Pocket 1: Daily Pocket */}
               <div className="bg-white border border-[#E8F0FA] rounded-[20px] p-3.5 flex items-center gap-2.5 shadow-2xs">
@@ -159,8 +261,8 @@ export default function HomePage() {
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-bold text-[#0F172A] leading-tight">Daily Pocket</p>
                   <span className="text-[10px] text-[#64748B] block mt-0.5">(Siap Pakai)</span>
-                  <p className="text-sm font-bold text-[#0F172A] mt-0.5 truncate">
-                    {formatRupiah(dailyPocket)}
+                  <p className="text-sm font-bold text-[#0F172A] mt-0.5" title={formatRupiah(dailyPocket)}>
+                    {formatRupiahShort(dailyPocket)}
                   </p>
                 </div>
               </div>
@@ -173,8 +275,8 @@ export default function HomePage() {
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-bold text-[#0F172A] leading-tight">Lock Pocket</p>
                   <span className="text-[10px] text-[#64748B] block mt-0.5">(BNI Life Goals)</span>
-                  <p className="text-sm font-bold text-[#0F172A] mt-0.5 flex items-center gap-1 truncate">
-                    <span>{formatRupiah(lockPocket)}</span>
+                  <p className="text-sm font-bold text-[#0F172A] mt-0.5 flex items-center gap-1" title={formatRupiah(lockPocket)}>
+                    <span>{formatRupiahShort(lockPocket)}</span>
                     <Lock size={12} className="text-[#7C3AED] fill-[#7C3AED] shrink-0" />
                   </p>
                 </div>
@@ -195,7 +297,6 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* White Rounded Card Surface Container */}
           <div className="bg-white border border-[#E2E8F0] rounded-[22px] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)]">
             <div className="grid grid-cols-4 gap-2">
               {/* 1. Scan QRIS */}
@@ -253,46 +354,94 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 4. INSIGHT NERA SECTION */}
+        {/* 4. INSIGHT NERA (Smart Nudges) */}
         <section className="space-y-2.5 pt-1">
           <h3 className="text-[15px] font-bold text-[#0F172A]">Insight Nera</h3>
 
           <div className="space-y-3">
-            {/* Card 1: Kos Jatuh Tempo 3 Hari Lagi */}
-            <div className="bg-[#FDF6E9] border border-[#FDE68A]/80 rounded-[22px] p-4 flex gap-3.5 shadow-xs">
-              <div className="w-12 h-12 rounded-full bg-[#FDF0D5] text-[#D97706] flex items-center justify-center shrink-0 mt-0.5">
-                <Home size={22} className="stroke-[2.5]" />
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
-                    Kos Jatuh Tempo 3 Hari Lagi
-                  </h4>
-                  <ChevronRight size={18} className="text-[#64748B] stroke-[2.5] shrink-0 ml-1" />
+            {/* Nudge: Kos Payment */}
+            {nudges.find((n) => n.category === "BILL_KOS") && (
+              <div className="bg-[#FDF6E9] border border-[#FDE68A]/80 rounded-[22px] p-4 flex gap-3.5 shadow-xs">
+                <div className="w-12 h-12 rounded-full bg-[#FDF0D5] text-[#D97706] flex items-center justify-center shrink-0 mt-0.5">
+                  <Home size={22} className="stroke-[2.5]" />
                 </div>
-
-                <p className="text-xs text-[#64748B] leading-relaxed mt-1">
-                  Saldomu di Daily Pocket cukup (Rp630rb). Bayar sekarang agar runway tetap aman?
-                </p>
-
-                <div className="flex justify-end mt-2.5">
-                  <button
-                    onClick={() => setIsPayKosOpen(true)}
-                    className="bg-[#6C5CE7] hover:bg-[#5B4CD4] text-white text-xs font-bold px-4 py-2 rounded-full shadow-sm transition-all cursor-pointer active:scale-95"
-                  >
-                    Bayar via BNI
-                  </button>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
+                      Kos Jatuh Tempo 3 Hari Lagi
+                    </h4>
+                    <ChevronRight size={18} className="text-[#64748B] stroke-[2.5] shrink-0 ml-1" />
+                  </div>
+                  <p className="text-xs text-[#64748B] leading-relaxed mt-1">
+                    Saldomu di Daily Pocket cukup ({formatRupiahShort(dailyPocket)}). Bayar sekarang agar runway tetap aman?
+                  </p>
+                  <div className="flex justify-end mt-2.5">
+                    <button
+                      onClick={() => setIsPayKosOpen(true)}
+                      className="bg-[#6C5CE7] hover:bg-[#5B4CD4] text-white text-xs font-bold px-4 py-2 rounded-full shadow-sm transition-all cursor-pointer active:scale-95"
+                    >
+                      Bayar via BNI
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            {/* Card 2: Pengeluaran Jajan Naik */}
+            {/* Nudge: UKT */}
+            {nudges.find((n) => n.category === "BILL_UKT") && (
+              <div className="bg-[#F0EBFF] border border-[#C4B5FD]/60 rounded-[22px] p-4 flex gap-3.5 shadow-xs">
+                <div className="w-12 h-12 rounded-full bg-[#E8DEFF] text-[#6C5CE7] flex items-center justify-center shrink-0 mt-0.5">
+                  <GraduationCap size={22} className="stroke-[2.5]" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
+                      UKT Semester Ganjil
+                    </h4>
+                    <span className="text-[10px] bg-[#6C5CE7] text-white font-bold px-2 py-0.5 rounded-full shrink-0">
+                      12 Hari
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#64748B] leading-relaxed mt-1">
+                    Rp3.500.000 jatuh tempo 31 Agustus. Cashback 5% jika bayar via wondr by BNI.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Nudge: End-of-Month Sweep */}
+            {nudges.find((n) => n.category === "SWEEP_LEFTOVER") && (
+              <div className="bg-[#ECF8F1] border border-[#86EFAC]/60 rounded-[22px] p-4 flex gap-3.5 shadow-xs">
+                <div className="w-12 h-12 rounded-full bg-[#DCFCE7] text-[#15803D] flex items-center justify-center shrink-0 mt-0.5">
+                  <ArrowUpFromLine size={22} className="stroke-[2.5]" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
+                      Smart Sweep Akhir Bulan
+                    </h4>
+                    <ChevronRight size={18} className="text-[#64748B] stroke-[2.5] shrink-0 ml-1" />
+                  </div>
+                  <p className="text-xs text-[#64748B] leading-relaxed mt-1">
+                    Sisa saldo harianmu bisa disapu otomatis ke BNI Life Goals agar tidak boros.
+                  </p>
+                  <div className="flex justify-end mt-2.5">
+                    <button
+                      onClick={() => setSweepModalOpen(true)}
+                      className="bg-[#00747F] hover:bg-[#005F68] text-white text-xs font-bold px-4 py-2 rounded-full shadow-sm transition-all cursor-pointer active:scale-95"
+                    >
+                      Sapu ke Life Goals
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Weekly Spending Insight */}
             <div className="bg-[#ECF1FD] border border-[#D9E4FA] rounded-[22px] p-4 flex gap-3.5 shadow-xs">
               <div className="w-12 h-12 rounded-full bg-[#E0EDFF] text-[#2563EB] flex items-center justify-center shrink-0 mt-0.5">
                 <Coffee size={22} className="stroke-[2.5]" />
               </div>
-
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
@@ -300,7 +449,6 @@ export default function HomePage() {
                   </h4>
                   <ChevronRight size={18} className="text-[#64748B] stroke-[2.5] shrink-0 ml-1" />
                 </div>
-
                 <p className="text-xs text-[#64748B] leading-relaxed mt-1">
                   Minggu ini jajan QRIS naik Rp85.000 dari rata-rata. Atur ritme belanjamu.
                 </p>
@@ -308,11 +456,74 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* 4.5. MANFAAT BNI UNTUKMU (Persona-based Privilege Hub entry point) */}
+        {topPersona && (
+          <section className="space-y-2.5 pt-1">
+            <h3 className="text-[15px] font-bold text-[#0F172A]">Manfaat BNI Untukmu</h3>
+            <Link href="/privileges">
+              <div className="bg-gradient-to-br from-[#6C5CE7] to-[#4EA8FF] rounded-[22px] p-4 flex items-center gap-3.5 shadow-[0_8px_24px_rgba(108,92,231,0.18)] active:scale-[0.99] transition-transform">
+                <div className="w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center shrink-0">
+                  <Gift size={22} className="stroke-[2]" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-sm font-bold text-white tracking-tight">{topPersona.label}</h4>
+                  <p className="text-xs text-white/85 leading-relaxed mt-0.5">{topPersona.tagline}</p>
+                </div>
+                <ChevronRight size={20} className="text-white/90 stroke-[2.5] shrink-0" />
+              </div>
+            </Link>
+          </section>
+        )}
+
+        {/* 5. RECENT TRANSACTIONS */}
+        <section className="space-y-2.5 pt-1">
+          <div className="flex items-center justify-between">
+            <h3 className="text-[15px] font-bold text-[#0F172A]">Transaksi Terakhir</h3>
+            <span className="text-xs font-medium text-[#64748B]">{transactions.length} total</span>
+          </div>
+
+          <div className="bg-white border border-[#E2E8F0] rounded-[22px] overflow-hidden shadow-[0_2px_12px_rgba(15,23,42,0.03)]">
+            {recentTransactions.map((tx, idx) => {
+              const IconComp = CATEGORY_ICONS[tx.category] || ShoppingBag;
+              const color = CATEGORY_COLORS[tx.category] || "#64748B";
+              const isLast = idx === recentTransactions.length - 1;
+              const isIncome = tx.type === "income";
+              const dateStr = new Date(tx.timestamp).toLocaleDateString("id-ID", {
+                day: "numeric",
+                month: "short",
+              });
+
+              return (
+                <div
+                  key={tx.id}
+                  className={`flex items-center gap-3 px-4 py-3 ${!isLast ? "border-b border-[#F1F5F9]" : ""}`}
+                >
+                  <div
+                    className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: `${color}15` }}
+                  >
+                    <IconComp size={16} style={{ color }} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-semibold text-[#0F172A] truncate">{tx.title}</p>
+                    <p className="text-[10px] text-[#64748B]">{dateStr}</p>
+                  </div>
+                  <span
+                    className={`text-xs font-bold tabular-nums ${isIncome ? "text-[#22C55E]" : "text-[#0F172A]"}`}
+                  >
+                    {isIncome ? "+" : "-"}{formatRupiahShort(tx.amount)}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
       </main>
 
       {/* TOAST NOTIFICATION */}
       {isSuccessToastOpen && (
-        <div className="fixed top-14 inset-x-0 mx-auto max-w-[390px] px-4 z-50 animate-in fade-in slide-in-from-top-4 duration-200">
+        <div className="absolute top-14 inset-x-0 mx-auto max-w-[390px] px-4 z-50 animate-in fade-in slide-in-from-top-4 duration-200">
           <div className="bg-[#0F172A] text-white p-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-medium border border-white/10">
             <CheckCircle2 size={18} className="text-[#22C55E] shrink-0" />
             <span className="flex-1">{toastMessage}</span>
@@ -411,6 +622,47 @@ export default function HomePage() {
             Bayar Transaksi
           </Button>
         </form>
+      </Modal>
+
+      {/* MODAL: END-OF-MONTH SWEEP */}
+      <Modal
+        isOpen={isSweepModalOpen}
+        onClose={() => setSweepModalOpen(false)}
+        title="Smart Sweep ke BNI Life Goals"
+      >
+        <div className="space-y-4">
+          <div className="text-center py-3">
+            <div className="w-16 h-16 bg-[#DDF0E6] text-[#22C55E] rounded-2xl flex items-center justify-center mx-auto mb-3">
+              <ArrowUpFromLine size={32} />
+            </div>
+            <h4 className="text-base font-bold text-[#0F172A]">
+              Sapu Sisa Saldo Harian
+            </h4>
+            <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
+              Pindahkan seluruh sisa Daily Pocket ke tabungan BNI Life Goals agar uangmu tidak habis percuma di akhir bulan.
+            </p>
+          </div>
+
+          <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-[#64748B]">Sisa Daily Pocket</span>
+              <span className="font-bold text-[#0F172A]">{formatRupiah(dailyPocket)}</span>
+            </div>
+            <div className="flex items-center justify-between text-xs pt-2 border-t border-[#E2E8F0]">
+              <span className="text-[#64748B]">Life Goals Setelah Sweep</span>
+              <span className="font-bold text-[#00747F]">{formatRupiah(lockPocket + dailyPocket)}</span>
+            </div>
+          </div>
+
+          <div className="flex gap-2">
+            <Button variant="outline" fullWidth onClick={() => setSweepModalOpen(false)}>
+              Nanti Saja
+            </Button>
+            <Button variant="bni" fullWidth onClick={executeEndOfMonthSweep}>
+              Sweep Sekarang
+            </Button>
+          </div>
+        </div>
       </Modal>
 
       {/* MODAL: GENERIC ACTION (Transfer, Top Up, dll) */}

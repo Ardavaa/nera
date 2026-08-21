@@ -134,6 +134,134 @@ export interface ChatMessage {
   };
 }
 
+export interface PredatoryPattern {
+  id: string;
+  platformNameKeywords: string[];
+  typicalAmountRange: [number, number];
+  typicalInterestMonthly: number;
+  riskLabel: string;
+}
+
+export interface AnomalyAlert {
+  id: string;
+  transactionId: string;
+  matchedPattern: PredatoryPattern;
+  detectedAmount: number;
+  detectedSource: string;
+  timestamp: string;
+  severity: "warning" | "critical";
+  isAcknowledged: boolean;
+  realDeficitPerMonth: number;
+}
+
+export interface RecoveryMilestone {
+  id: string;
+  label: string;
+  description: string;
+  isCompleted: boolean;
+  completedAt?: string;
+  order: number;
+}
+
+export type PersonaId =
+  | "konsisten_nabung"
+  | "pejuang_runway"
+  | "anak_rantau"
+  | "calon_mapan"
+  | "wirausaha_kampus"
+  | "pejuang_pemulihan";
+
+export interface PersonaMatch {
+  id: PersonaId;
+  label: string;
+  tagline: string;
+  matchReasons: string[];
+}
+
+export interface BniOffer {
+  id: string;
+  personaId: PersonaId;
+  productName: string;
+  category: "Tabungan" | "Investasi" | "Kartu Kredit" | "Proteksi" | "Pinjaman Resmi" | "Wirausaha";
+  benefit: string;
+  eligibilityNote: string;
+  sourceLabel: string;
+  badge: string;
+  actionLabel: string;
+  actionType: "wondr" | "external";
+  actionUrl?: string;
+}
+
+export interface EmergencyTopUpRequest {
+  id: string;
+  reasonText: string;
+  suggestedAmount: number;
+  requestedAt: string;
+  status: "pending" | "approved" | "dismissed";
+}
+
+export interface CampusOverviewMetrics {
+  totalMonitoredStudents: number;
+  avgScore: number;
+  criticalPercentage: number;
+}
+
+export interface CampusTrendPoint {
+  week: string;
+  avgScore: number;
+}
+
+export interface CampusScoreDistributionItem {
+  status: FinancialStatus;
+  count: number;
+}
+
+export interface CampusCohortRisk {
+  id: string;
+  faculty: string;
+  cohortYear: number;
+  totalStudents: number;
+  amanPct: number;
+  waspadaPct: number;
+  kritisPct: number;
+}
+
+export interface CampusMetricCard {
+  id: string;
+  label: string;
+  value: string;
+  trendPct: number; // signed, e.g. 6.2 or -1.3
+  trendIsPositive: boolean; // whether this direction of change is good news
+  sparkline: number[];
+  accent: "purple" | "teal" | "critical";
+}
+
+export interface CampusHealthIndicator {
+  id: string;
+  label: string;
+  valuePct: number;
+  accent: "purple" | "teal" | "amber" | "critical";
+}
+
+export interface CampusKeyInsight {
+  title: string;
+  description: string;
+}
+
+export interface CampusProfile {
+  name: string;
+  institution: string;
+}
+
+export interface CampusInterventionAlert {
+  id: string;
+  severity: "info" | "warning" | "critical";
+  title: string;
+  description: string;
+  recommendedAction: string;
+  detectedAt: string;
+}
+
 // Zod Schemas for validation
 export const LoanSimulationInputSchema = z.object({
   loanAmount: z.number().positive(),

@@ -2,8 +2,10 @@
 
 import React from "react";
 import Image from "next/image";
-import { Bell, ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { Bell, ArrowLeft, MessageCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { DemoControlPanel } from "./DemoControlPanel";
 
 export interface TopAppBarProps {
   title?: string;
@@ -52,8 +54,18 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false })
           </div>
         )}
 
-        {/* Right: Notification Bell with Dot */}
+        {/* Right: NerAI Coach + Notification Bell */}
         <div className="flex items-center gap-1">
+          {/* NerAI Coach Button */}
+          <Link
+            href="/coach"
+            className="w-9 h-9 rounded-full flex items-center justify-center text-[#6C5CE7] hover:bg-[#6C5CE7]/10 transition-colors"
+            aria-label="NerAI Coach"
+          >
+            <MessageCircle size={20} />
+          </Link>
+
+          {/* Notification Bell */}
           <button
             className="relative w-9 h-9 rounded-full flex items-center justify-center text-[#0F172A] hover:bg-slate-100 transition-colors"
             aria-label="Notifikasi"
@@ -61,9 +73,11 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false })
             <Bell size={22} className="text-[#0F172A]" />
             <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#6C5CE7] ring-2 ring-white" />
           </button>
+
+          {/* Demo-only: role switcher + persona scenario switcher (judge/demo aid) */}
+          <DemoControlPanel />
         </div>
       </div>
     </header>
   );
 };
-
