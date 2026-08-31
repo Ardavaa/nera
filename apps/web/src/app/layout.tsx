@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { MobileFrame } from "../components/common/MobileFrame";
-import { BottomNav } from "../components/common/BottomNav";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -22,6 +20,7 @@ export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
   themeColor: "#6C5CE7",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -31,12 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className={poppins.variable}>
-      <body className="antialiased font-sans bg-[#0F172A]">
-        <MobileFrame>
-          {children}
-          <BottomNav />
-        </MobileFrame>
-      </body>
+      <body className="antialiased font-sans bg-[#0F172A]">{children}</body>
     </html>
   );
 }

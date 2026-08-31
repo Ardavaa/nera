@@ -31,10 +31,10 @@ export const Modal: React.FC<ModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+    <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
       <div
         className={cn(
-          "w-full max-w-[430px] bg-white rounded-t-[28px] sm:rounded-[24px] shadow-2xl overflow-hidden p-6 transition-all transform animate-slide-up max-h-[90vh] overflow-y-auto",
+          "w-full max-w-[430px] bg-white rounded-[24px] shadow-2xl overflow-hidden p-6 transition-all transform animate-slide-up max-h-[85vh] overflow-y-auto",
           className
         )}
       >
