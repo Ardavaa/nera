@@ -36,7 +36,7 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false })
         ) : (
           <div className="flex items-center gap-3">
             <Image
-              src="/logos/nera-home-logo.png"
+              src="/logos/nera-home-logo.webp"
               alt="Nera Logo"
               width={112}
               height={34}

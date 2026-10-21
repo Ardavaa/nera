@@ -22,7 +22,7 @@ export const CampusSidebar: React.FC = () => {
       <div className="p-6 space-y-2.5">
         <div className="flex items-center gap-3">
           <Image
-            src="/logos/nera-home-logo.png"
+            src="/logos/nera-home-logo.webp"
             alt="Nera Logo"
             width={112}
             height={34}

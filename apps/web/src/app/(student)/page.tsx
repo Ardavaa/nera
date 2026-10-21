@@ -212,7 +212,7 @@ export default function HomePage() {
           {/* Nera Mascot */}
           <div className="absolute top-9 right-2 w-36 h-36 pointer-events-none select-none z-0">
             <Image
-              src="/images/nera-home-mascot.png"
+              src="/images/nera-home-mascot.webp"
               alt="Nera Bot Mascot"
               width={144}
               height={144}

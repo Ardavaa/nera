@@ -4,8 +4,8 @@ Panduan ini mencatat gaya aplikasi yang digunakan di beranda, layar mahasiswa, o
 
 ## Identitas
 
-- Logo header: `/logos/nera-home-logo.png`, disandingkan dengan logo wondr by BNI.
-- Maskot beranda: `/images/nera-home-mascot.png`.
+- Logo header: `/logos/nera-home-logo.webp`, disandingkan dengan logo wondr by BNI.
+- Maskot beranda: `/images/nera-home-mascot.webp`.
 - Font UI: Inter Tight melalui `next/font/google`, dengan `system-ui` sebagai fallback.
 - Ikon: `lucide-react`, garis umumnya 2 px. Wadah ikon memakai kotak membulat saat perlu penekanan.
 
