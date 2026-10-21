@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins } from "next/font/google";
+import { Inter_Tight } from "next/font/google";
 import "./globals.css";
 
-const poppins = Poppins({
-  weight: ["400", "500", "600", "700"],
+const interTight = Inter_Tight({
+  weight: "variable",
   subsets: ["latin"],
-  variable: "--font-poppins",
+  display: "swap",
+  variable: "--font-inter-tight",
 });
 
 export const metadata: Metadata = {
@@ -19,7 +20,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#6C5CE7",
+  themeColor: "#76520E",
   viewportFit: "cover",
 };
 
@@ -29,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={poppins.variable}>
-      <body className="antialiased font-sans bg-[#0F172A]">{children}</body>
+    <html lang="id" className={interTight.variable}>
+      <body className="antialiased font-sans bg-[#2F240E]">{children}</body>
     </html>
   );
 }

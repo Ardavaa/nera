@@ -84,13 +84,13 @@ export default function RiskCheckPage() {
         {/* FINANCIAL HEALTH OVERVIEW GAUGE */}
         <Card className="p-4 flex items-center justify-between">
           <div className="space-y-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#64748B]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#736B60]">
               Skor Risiko Finansial
             </span>
             <div className="flex items-center gap-2">
               <StatusBadge status={state} />
             </div>
-            <p className="text-xs text-[#64748B] pt-1">
+            <p className="text-xs text-[#736B60] pt-1">
               DTI: {((totalMonthlyInstallments / (monthlyAllowance || 1)) * 100).toFixed(0)}% • {activeLoanSources.length} Cicilan Aktif
             </p>
           </div>
@@ -113,19 +113,19 @@ export default function RiskCheckPage() {
                 </div>
                 <div className="p-3 bg-white/80 rounded-xl border border-[#EF4444]/20 space-y-1.5">
                   <div className="flex justify-between text-xs">
-                    <span className="text-[#64748B]">Transfer Terdeteksi:</span>
+                    <span className="text-[#736B60]">Transfer Terdeteksi:</span>
                     <span className="font-bold text-[#EF4444]">{formatRupiah(alert.detectedAmount)}</span>
                   </div>
                   <div className="flex justify-between text-xs">
-                    <span className="text-[#64748B]">Sumber:</span>
-                    <span className="font-semibold text-[#0F172A]">{alert.detectedSource}</span>
+                    <span className="text-[#736B60]">Sumber:</span>
+                    <span className="font-semibold text-[#2F240E]">{alert.detectedSource}</span>
                   </div>
                   <div className="flex justify-between text-xs">
-                    <span className="text-[#64748B]">Estimasi Tekor/Bulan:</span>
+                    <span className="text-[#736B60]">Estimasi Tekor/Bulan:</span>
                     <span className="font-bold text-[#EF4444]">-{formatRupiah(alert.realDeficitPerMonth)}</span>
                   </div>
                 </div>
-                <p className="text-xs text-[#0F172A] leading-relaxed">
+                <p className="text-xs text-[#2F240E] leading-relaxed">
                   Transfer ini cocok dengan pola platform pinjaman berisiko tinggi. Periksa dan pastikan ini bukan dana pinjol ilegal.
                 </p>
                 <Button
@@ -143,7 +143,7 @@ export default function RiskCheckPage() {
 
         {/* 24-HOUR COOLING-OFF TIMER */}
         {isCoolingActive && (
-          <Card className="p-5 space-y-4 border-[#EF4444]/30 bg-gradient-to-br from-[#FBE4DE]/50 to-[#FBF0D9]/30">
+          <Card className="p-5 space-y-4 border-[#C43737]/20 bg-[#FBE4DE]/50">
             <div className="flex items-center gap-2 text-[#EF4444]">
               <AlertOctagon size={18} />
               <h3 className="text-xs font-bold uppercase tracking-wider">
@@ -167,7 +167,7 @@ export default function RiskCheckPage() {
               </ProgressRing>
             </div>
 
-            <p className="text-xs text-[#0F172A] text-center leading-relaxed">
+            <p className="text-xs text-[#2F240E] text-center leading-relaxed">
               Jeda tunda keputusan impulsif sedang berlangsung. Tinjau kembali alternatif aman di bawah ini sebelum membuat keputusan.
             </p>
 
@@ -188,35 +188,35 @@ export default function RiskCheckPage() {
         {/* LOAN SIMULATOR FORM */}
         <Card className="p-4 space-y-4">
           <div className="flex items-center gap-2">
-            <ShieldAlert size={16} className="text-[#6C5CE7]" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
+            <ShieldAlert size={16} className="text-[#76520E]" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#2F240E]">
               Simulator Risiko Cicilan
             </h3>
           </div>
 
           <form onSubmit={handleSimulate} className="space-y-3">
             <div>
-              <label className="block text-xs font-semibold text-[#64748B] mb-1">
+              <label className="block text-xs font-semibold text-[#736B60] mb-1">
                 Plafon Pinjaman / Cicilan (Rp)
               </label>
               <input
                 type="number"
                 value={loanAmount}
                 onChange={(e) => setLoanAmount(Number(e.target.value))}
-                className="w-full px-3 py-2 text-sm font-bold text-[#0F172A] border border-[#E2E8F0] rounded-xl focus:outline-none focus:border-[#6C5CE7]"
+                className="w-full px-3 py-2 text-sm font-bold text-[#2F240E] border border-[#E9E5DD] rounded-xl focus:outline-none focus:border-[#76520E]"
                 required
               />
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-xs font-semibold text-[#64748B] mb-1">
+                <label className="block text-xs font-semibold text-[#736B60] mb-1">
                   Tenor (Bulan)
                 </label>
                 <select
                   value={tenorMonths}
                   onChange={(e) => setTenorMonths(Number(e.target.value))}
-                  className="w-full px-3 py-2 text-sm border border-[#E2E8F0] rounded-xl focus:outline-none focus:border-[#6C5CE7]"
+                  className="w-full px-3 py-2 text-sm border border-[#E9E5DD] rounded-xl focus:outline-none focus:border-[#76520E]"
                 >
                   <option value={1}>1 Bulan</option>
                   <option value={3}>3 Bulan</option>
@@ -225,7 +225,7 @@ export default function RiskCheckPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#64748B] mb-1">
+                <label className="block text-xs font-semibold text-[#736B60] mb-1">
                   Bunga Bulanan (%)
                 </label>
                 <input
@@ -233,21 +233,21 @@ export default function RiskCheckPage() {
                   step="0.1"
                   value={interestRateMonthly}
                   onChange={(e) => setInterestRateMonthly(Number(e.target.value))}
-                  className="w-full px-3 py-2 text-sm border border-[#E2E8F0] rounded-xl focus:outline-none focus:border-[#6C5CE7]"
+                  className="w-full px-3 py-2 text-sm border border-[#E9E5DD] rounded-xl focus:outline-none focus:border-[#76520E]"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#64748B] mb-1">
+              <label className="block text-xs font-semibold text-[#736B60] mb-1">
                 Biaya Admin / Layanan (Rp)
               </label>
               <input
                 type="number"
                 value={adminFee}
                 onChange={(e) => setAdminFee(Number(e.target.value))}
-                className="w-full px-3 py-2 text-sm border border-[#E2E8F0] rounded-xl focus:outline-none focus:border-[#6C5CE7]"
+                className="w-full px-3 py-2 text-sm border border-[#E9E5DD] rounded-xl focus:outline-none focus:border-[#76520E]"
               />
             </div>
 
@@ -268,7 +268,7 @@ export default function RiskCheckPage() {
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#2F240E]">
                   Hasil Simulasi NerAI
                 </span>
                 <StatusBadge status={simulationResult.projectedState} />
@@ -286,27 +286,27 @@ export default function RiskCheckPage() {
               )}
 
               {/* Breakdown */}
-              <div className="p-3 bg-white rounded-xl border border-[#E2E8F0] space-y-2">
+              <div className="p-3 bg-white rounded-xl border border-[#E9E5DD] space-y-2">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="text-[#64748B]">Cicilan per Bulan:</span>
-                  <span className="font-bold text-[#0F172A]">
+                  <span className="text-[#736B60]">Cicilan per Bulan:</span>
+                  <span className="font-bold text-[#2F240E]">
                     {formatRupiah(simulationResult.monthlyInstallment)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-xs">
-                  <span className="text-[#64748B]">Total Bunga & Admin:</span>
+                  <span className="text-[#736B60]">Total Bunga & Admin:</span>
                   <span className="font-bold text-[#EF4444]">
                     +{formatRupiah(simulationResult.totalInterestAndFees)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-xs">
-                  <span className="text-[#64748B]">Proyeksi DTI Baru:</span>
-                  <span className="font-bold text-[#0F172A]">
+                  <span className="text-[#736B60]">Proyeksi DTI Baru:</span>
+                  <span className="font-bold text-[#2F240E]">
                     {simulationResult.newDti}%
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-xs">
-                  <span className="text-[#64748B]">Skor Risiko Baru:</span>
+                  <span className="text-[#736B60]">Skor Risiko Baru:</span>
                   <span className={`font-bold ${
                     simulationResult.projectedState === "KRITIS" ? "text-[#EF4444]" :
                     simulationResult.projectedState === "WASPADA" ? "text-[#FBBF24]" : "text-[#22C55E]"
@@ -317,7 +317,7 @@ export default function RiskCheckPage() {
               </div>
 
               {/* Explanation */}
-              <p className="text-xs text-[#0F172A] font-medium leading-relaxed">
+              <p className="text-xs text-[#2F240E] font-medium leading-relaxed">
                 {simulationResult.deficitExplanation}
               </p>
 
@@ -336,32 +336,32 @@ export default function RiskCheckPage() {
 
             {/* SAFER CAMPUS ALTERNATIVES */}
             <div className="space-y-2">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#2F240E]">
                 Alternatif Aman Kampus (Rekomendasi Nera)
               </h3>
 
               <div className="space-y-2">
                 {CAMPUS_SAFER_ALTERNATIVES.map((alt) => (
-                  <Card key={alt.id} className="p-3.5 space-y-2 border-l-4 border-l-[#00747F]">
+                  <Card key={alt.id} className="p-3.5 space-y-2 border-l-4 border-l-[#5B410C]">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
-                        <Building2 size={14} className="text-[#00747F]" />
-                        <h4 className="text-xs font-bold text-[#0F172A]">{alt.title}</h4>
+                        <Building2 size={14} className="text-[#5B410C]" />
+                        <h4 className="text-xs font-bold text-[#2F240E]">{alt.title}</h4>
                       </div>
                       <span className="text-[10px] bg-[#DDF0E6] text-[#15803D] font-bold px-2 py-0.5 rounded-full">
                         {alt.badge}
                       </span>
                     </div>
-                    <p className="text-xs text-[#64748B] leading-relaxed">{alt.description}</p>
+                    <p className="text-xs text-[#736B60] leading-relaxed">{alt.description}</p>
                     <div className="flex items-center justify-between pt-1">
-                      <span className="text-[11px] font-semibold text-[#00747F]">
+                      <span className="text-[11px] font-semibold text-[#5B410C]">
                         Plafon s/d {formatRupiah(alt.maxAmount)}
                       </span>
                       <a
                         href={alt.actionUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-xs font-bold text-[#6C5CE7] hover:underline flex items-center gap-1"
+                        className="text-xs font-bold text-[#76520E] hover:underline flex items-center gap-1"
                       >
                         Ajukan Resmi <ArrowRight size={12} />
                       </a>

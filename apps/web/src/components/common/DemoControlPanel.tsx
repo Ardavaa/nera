@@ -54,7 +54,7 @@ export const DemoControlPanel: React.FC = () => {
     <div className="relative">
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className="w-9 h-9 rounded-full flex items-center justify-center text-[#94A3B8] hover:bg-slate-100 hover:text-[#0F172A] transition-colors"
+        className="w-9 h-9 rounded-full flex items-center justify-center text-[#817B70] hover:bg-slate-100 hover:text-[#2F240E] transition-colors"
         aria-label="Menu Demo"
         title="Menu Demo"
       >
@@ -62,14 +62,14 @@ export const DemoControlPanel: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute top-11 right-0 w-64 bg-white border border-dashed border-[#6C5CE7]/50 rounded-[18px] shadow-2xl p-2 space-y-1 z-50 max-h-[70vh] overflow-y-auto">
+        <div className="absolute top-11 right-0 w-64 bg-white border border-dashed border-[#76520E]/50 rounded-[18px] shadow-2xl p-2 space-y-1 z-50 max-h-[70vh] overflow-y-auto">
           <div className="flex items-center justify-between px-2 py-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#6C5CE7]">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#76520E]">
               Menu Demo
             </span>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-[#94A3B8] hover:text-[#0F172A]"
+              className="text-[#817B70] hover:text-[#2F240E]"
               aria-label="Tutup"
             >
               <X size={14} />
@@ -78,7 +78,7 @@ export const DemoControlPanel: React.FC = () => {
 
           {/* Role Switcher */}
           <div className="px-2 pb-1">
-            <span className="text-[9px] font-bold uppercase tracking-wider text-[#94A3B8]">
+            <span className="text-[9px] font-bold uppercase tracking-wider text-[#817B70]">
               Lihat Sebagai
             </span>
           </div>
@@ -87,18 +87,18 @@ export const DemoControlPanel: React.FC = () => {
               key={href}
               href={href}
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2 px-2.5 py-2 rounded-xl hover:bg-[#6C5CE7]/8 transition-colors"
+              className="flex items-center gap-2 px-2.5 py-2 rounded-xl hover:bg-[#76520E]/8 transition-colors"
             >
-              <Icon size={14} className="text-[#6C5CE7]" />
-              <span className="text-xs font-semibold text-[#0F172A]">{label}</span>
+              <Icon size={14} className="text-[#76520E]" />
+              <span className="text-xs font-semibold text-[#2F240E]">{label}</span>
             </Link>
           ))}
 
-          <div className="h-px bg-[#E2E8F0] my-1" />
+          <div className="h-px bg-[#E9E5DD] my-1" />
 
           {/* Mockup Canvas Color Picker */}
           <div className="px-2 pb-1">
-            <span className="text-[9px] font-bold uppercase tracking-wider text-[#94A3B8]">
+            <span className="text-[9px] font-bold uppercase tracking-wider text-[#817B70]">
               Warna Latar Mockup
             </span>
           </div>
@@ -107,7 +107,7 @@ export const DemoControlPanel: React.FC = () => {
               type="color"
               value={mockupCanvasColor}
               onChange={(e) => setMockupCanvasColor(e.target.value)}
-              className="w-8 h-8 rounded-lg border border-[#E2E8F0] cursor-pointer p-0.5 bg-white"
+              className="w-8 h-8 rounded-lg border border-[#E9E5DD] cursor-pointer p-0.5 bg-white"
               aria-label="Pilih warna latar mockup"
             />
             <input
@@ -115,12 +115,12 @@ export const DemoControlPanel: React.FC = () => {
               value={hexInputValue}
               onChange={(e) => handleHexInputChange(e.target.value)}
               spellCheck={false}
-              className="w-24 text-xs font-mono text-[#64748B] flex-1 border border-transparent hover:border-[#E2E8F0] focus:border-[#6C5CE7] focus:text-[#0F172A] rounded-lg px-1.5 py-1 outline-none transition-colors"
+              className="w-24 text-xs font-mono text-[#736B60] flex-1 border border-transparent hover:border-[#E9E5DD] focus:border-[#76520E] focus:text-[#2F240E] rounded-lg px-1.5 py-1 outline-none transition-colors"
               aria-label="Ketik kode warna hex"
             />
             <button
               onClick={resetMockupCanvasColor}
-              className="text-[#94A3B8] hover:text-[#0F172A] transition-colors"
+              className="text-[#817B70] hover:text-[#2F240E] transition-colors"
               aria-label="Reset warna latar"
               title="Reset ke warna default"
             >
@@ -128,14 +128,14 @@ export const DemoControlPanel: React.FC = () => {
             </button>
           </div>
 
-          <div className="h-px bg-[#E2E8F0] my-1" />
+          <div className="h-px bg-[#E9E5DD] my-1" />
 
           {/* Persona Scenario Switcher */}
           <div className="px-2 pb-1">
-            <span className="text-[9px] font-bold uppercase tracking-wider text-[#94A3B8]">
+            <span className="text-[9px] font-bold uppercase tracking-wider text-[#817B70]">
               Ganti Persona (Mahasiswa)
             </span>
-            <p className="text-[10px] text-[#64748B] leading-relaxed pt-0.5">
+            <p className="text-[10px] text-[#736B60] leading-relaxed pt-0.5">
               Hanya mengganti angka transaksi mentah — persona tetap dihitung ulang oleh classifier.
             </p>
           </div>
@@ -143,10 +143,10 @@ export const DemoControlPanel: React.FC = () => {
             <button
               key={id}
               onClick={() => handleSelect(id)}
-              className="w-full text-left px-2.5 py-2 rounded-xl hover:bg-[#6C5CE7]/8 transition-colors"
+              className="w-full text-left px-2.5 py-2 rounded-xl hover:bg-[#76520E]/8 transition-colors"
             >
-              <p className="text-xs font-bold text-[#0F172A]">{PERSONA_LABELS[id].label}</p>
-              <p className="text-[10px] text-[#64748B] leading-snug">
+              <p className="text-xs font-bold text-[#2F240E]">{PERSONA_LABELS[id].label}</p>
+              <p className="text-[10px] text-[#736B60] leading-snug">
                 {DEMO_PERSONA_SCENARIOS[id].scenarioLabel !== PERSONA_LABELS[id].label
                   ? DEMO_PERSONA_SCENARIOS[id].scenarioLabel
                   : PERSONA_LABELS[id].tagline}

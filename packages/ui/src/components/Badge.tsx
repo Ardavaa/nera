@@ -29,9 +29,9 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
       {showIcon && (
         <span
           className={cn("w-2 h-2 rounded-full", {
-            "bg-[#22C55E]": status === "AMAN",
-            "bg-[#FBBF24]": status === "WASPADA",
-            "bg-[#EF4444]": status === "KRITIS",
+            "bg-[#277449]": status === "AMAN",
+            "bg-[#A36A00]": status === "WASPADA",
+            "bg-[#C43737]": status === "KRITIS",
           })}
         />
       )}

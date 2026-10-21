@@ -44,40 +44,35 @@ export default function ParentDashboardPage() {
   }[state];
 
   return (
-    <div className="flex flex-col min-h-full bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-full bg-[#F1F2F4]">
       <TopAppBar />
 
       <main className="flex-1 px-4 pt-3.5 pb-6 space-y-4">
         {/* CHILD SELECTOR */}
-        <button className="flex items-center gap-2.5 bg-white border border-[#E2E8F0] rounded-full pl-1.5 pr-3.5 py-1.5 shadow-xs">
-          <div className="w-8 h-8 rounded-full bg-[#6C5CE7] text-white flex items-center justify-center font-bold text-xs shrink-0">
+        <button className="flex items-center gap-2.5 bg-white border border-[#E9E5DD] rounded-full pl-1.5 pr-3.5 py-1.5">
+          <div className="w-8 h-8 rounded-full bg-[#FFB900] text-[#352500] flex items-center justify-center font-bold text-xs shrink-0">
             {userName.charAt(0).toUpperCase()}
           </div>
-          <span className="text-sm font-bold text-[#0F172A]">{userName}</span>
-          <ChevronDown size={14} className="text-[#94A3B8]" />
+          <span className="text-sm font-bold text-[#2F240E]">{userName}</span>
+          <ChevronDown size={14} className="text-[#817B70]" />
         </button>
 
-        <p className="text-sm text-[#64748B] -mt-2">Ringkasan untuk orang tua</p>
+        <p className="text-sm text-[#736B60] -mt-2">Ringkasan untuk orang tua</p>
 
         {/* HERO CARD: Child Safety Status */}
-        <div className="relative overflow-hidden rounded-[28px] bg-[#F5F3FF] p-4 shadow-xs">
-          <span className="absolute top-5 right-9 text-[#6C5CE7] text-xs select-none animate-pulse">✦</span>
-          <span className="absolute top-16 right-5 text-[#6C5CE7]/60 text-[9px] select-none animate-pulse delay-500">✦</span>
-          <span className="absolute bottom-16 right-7 text-[#6C5CE7]/70 text-[10px] select-none animate-pulse delay-700">✦</span>
-          <span className="absolute bottom-6 right-16 text-[#6C5CE7]/50 text-[9px] select-none animate-pulse delay-300">✦</span>
-
+        <div className="relative overflow-hidden rounded-[26px] bg-white p-4">
           <div className="flex items-center justify-between gap-3 relative z-10">
             <div className="min-w-0">
-              <p className="text-xs font-bold uppercase tracking-wider text-[#64748B]">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#736B60]">
                 Status Keamanan Finansial
               </p>
               <div className="flex items-center gap-2 mt-1.5">
                 <ShieldCheck size={22} style={{ color: stateConfig.color }} />
-                <h2 className="text-[28px] font-bold text-[#0F172A] tracking-tight leading-none">
+                <h2 className="text-[28px] font-bold text-[#2F240E] tracking-tight leading-none">
                   {stateConfig.label}
                 </h2>
               </div>
-              <p className="text-xs text-[#64748B] mt-2 leading-relaxed max-w-[210px]">
+              <p className="text-xs text-[#736B60] mt-2 leading-relaxed max-w-[210px]">
                 {stateConfig.copy}
               </p>
             </div>
@@ -86,27 +81,27 @@ export default function ParentDashboardPage() {
         </div>
 
         <Card className="p-3.5 bg-white border-dashed flex items-start gap-2.5">
-          <EyeOff size={16} className="text-[#6C5CE7] shrink-0 mt-0.5" />
-          <p className="text-[11px] text-[#64748B] leading-relaxed">
-            Demi privasi anak Anda, Nera <strong className="text-[#0F172A]">tidak menampilkan</strong> riwayat transaksi atau nama merchant — hanya status keamanan finansial secara umum.
+          <EyeOff size={16} className="text-[#76520E] shrink-0 mt-0.5" />
+          <p className="text-[11px] text-[#736B60] leading-relaxed">
+            Demi privasi anak Anda, Nera <strong className="text-[#2F240E]">tidak menampilkan</strong> riwayat transaksi atau nama merchant — hanya status keamanan finansial secara umum.
           </p>
         </Card>
 
         {pendingRequests.length > 0 && (
           <section className="space-y-2.5">
-            <h3 className="text-[15px] font-bold text-[#0F172A]">Insight Nera</h3>
+            <h3 className="text-[15px] font-bold text-[#2F240E]">Insight Nera</h3>
             {pendingRequests.map((request) => (
               <EmergencyTopUpCard key={request.id} request={request} />
             ))}
           </section>
         )}
 
-        <Card className="p-4 space-y-2 bg-[#F5F3FF] border-[#6C5CE7]/20">
-          <div className="flex items-center gap-2 text-[#6C5CE7]">
+        <Card className="p-4 space-y-2 bg-[#FFF3D6] border-[#76520E]/20">
+          <div className="flex items-center gap-2 text-[#76520E]">
             <ShieldCheck size={16} />
             <h3 className="text-xs font-bold uppercase tracking-wider">Terenkripsi BNI</h3>
           </div>
-          <p className="text-xs text-[#0F172A] leading-relaxed">
+          <p className="text-xs text-[#2F240E] leading-relaxed">
             Akses ini bersifat read-only dan bisa dicabut kapan saja lewat aplikasi wondr by BNI milik Anda.
           </p>
         </Card>

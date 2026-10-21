@@ -51,7 +51,7 @@ const STATUS_LABEL: Record<string, string> = {
 };
 
 const ACCENT_HEX: Record<string, string> = {
-  purple: "#6C5CE7",
+  purple: "#76520E",
   teal: "#14B8A6",
   amber: "#F59E0B",
   critical: "#EF4444",
@@ -89,27 +89,27 @@ export default function CampusOverviewPage() {
       {/* HEADER */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold text-[#0F172A]">Halo, Nera Campus! 👋</h1>
-          <p className="text-sm text-[#64748B] mt-1">
+          <h1 className="text-2xl font-bold text-[#2F240E]">Halo, Nera Campus! 👋</h1>
+          <p className="text-sm text-[#736B60] mt-1">
             Ringkasan kesehatan finansial mahasiswa kampus Anda.
           </p>
         </div>
-        <button className="flex items-center gap-2 bg-white border border-[#E2E8F0] rounded-xl px-4 py-2.5 text-sm font-medium text-[#0F172A] shadow-sm">
-          <Calendar size={16} className="text-[#64748B]" />
+        <button className="flex items-center gap-2 bg-white border border-[#E9E5DD] rounded-xl px-4 py-2.5 text-sm font-medium text-[#2F240E]">
+          <Calendar size={16} className="text-[#736B60]" />
           1 Mei 2026 – 31 Mei 2026
-          <ChevronDown size={14} className="text-[#94A3B8]" />
+          <ChevronDown size={14} className="text-[#817B70]" />
         </button>
       </div>
 
       {/* METRIC CARDS WITH SPARKLINES */}
       {isLoading ? (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <CardSkeleton className="h-[170px]" />
           <CardSkeleton className="h-[170px]" />
           <CardSkeleton className="h-[170px]" />
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {CAMPUS_METRIC_CARDS.map((metric) => {
             const Icon = METRIC_ICONS[metric.id] || TrendingUp;
             const accent = ACCENT_HEX[metric.accent];
@@ -127,8 +127,8 @@ export default function CampusOverviewPage() {
                   >
                     <Icon size={20} />
                   </div>
-                  <p className="text-sm text-[#64748B]">{metric.label}</p>
-                  <h2 className="text-[28px] font-bold text-[#0F172A] mt-1 leading-none">
+                  <p className="text-sm text-[#736B60]">{metric.label}</p>
+                  <h2 className="text-[28px] font-bold text-[#2F240E] mt-1 leading-none">
                     {metric.value}
                   </h2>
                   <div className="flex items-center gap-1 mt-2 text-xs">
@@ -136,7 +136,7 @@ export default function CampusOverviewPage() {
                     <span className="font-bold" style={{ color: trendColor }}>
                       {Math.abs(metric.trendPct)}%
                     </span>
-                    <span className="text-[#94A3B8]">dari periode sebelumnya</span>
+                    <span className="text-[#817B70]">dari periode sebelumnya</span>
                   </div>
                 </div>
                 <ResponsiveContainer width="100%" height={56}>
@@ -163,44 +163,44 @@ export default function CampusOverviewPage() {
       )}
 
       {/* TREND LINE + DISTRIBUTION DONUT */}
-      <div className="grid grid-cols-3 gap-4 items-start">
-        <div className="col-span-2">
+      <div className="grid grid-cols-1 gap-4 items-start xl:grid-cols-3">
+        <div className="xl:col-span-2">
           {isLoading ? (
             <CardSkeleton className="h-[420px]" />
           ) : (
             <Card className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-bold text-[#0F172A]">
+                <h3 className="text-sm font-bold text-[#2F240E]">
                   Tren Skor Rata-rata Sepanjang Semester
                 </h3>
-                <button className="flex items-center gap-2 bg-white border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs font-medium text-[#0F172A]">
+                <button className="flex items-center gap-2 bg-white border border-[#E9E5DD] rounded-xl px-3 py-2 text-xs font-medium text-[#2F240E]">
                   Semester Genap 2025/2026
-                  <ChevronDown size={12} className="text-[#94A3B8]" />
+                  <ChevronDown size={12} className="text-[#817B70]" />
                 </button>
               </div>
 
               <ResponsiveContainer width="100%" height={260}>
                 <LineChart data={CAMPUS_SEMESTER_TREND}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
-                  <XAxis dataKey="week" tick={{ fontSize: 11, fill: "#94A3B8" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 11, fill: "#94A3B8" }} domain={[0, 100]} axisLine={false} tickLine={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#F7F5F0" />
+                  <XAxis dataKey="week" tick={{ fontSize: 11, fill: "#817B70" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 11, fill: "#817B70" }} domain={[0, 100]} axisLine={false} tickLine={false} />
                   <Tooltip />
                   <Line
                     type="monotone"
                     dataKey="avgScore"
                     name="Skor Rata-rata"
-                    stroke="#6C5CE7"
+                    stroke="#76520E"
                     strokeWidth={2.5}
-                    dot={{ r: 3, fill: "#6C5CE7", strokeWidth: 0 }}
+                    dot={{ r: 3, fill: "#76520E", strokeWidth: 0 }}
                   />
                 </LineChart>
               </ResponsiveContainer>
 
-              <div className="flex items-center gap-2.5 bg-[#F5F3FF] rounded-2xl p-4">
-                <Sparkles size={16} className="text-[#6C5CE7] shrink-0" />
-                <p className="text-xs text-[#0F172A] leading-relaxed">
+              <div className="flex items-center gap-2.5 bg-[#FFF3D6] rounded-2xl p-4">
+                <Sparkles size={16} className="text-[#76520E] shrink-0" />
+                <p className="text-xs text-[#2F240E] leading-relaxed">
                   Skor rata-rata saat ini berada di zona{" "}
-                  <strong className="text-[#6C5CE7]">Aman</strong>. Pertahankan tren positif ini!
+                  <strong className="text-[#76520E]">Aman</strong>. Pertahankan tren positif ini!
                 </p>
               </div>
             </Card>
@@ -213,8 +213,8 @@ export default function CampusOverviewPage() {
           ) : (
             <Card className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-bold text-[#0F172A]">Distribusi Skor Mahasiswa</h3>
-                <Info size={14} className="text-[#94A3B8]" />
+                <h3 className="text-sm font-bold text-[#2F240E]">Distribusi Skor Mahasiswa</h3>
+                <Info size={14} className="text-[#817B70]" />
               </div>
 
               <div className="flex items-center gap-4">
@@ -243,13 +243,13 @@ export default function CampusOverviewPage() {
                           className="w-2.5 h-2.5 rounded-full shrink-0"
                           style={{ backgroundColor: STATUS_HEX[entry.status] }}
                         />
-                        <span className="text-xs text-[#64748B]">{STATUS_LABEL[entry.status]}</span>
+                        <span className="text-xs text-[#736B60]">{STATUS_LABEL[entry.status]}</span>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-bold text-[#0F172A]">
+                        <p className="text-sm font-bold text-[#2F240E]">
                           {((entry.count / totalDistribution) * 100).toFixed(1)}%
                         </p>
-                        <p className="text-[10px] text-[#94A3B8]">({entry.count})</p>
+                        <p className="text-[10px] text-[#817B70]">({entry.count})</p>
                       </div>
                     </div>
                   ))}
@@ -262,20 +262,20 @@ export default function CampusOverviewPage() {
             <CardSkeleton className="h-[100px]" />
           ) : (
             <Card>
-              <h3 className="text-sm font-bold text-[#0F172A] mb-3">Insight Utama</h3>
+              <h3 className="text-sm font-bold text-[#2F240E] mb-3">Insight Utama</h3>
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-full bg-[#F5F3FF] flex items-center justify-center shrink-0">
-                  <TrendingUp size={18} className="text-[#6C5CE7]" />
+                <div className="w-11 h-11 rounded-full bg-[#FFF3D6] flex items-center justify-center shrink-0">
+                  <TrendingUp size={18} className="text-[#76520E]" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-[#0F172A] leading-snug">
+                  <p className="text-xs font-bold text-[#2F240E] leading-snug">
                     {CAMPUS_KEY_INSIGHT.title}
                   </p>
-                  <p className="text-[11px] text-[#64748B] leading-snug mt-0.5">
+                  <p className="text-[11px] text-[#736B60] leading-snug mt-0.5">
                     {CAMPUS_KEY_INSIGHT.description}
                   </p>
                 </div>
-                <ChevronDown size={16} className="text-[#94A3B8] -rotate-90 shrink-0" />
+                <ChevronDown size={16} className="text-[#817B70] -rotate-90 shrink-0" />
               </div>
             </Card>
           )}
@@ -288,12 +288,12 @@ export default function CampusOverviewPage() {
       ) : (
         <Card>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-bold text-[#0F172A]">Indikator Kesehatan Finansial</h3>
-            <button className="text-xs font-bold text-[#6C5CE7] flex items-center gap-1">
+            <h3 className="text-sm font-bold text-[#2F240E]">Indikator Kesehatan Finansial</h3>
+            <button className="text-xs font-bold text-[#76520E] flex items-center gap-1">
               Lihat Detail <ChevronDown size={12} className="-rotate-90" />
             </button>
           </div>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {CAMPUS_HEALTH_INDICATORS.map((indicator) => {
               const Icon = INDICATOR_ICONS[indicator.id] || Wallet;
               const accent = ACCENT_HEX[indicator.accent];
@@ -306,10 +306,10 @@ export default function CampusOverviewPage() {
                     <Icon size={18} />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-lg font-bold text-[#0F172A] leading-tight">
+                    <p className="text-lg font-bold text-[#2F240E] leading-tight">
                       {indicator.valuePct}%
                     </p>
-                    <p className="text-[11px] text-[#64748B] truncate">{indicator.label}</p>
+                    <p className="text-[11px] text-[#736B60] truncate">{indicator.label}</p>
                   </div>
                 </div>
               );

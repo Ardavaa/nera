@@ -19,7 +19,7 @@ export interface StepProgressProps {
 export const StepProgress: React.FC<StepProgressProps> = ({
   steps,
   className,
-  accentColor = "#6C5CE7",
+  accentColor = "#76520E",
 }) => {
   return (
     <div className={cn("space-y-0", className)}>
@@ -37,7 +37,7 @@ export const StepProgress: React.FC<StepProgressProps> = ({
                     ? "bg-[#22C55E] border-[#22C55E] text-white"
                     : step.isActive
                     ? "border-current text-white"
-                    : "bg-white border-[#E2E8F0] text-[#64748B]"
+                    : "bg-white border-[#E9E5DD] text-[#736B60]"
                 )}
                 style={
                   step.isActive && !step.isCompleted
@@ -55,7 +55,7 @@ export const StepProgress: React.FC<StepProgressProps> = ({
                 <div
                   className={cn(
                     "w-0.5 flex-1 min-h-[24px] transition-all",
-                    step.isCompleted ? "bg-[#22C55E]" : "bg-[#E2E8F0]"
+                    step.isCompleted ? "bg-[#22C55E]" : "bg-[#E9E5DD]"
                   )}
                 />
               )}
@@ -69,14 +69,14 @@ export const StepProgress: React.FC<StepProgressProps> = ({
                   step.isCompleted
                     ? "text-[#22C55E]"
                     : step.isActive
-                    ? "text-[#0F172A]"
-                    : "text-[#64748B]"
+                    ? "text-[#2F240E]"
+                    : "text-[#736B60]"
                 )}
               >
                 {step.label}
               </p>
               {step.description && (
-                <p className="text-[11px] text-[#64748B] mt-0.5 leading-relaxed">
+                <p className="text-[11px] text-[#736B60] mt-0.5 leading-relaxed">
                   {step.description}
                 </p>
               )}

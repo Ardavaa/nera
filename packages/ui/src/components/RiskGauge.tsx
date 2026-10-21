@@ -22,7 +22,7 @@ export const RiskGauge: React.FC<RiskGaugeProps> = ({
   const strokeColor =
     state === "AMAN" ? "#22C55E" : state === "WASPADA" ? "#FBBF24" : "#EF4444";
   const bgColor =
-    state === "AMAN" ? "#DDF0E6" : state === "WASPADA" ? "#FBF0D9" : "#FBE4DE";
+    state === "AMAN" ? "#DDF0E6" : state === "WASPADA" ? "#FFF3D6" : "#FBE4DE";
 
   const radius = 38;
   const circumference = 2 * Math.PI * radius;
@@ -44,7 +44,7 @@ export const RiskGauge: React.FC<RiskGaugeProps> = ({
           cy="50"
           r={radius}
           fill="none"
-          stroke="#E2E8F0"
+          stroke="#E9E5DD"
           strokeWidth="8"
           className="transition-all"
         />
@@ -64,7 +64,7 @@ export const RiskGauge: React.FC<RiskGaugeProps> = ({
       </svg>
       {/* Center Label */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <span className="text-xl font-bold text-[#0F172A] leading-none">{clampedScore}</span>
+        <span className="text-xl font-bold text-[#2F240E] leading-none">{clampedScore}</span>
         <span
           className="text-[10px] font-semibold mt-0.5 px-1.5 py-0.5 rounded-full"
           style={{ backgroundColor: bgColor, color: strokeColor }}

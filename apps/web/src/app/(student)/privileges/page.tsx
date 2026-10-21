@@ -96,12 +96,12 @@ export default function PrivilegesPage() {
         </Card>
 
         {state !== "AMAN" && (
-          <Card className="p-4 bg-[#FBF0D9]/40 border-[#FBBF24]/40 space-y-1.5">
+          <Card className="p-4 bg-[#FFF3D6]/40 border-[#FBBF24]/40 space-y-1.5">
             <div className="flex items-center gap-2 text-[#92400E]">
               <BadgeCheck size={16} />
               <h3 className="text-xs font-bold uppercase tracking-wider">Mode Proteksi Reputasi Aktif</h3>
             </div>
-            <p className="text-xs text-[#0F172A] leading-relaxed">
+            <p className="text-xs text-[#2F240E] leading-relaxed">
               Selama status belum kembali Aman, Nera hanya menampilkan opsi resmi & suportif — bukan produk investasi atau kartu kredit.
             </p>
           </Card>
@@ -113,21 +113,21 @@ export default function PrivilegesPage() {
 
           return (
             <div key={persona.id} className="space-y-2.5">
-              <Card className="p-4 space-y-2.5 border-[#6C5CE7]/30 bg-gradient-to-br from-white to-[#F8FAFC]">
+              <Card className="p-4 space-y-2.5 border-[#EEDB9A] bg-[#FFF8E6]">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-xl bg-[#6C5CE7]/10 text-[#6C5CE7] flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#FFF0BD] text-[#76520E] flex items-center justify-center shrink-0">
                     <Icon size={18} />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-[#0F172A]">{persona.label}</h3>
-                    <p className="text-[11px] text-[#64748B]">{persona.tagline}</p>
+                    <h3 className="text-sm font-bold text-[#2F240E]">{persona.label}</h3>
+                    <p className="text-[11px] text-[#736B60]">{persona.tagline}</p>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {persona.matchReasons.map((reason, i) => (
                     <span
                       key={i}
-                      className="text-[10px] bg-[#6C5CE7]/8 text-[#6C5CE7] font-medium px-2.5 py-1 rounded-full"
+                      className="text-[10px] bg-[#76520E]/8 text-[#76520E] font-medium px-2.5 py-1 rounded-full"
                     >
                       {reason}
                     </span>
@@ -142,12 +142,12 @@ export default function PrivilegesPage() {
                     <Card key={offer.id} className="p-4 space-y-2.5">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2.5 min-w-0">
-                          <div className="w-9 h-9 rounded-full bg-[#EDF6FF] text-[#2563EB] flex items-center justify-center shrink-0">
+                          <div className="w-9 h-9 rounded-full bg-[#FFF3D6] text-[#76520E] flex items-center justify-center shrink-0">
                             <OfferIcon size={16} />
                           </div>
                           <div className="min-w-0">
-                            <h4 className="text-xs font-bold text-[#0F172A] truncate">{offer.productName}</h4>
-                            <span className="text-[10px] text-[#64748B]">{offer.category}</span>
+                            <h4 className="text-xs font-bold text-[#2F240E] truncate">{offer.productName}</h4>
+                            <span className="text-[10px] text-[#736B60]">{offer.category}</span>
                           </div>
                         </div>
                         <span className="text-[10px] bg-[#DDF0E6] text-[#15803D] font-bold px-2 py-0.5 rounded-full shrink-0">
@@ -155,11 +155,11 @@ export default function PrivilegesPage() {
                         </span>
                       </div>
 
-                      <p className="text-xs text-[#0F172A] leading-relaxed">{offer.benefit}</p>
-                      <p className="text-[11px] text-[#64748B] leading-relaxed">{offer.eligibilityNote}</p>
+                      <p className="text-xs text-[#2F240E] leading-relaxed">{offer.benefit}</p>
+                      <p className="text-[11px] text-[#736B60] leading-relaxed">{offer.eligibilityNote}</p>
 
                       <div className="flex items-center justify-between pt-1">
-                        <span className="text-[10px] text-[#94A3B8]">Sumber: {offer.sourceLabel}</span>
+                        <span className="text-[10px] text-[#817B70]">Sumber: {offer.sourceLabel}</span>
                         {offer.actionType === "wondr" ? (
                           <Button
                             size="sm"
@@ -174,7 +174,7 @@ export default function PrivilegesPage() {
                             href={offer.actionUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="text-xs font-bold text-[#6C5CE7] hover:underline flex items-center gap-1"
+                            className="text-xs font-bold text-[#76520E] hover:underline flex items-center gap-1"
                           >
                             {offer.actionLabel} <ArrowUpRight size={12} />
                           </a>
@@ -196,12 +196,12 @@ export default function PrivilegesPage() {
         title={activeOfferData?.productName || "Fitur wondr"}
       >
         <div className="space-y-4 text-center py-2">
-          <div className="w-14 h-14 bg-[#EDF6FF] text-[#2563EB] rounded-2xl flex items-center justify-center mx-auto">
+          <div className="w-14 h-14 bg-[#FFF3D6] text-[#76520E] rounded-2xl flex items-center justify-center mx-auto">
             <Sparkles size={28} />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-[#0F172A]">{activeOfferData?.productName}</h4>
-            <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
+            <h4 className="text-sm font-bold text-[#2F240E]">{activeOfferData?.productName}</h4>
+            <p className="text-xs text-[#736B60] mt-1 leading-relaxed">
               Layanan wondr by BNI ini terintegrasi langsung dengan proteksi kecerdasan finansial Nera.
             </p>
           </div>

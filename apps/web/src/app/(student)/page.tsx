@@ -140,7 +140,7 @@ export default function HomePage() {
   // State-based badge config
   const stateBadge = {
     AMAN: { label: `Skor ${score} · Kondisi Sehat`, bg: "bg-[#E8F8EE]", border: "border-[#22C55E]/30", text: "text-[#15803D]", dot: "bg-[#22C55E]" },
-    WASPADA: { label: `Skor ${score} · Waspada`, bg: "bg-[#FBF0D9]", border: "border-[#FBBF24]/30", text: "text-[#92400E]", dot: "bg-[#FBBF24]" },
+    WASPADA: { label: `Skor ${score} · Waspada`, bg: "bg-[#FFF3D6]", border: "border-[#FBBF24]/30", text: "text-[#92400E]", dot: "bg-[#FBBF24]" },
     KRITIS: { label: `Skor ${score} · Kritis`, bg: "bg-[#FBE4DE]", border: "border-[#EF4444]/30", text: "text-[#991B1B]", dot: "bg-[#EF4444]" },
   }[state];
 
@@ -254,9 +254,9 @@ export default function HomePage() {
                   <Wallet size={18} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-bold text-[#0F172A] leading-tight">Daily Pocket</p>
-                  <span className="text-[10px] text-[#64748B] block mt-0.5">(Siap Pakai)</span>
-                  <p className="text-sm font-bold text-[#0F172A] mt-0.5" title={formatRupiah(dailyPocket)}>
+                  <p className="text-xs font-bold text-[#2F240E] leading-tight">Daily Pocket</p>
+                  <span className="text-[10px] text-[#736B60] block mt-0.5">(Siap Pakai)</span>
+                  <p className="text-sm font-bold text-[#2F240E] mt-0.5" title={formatRupiah(dailyPocket)}>
                     {formatRupiahShort(dailyPocket)}
                   </p>
                 </div>
@@ -268,9 +268,9 @@ export default function HomePage() {
                   <Lock size={18} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-bold text-[#0F172A] leading-tight">Lock Pocket</p>
-                  <span className="text-[10px] text-[#64748B] block mt-0.5">(BNI Life Goals)</span>
-                  <p className="text-sm font-bold text-[#0F172A] mt-0.5 flex items-center gap-1" title={formatRupiah(lockPocket)}>
+                  <p className="text-xs font-bold text-[#2F240E] leading-tight">Lock Pocket</p>
+                  <span className="text-[10px] text-[#736B60] block mt-0.5">(BNI Life Goals)</span>
+                  <p className="text-sm font-bold text-[#2F240E] mt-0.5 flex items-center gap-1" title={formatRupiah(lockPocket)}>
                     <span>{formatRupiahShort(lockPocket)}</span>
                     <Lock size={12} className="text-[#76520E] shrink-0" />
                   </p>
@@ -286,23 +286,21 @@ export default function HomePage() {
             <h3 className="text-[16px] font-semibold text-[#2F240E]">Quick Action</h3>
             <button
               onClick={() => setActiveActionModal("Semua Menu Quick Action")}
-              className="text-xs font-medium text-[#76520E] hover:underline cursor-pointer"
+              className="cursor-pointer text-xs font-medium text-[#76520E] hover:underline"
             >
               Lihat Semua
             </button>
           </div>
-
-          <div>
-            <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-4 overflow-hidden rounded-[22px] bg-white px-1.5 py-3">
               {/* 1. Scan QRIS */}
               <button
                 onClick={() => setIsQuickSpendOpen(true)}
-                className="flex min-h-[106px] flex-col items-center justify-center gap-2 rounded-[20px] bg-white group cursor-pointer"
+                className="flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-[15px] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#BA8500]"
               >
-                <div className="w-11 h-11 rounded-[14px] bg-[#FFF3D6] text-[#76520E] flex items-center justify-center transition-transform group-active:scale-95">
-                  <QrCode size={22} className="stroke-[2]" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#FFF0BD] text-[#6D4C00]">
+                  <QrCode size={21} strokeWidth={2} />
                 </div>
-                <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
+                <span className="text-[11px] font-semibold text-[#2F240E] text-center leading-tight">
                   Scan QRIS
                 </span>
               </button>
@@ -310,12 +308,12 @@ export default function HomePage() {
               {/* 2. Transfer */}
               <button
                 onClick={() => setActiveActionModal("Transfer Saldo BNI")}
-                className="flex min-h-[106px] flex-col items-center justify-center gap-2 rounded-[20px] bg-white group cursor-pointer"
+                className="flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-[15px] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#BA8500]"
               >
-                <div className="w-11 h-11 rounded-[14px] bg-[#FFF3D6] text-[#76520E] flex items-center justify-center transition-transform group-active:scale-95">
-                  <ArrowUpRight size={22} className="stroke-[2.2]" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#FFF0BD] text-[#6D4C00]">
+                  <ArrowUpRight size={21} strokeWidth={2} />
                 </div>
-                <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
+                <span className="text-[11px] font-semibold text-[#2F240E] text-center leading-tight">
                   Transfer
                 </span>
               </button>
@@ -323,12 +321,12 @@ export default function HomePage() {
               {/* 3. Bayar Tagihan */}
               <button
                 onClick={() => setIsPayKosOpen(true)}
-                className="flex min-h-[106px] flex-col items-center justify-center gap-2 rounded-[20px] bg-white group cursor-pointer"
+                className="flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-[15px] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#BA8500]"
               >
-                <div className="w-11 h-11 rounded-[14px] bg-[#FFF3D6] text-[#76520E] flex items-center justify-center transition-transform group-active:scale-95">
-                  <FileText size={22} className="stroke-[2]" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#FFF0BD] text-[#6D4C00]">
+                  <FileText size={21} strokeWidth={2} />
                 </div>
-                <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
+                <span className="text-[11px] font-semibold text-[#2F240E] text-center leading-tight">
                   Bayar<br />Tagihan
                 </span>
               </button>
@@ -336,16 +334,15 @@ export default function HomePage() {
               {/* 4. Top Up */}
               <button
                 onClick={() => setActiveActionModal("Top Up Saldo Taplus Muda")}
-                className="flex min-h-[106px] flex-col items-center justify-center gap-2 rounded-[20px] bg-white group cursor-pointer"
+                className="flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-[15px] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#BA8500]"
               >
-                <div className="w-11 h-11 rounded-[14px] bg-[#FFF3D6] text-[#76520E] flex items-center justify-center transition-transform group-active:scale-95">
-                  <WalletCards size={22} className="stroke-[2]" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#FFF0BD] text-[#6D4C00]">
+                  <WalletCards size={21} strokeWidth={2} />
                 </div>
-                <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
+                <span className="text-[11px] font-semibold text-[#2F240E] text-center leading-tight">
                   Top Up
                 </span>
               </button>
-            </div>
           </div>
         </section>
 
@@ -357,17 +354,14 @@ export default function HomePage() {
             {/* Nudge: Kos Payment */}
             {nudges.find((n) => n.category === "BILL_KOS") && (
               <div className="p-4 flex gap-3.5">
-                <div className="w-10 h-10 rounded-[13px] bg-[#FFF3D6] text-[#A36A00] flex items-center justify-center shrink-0 mt-0.5">
-                  <Home size={22} className="stroke-[2.5]" />
+                <div className="w-10 h-10 rounded-[13px] bg-[#FFF0BD] text-[#76520E] flex items-center justify-center shrink-0 mt-0.5">
+                  <Home size={21} strokeWidth={2} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
-                      Kos Jatuh Tempo 3 Hari Lagi
-                    </h4>
-                    <ChevronRight size={18} className="text-[#64748B] stroke-[2.5] shrink-0 ml-1" />
-                  </div>
-                  <p className="text-xs text-[#64748B] leading-relaxed mt-1">
+                  <h4 className="text-sm font-semibold text-[#2F240E]">
+                    Kos Jatuh Tempo 3 Hari Lagi
+                  </h4>
+                  <p className="text-xs text-[#736B60] leading-relaxed mt-1">
                     Saldomu di Daily Pocket cukup ({formatRupiahShort(dailyPocket)}). Bayar sekarang agar runway tetap aman?
                   </p>
                   <div className="flex justify-end mt-2.5">
@@ -385,19 +379,19 @@ export default function HomePage() {
             {/* Nudge: UKT */}
             {nudges.find((n) => n.category === "BILL_UKT") && (
               <div className="p-4 flex gap-3.5">
-                <div className="w-10 h-10 rounded-[13px] bg-[#FFF3D6] text-[#A36A00] flex items-center justify-center shrink-0 mt-0.5">
-                  <GraduationCap size={22} className="stroke-[2.5]" />
+                <div className="w-10 h-10 rounded-[13px] bg-[#F7F5F0] text-[#76520E] flex items-center justify-center shrink-0 mt-0.5">
+                  <GraduationCap size={21} strokeWidth={2} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
+                    <h4 className="text-sm font-semibold text-[#2F240E]">
                       UKT Semester Ganjil
                     </h4>
-                    <span className="text-[10px] bg-[#FFF3D6] text-[#6D4C00] font-semibold px-2 py-0.5 rounded-full shrink-0">
+                    <span className="text-[11px] bg-[#F7F5F0] text-[#76520E] font-medium px-2 py-0.5 rounded-full shrink-0">
                       12 Hari
                     </span>
                   </div>
-                  <p className="text-xs text-[#64748B] leading-relaxed mt-1">
+                  <p className="text-xs text-[#736B60] leading-relaxed mt-1">
                     Rp3.500.000 jatuh tempo 31 Agustus. Cashback 5% jika bayar via wondr by BNI.
                   </p>
                 </div>
@@ -407,17 +401,14 @@ export default function HomePage() {
             {/* Nudge: End-of-Month Sweep */}
             {nudges.find((n) => n.category === "SWEEP_LEFTOVER") && (
               <div className="p-4 flex gap-3.5">
-                <div className="w-10 h-10 rounded-[13px] bg-[#FFF3D6] text-[#A36A00] flex items-center justify-center shrink-0 mt-0.5">
-                  <ArrowUpFromLine size={22} className="stroke-[2.5]" />
+                <div className="w-10 h-10 rounded-[13px] bg-[#F7F5F0] text-[#76520E] flex items-center justify-center shrink-0 mt-0.5">
+                  <ArrowUpFromLine size={21} strokeWidth={2} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
-                      Smart Sweep Akhir Bulan
-                    </h4>
-                    <ChevronRight size={18} className="text-[#64748B] stroke-[2.5] shrink-0 ml-1" />
-                  </div>
-                  <p className="text-xs text-[#64748B] leading-relaxed mt-1">
+                  <h4 className="text-sm font-semibold text-[#2F240E]">
+                    Smart Sweep Akhir Bulan
+                  </h4>
+                  <p className="text-xs text-[#736B60] leading-relaxed mt-1">
                     Sisa saldo harianmu bisa disapu otomatis ke BNI Life Goals agar tidak boros.
                   </p>
                   <div className="flex justify-end mt-2.5">
@@ -434,17 +425,14 @@ export default function HomePage() {
 
             {/* Weekly Spending Insight */}
             <div className="p-4 flex gap-3.5">
-              <div className="w-10 h-10 rounded-[13px] bg-[#FFF3D6] text-[#A36A00] flex items-center justify-center shrink-0 mt-0.5">
-                <Coffee size={22} className="stroke-[2.5]" />
+              <div className="w-10 h-10 rounded-[13px] bg-[#F7F5F0] text-[#76520E] flex items-center justify-center shrink-0 mt-0.5">
+                <Coffee size={21} strokeWidth={2} />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
-                    Pengeluaran Jajan Naik
-                  </h4>
-                  <ChevronRight size={18} className="text-[#64748B] stroke-[2.5] shrink-0 ml-1" />
-                </div>
-                <p className="text-xs text-[#64748B] leading-relaxed mt-1">
+                <h4 className="text-sm font-semibold text-[#2F240E]">
+                  Pengeluaran Jajan Naik
+                </h4>
+                <p className="text-xs text-[#736B60] leading-relaxed mt-1">
                   Minggu ini jajan QRIS naik Rp85.000 dari rata-rata. Atur ritme belanjamu.
                 </p>
               </div>
@@ -475,13 +463,13 @@ export default function HomePage() {
         <section className="space-y-3">
           <div className="flex items-center justify-between">
             <h3 className="text-[16px] font-semibold text-[#2F240E]">Transaksi Terakhir</h3>
-            <span className="text-xs font-medium text-[#64748B]">{transactions.length} total</span>
+            <span className="text-xs font-medium text-[#736B60]">{transactions.length} total</span>
           </div>
 
           <div className="bg-white rounded-[24px] overflow-hidden">
             {recentTransactions.map((tx, idx) => {
               const IconComp = CATEGORY_ICONS[tx.category] || ShoppingBag;
-              const color = CATEGORY_COLORS[tx.category] || "#64748B";
+              const color = CATEGORY_COLORS[tx.category] || "#7D766B";
               const isLast = idx === recentTransactions.length - 1;
               const isIncome = tx.type === "income";
               const dateStr = new Date(tx.timestamp).toLocaleDateString("id-ID", {
@@ -492,7 +480,7 @@ export default function HomePage() {
               return (
                 <div
                   key={tx.id}
-                  className={`flex items-center gap-3 px-4 py-3 ${!isLast ? "border-b border-[#F1F5F9]" : ""}`}
+                  className={`flex items-center gap-3 px-4 py-3.5 ${!isLast ? "border-b border-[#F0EEE9]" : ""}`}
                 >
                   <div
                     className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
@@ -501,13 +489,13 @@ export default function HomePage() {
                     <IconComp size={16} style={{ color }} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-[#0F172A] truncate">{tx.title}</p>
-                    <p className="text-[10px] text-[#64748B]">{dateStr}</p>
+                    <p className="truncate text-[13px] font-semibold text-[#2F240E]">{tx.title}</p>
+                    <p className="mt-0.5 text-[11px] text-[#736B60]">{dateStr}</p>
                   </div>
                   <span
-                    className={`text-xs font-bold tabular-nums ${isIncome ? "text-[#22C55E]" : "text-[#0F172A]"}`}
+                    className={`shrink-0 text-[13px] font-semibold tabular-nums ${isIncome ? "text-[#277449]" : "text-[#2F240E]"}`}
                   >
-                    {isIncome ? "+" : "-"}{formatRupiahShort(tx.amount)}
+                    {isIncome ? "+" : "-"}{formatRupiah(tx.amount)}
                   </span>
                 </div>
               );
@@ -519,7 +507,7 @@ export default function HomePage() {
       {/* TOAST NOTIFICATION */}
       {isSuccessToastOpen && (
         <div className="absolute top-14 inset-x-0 mx-auto max-w-[390px] px-4 z-50 animate-in fade-in slide-in-from-top-4 duration-200">
-          <div className="bg-[#0F172A] text-white p-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-medium border border-white/10">
+          <div className="bg-[#2F240E] text-white p-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-medium border border-white/10">
             <CheckCircle2 size={18} className="text-[#22C55E] shrink-0" />
             <span className="flex-1">{toastMessage}</span>
           </div>
@@ -533,27 +521,27 @@ export default function HomePage() {
         title="Pembayaran Tagihan Kos via BNI"
       >
         <div className="space-y-4">
-          <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] space-y-2">
-            <div className="flex items-center justify-between text-xs text-[#64748B]">
+          <div className="p-4 bg-[#F1F2F4] rounded-2xl border border-[#E9E5DD] space-y-2">
+            <div className="flex items-center justify-between text-xs text-[#736B60]">
               <span>Tujuan Pembayaran</span>
-              <span className="font-semibold text-[#0F172A]">Kos Griya Asri Tel-U</span>
+              <span className="font-semibold text-[#2F240E]">Kos Griya Asri Tel-U</span>
             </div>
-            <div className="flex items-center justify-between text-xs text-[#64748B]">
+            <div className="flex items-center justify-between text-xs text-[#736B60]">
               <span>Nomor Virtual Account</span>
-              <span className="font-mono font-medium text-[#0F172A]">8808 1301 2130 4501</span>
+              <span className="font-mono font-medium text-[#2F240E]">8808 1301 2130 4501</span>
             </div>
-            <div className="flex items-center justify-between text-xs text-[#64748B] pt-2 border-t border-[#E2E8F0]">
+            <div className="flex items-center justify-between text-xs text-[#736B60] pt-2 border-t border-[#E9E5DD]">
               <span>Total Tagihan</span>
-              <span className="font-bold text-[#0F172A] text-base">Rp 500.000</span>
+              <span className="font-bold text-[#2F240E] text-base">Rp 500.000</span>
             </div>
           </div>
 
-          <div className="p-3 bg-[#EBF5FF] rounded-xl border border-[#4EA8FF]/30 flex items-center justify-between text-xs">
+          <div className="p-3 bg-[#EBF5FF] rounded-xl border border-[#A36A00]/30 flex items-center justify-between text-xs">
             <div className="flex items-center gap-2">
-              <Wallet size={16} className="text-[#2563EB]" />
-              <span className="text-[#0F172A] font-medium">Daily Pocket</span>
+              <Wallet size={16} className="text-[#76520E]" />
+              <span className="text-[#2F240E] font-medium">Daily Pocket</span>
             </div>
-            <span className="font-bold text-[#2563EB]">Sisa {formatRupiah(dailyPocket)}</span>
+            <span className="font-bold text-[#76520E]">Sisa {formatRupiah(dailyPocket)}</span>
           </div>
 
           <div className="flex gap-2 pt-1">
@@ -583,7 +571,7 @@ export default function HomePage() {
       >
         <form onSubmit={handleQuickSpend} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-[#0F172A] mb-1">
+            <label className="block text-xs font-semibold text-[#2F240E] mb-1">
               Nama Merchant / Keterangan
             </label>
             <input
@@ -591,12 +579,12 @@ export default function HomePage() {
               placeholder="Contoh: Kopi Tuku / Makan Siang Kantin"
               value={spendTitle}
               onChange={(e) => setSpendTitle(e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-[#E2E8F0] rounded-xl focus:outline-none focus:border-[#6C5CE7]"
+              className="w-full px-3 py-2 text-sm border border-[#E9E5DD] rounded-xl focus:outline-none focus:border-[#76520E]"
               required
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#0F172A] mb-1">
+            <label className="block text-xs font-semibold text-[#2F240E] mb-1">
               Nominal Transaksi (Rp)
             </label>
             <input
@@ -604,12 +592,12 @@ export default function HomePage() {
               placeholder="Contoh: 25000"
               value={spendAmount}
               onChange={(e) => setSpendAmount(e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-[#E2E8F0] rounded-xl focus:outline-none focus:border-[#6C5CE7]"
+              className="w-full px-3 py-2 text-sm border border-[#E9E5DD] rounded-xl focus:outline-none focus:border-[#76520E]"
               required
             />
           </div>
 
-          <div className="p-3 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] text-xs text-[#64748B]">
+          <div className="p-3 bg-[#F1F2F4] rounded-xl border border-[#E9E5DD] text-xs text-[#736B60]">
             Transaksi akan otomatis memotong <strong>Daily Pocket</strong> dan menyesuaikan <strong>Runway Hari</strong> secara real-time.
           </div>
 
@@ -630,22 +618,22 @@ export default function HomePage() {
             <div className="w-16 h-16 bg-[#DDF0E6] text-[#22C55E] rounded-2xl flex items-center justify-center mx-auto mb-3">
               <ArrowUpFromLine size={32} />
             </div>
-            <h4 className="text-base font-bold text-[#0F172A]">
+            <h4 className="text-base font-bold text-[#2F240E]">
               Sapu Sisa Saldo Harian
             </h4>
-            <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
+            <p className="text-xs text-[#736B60] mt-1 leading-relaxed">
               Pindahkan seluruh sisa Daily Pocket ke tabungan BNI Life Goals agar uangmu tidak habis percuma di akhir bulan.
             </p>
           </div>
 
-          <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] space-y-2">
+          <div className="p-4 bg-[#F1F2F4] rounded-2xl border border-[#E9E5DD] space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-[#64748B]">Sisa Daily Pocket</span>
-              <span className="font-bold text-[#0F172A]">{formatRupiah(dailyPocket)}</span>
+              <span className="text-[#736B60]">Sisa Daily Pocket</span>
+              <span className="font-bold text-[#2F240E]">{formatRupiah(dailyPocket)}</span>
             </div>
-            <div className="flex items-center justify-between text-xs pt-2 border-t border-[#E2E8F0]">
-              <span className="text-[#64748B]">Life Goals Setelah Sweep</span>
-              <span className="font-bold text-[#00747F]">{formatRupiah(lockPocket + dailyPocket)}</span>
+            <div className="flex items-center justify-between text-xs pt-2 border-t border-[#E9E5DD]">
+              <span className="text-[#736B60]">Life Goals Setelah Sweep</span>
+              <span className="font-bold text-[#5B410C]">{formatRupiah(lockPocket + dailyPocket)}</span>
             </div>
           </div>
 
@@ -667,12 +655,12 @@ export default function HomePage() {
         title={activeActionModal || "Fitur wondr"}
       >
         <div className="space-y-4 text-center py-2">
-          <div className="w-14 h-14 bg-[#EDF6FF] text-[#2563EB] rounded-2xl flex items-center justify-center mx-auto">
+          <div className="w-14 h-14 bg-[#FFF3D6] text-[#76520E] rounded-2xl flex items-center justify-center mx-auto">
             <Sparkles size={28} />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-[#0F172A]">{activeActionModal}</h4>
-            <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
+            <h4 className="text-sm font-bold text-[#2F240E]">{activeActionModal}</h4>
+            <p className="text-xs text-[#736B60] mt-1 leading-relaxed">
               Layanan perbankan wondr by BNI terintegrasi langsung dengan proteksi kecerdasan finansial Nera.
             </p>
           </div>

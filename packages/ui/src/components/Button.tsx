@@ -22,14 +22,14 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       disabled={disabled || isLoading}
       className={cn(
-        "inline-flex items-center justify-center font-medium rounded-[14px] transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none cursor-pointer",
+        "inline-flex items-center justify-center rounded-[14px] font-medium transition-[background-color,border-color,transform] duration-150 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#BA8500] disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
         {
-          "bg-[#6C5CE7] hover:bg-[#5B4CD4] text-white shadow-sm": variant === "primary",
-          "bg-[#4EA8FF] hover:bg-[#3B96ED] text-white shadow-sm": variant === "secondary",
-          "bg-[#00747F] hover:bg-[#005F68] text-white shadow-sm": variant === "bni",
-          "bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-[#0F172A]": variant === "outline",
-          "bg-[#EF4444] hover:bg-[#DC2626] text-white shadow-sm": variant === "danger",
-          "bg-transparent hover:bg-slate-100 text-[#64748B]": variant === "ghost",
+          "bg-[#FFB900] hover:bg-[#E6A700] text-[#352500]": variant === "primary",
+          "bg-[#FFF0BD] hover:bg-[#FFE39A] text-[#5B410C]": variant === "secondary",
+          "bg-[#3A2800] hover:bg-[#5A4009] text-white": variant === "bni",
+          "border border-[#E9E5DD] bg-white hover:bg-[#F7F5F0] text-[#2F240E]": variant === "outline",
+          "bg-[#C43737] hover:bg-[#A92F2F] text-white": variant === "danger",
+          "bg-transparent hover:bg-[#F7F5F0] text-[#736B60]": variant === "ghost",
           "text-xs px-3 py-1.5 h-8": size === "sm",
           "text-sm px-4 py-2.5 h-11": size === "md",
           "text-base px-6 py-3.5 h-13 font-semibold": size === "lg",

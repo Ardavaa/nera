@@ -1,4 +1,4 @@
-import { CampusSidebar } from "../../components/campus/CampusSidebar";
+import { CampusMobileNav, CampusSidebar } from "../../components/campus/CampusSidebar";
 
 export default function CampusLayout({
   children,
@@ -6,9 +6,10 @@ export default function CampusLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen flex bg-[#F8FAFC]">
+    <div className="min-h-screen bg-[#F1F2F4] lg:flex">
       <CampusSidebar />
-      <main className="flex-1 p-8 max-w-[1200px]">{children}</main>
+      <CampusMobileNav />
+      <main className="min-w-0 w-full max-w-[1200px] flex-1 p-4 lg:p-8">{children}</main>
     </div>
   );
 }

@@ -21,20 +21,19 @@
 
 ## 3. Design System & Style Tokens
 
-### Colors (Strict Usage)
-* **Primary Purple:** `#6C5CE7` (CTA utama, tab aktif, badge highlight)
-* **Secondary Blue:** `#4EA8FF` (Progress bar runway, badge sekunder)
-* **BNI Teal:** `#00747F` (Integrasi elemen native BNI / Life Goals)
-* **Status Safe (Aman):** `#22C55E` (Background soft: `#DDF0E6`)
-* **Status Warning (Waspada):** `#FBBF24` (Background soft: `#FBF0D9`)
-* **Status Critical (Kritis):** `#EF4444` (Background soft: `#FBE4DE`)
-* **Typography Dark:** `#0F172A` (Heading H1-H3)
-* **Typography Muted:** `#7D8A9E` / `#64748B` (Keterangan, label, subtext)
-* **Canvas Background:** `#F8FAFC`
-* **Card Surface:** `#FFFFFF` dengan `border border-[#E2E8F0]`, `rounded-[20px]`, dan `shadow-[0_2px_12px_rgba(15,23,42,0.04)]`
+### Warna dan permukaan aplikasi
+* **Kuning utama:** `#FFB900` (CTA, kemajuan, penekanan aktif)
+* **Kuning lembut:** `#FFF0BD` / `#FFF3D6` (wadah ikon dan informasi tersorot)
+* **Cokelat:** `#76520E` / `#3A2800` (ikon, tautan, aksi BNI, panel privasi)
+* **Status Aman:** hijau `#277449` / `#DDF0E6`
+* **Status Waspada:** amber `#A36A00` / `#FFF3D6`
+* **Status Kritis:** merah `#C43737` / `#FBE4DE`
+* **Teks utama:** `#2F240E`; **teks sekunder:** `#736B60`
+* **Latar aplikasi:** `#F1F2F4`; **panel:** `#FFFFFF`; **batas halus:** `#E9E5DD`
+* **Kartu:** putih, radius sekitar 22 px, tanpa bayangan rutin
 
 ### Typography & Copywriting Tone
-* **Font:** Poppins / Clean System Sans-Serif.
+* **Font:** Inter Tight via Google Fonts / Clean System Sans-Serif.
 * **Tone:** Positif, objektif, solutif, tidak menggurui.
 * **Golden Copy Rule:** JANGAN sebut kata "pinjol" atau "utang" pada fitur rutin harian (Flow B). Gunakan istilah "Kebutuhan Harian", "Runway Saldo", dan "Tabungan Simpanan".
 

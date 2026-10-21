@@ -25,21 +25,21 @@ export const ParentPairingCard: React.FC = () => {
         {isSuccess ? (
           <motion.div
             key="success"
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
             <Card className="p-8 flex flex-col items-center text-center space-y-3">
               <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
+                initial={{ scale: 0.94, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", stiffness: 260, damping: 18, delay: 0.1 }}
                 className="w-16 h-16 rounded-full bg-[#DDF0E6] text-[#22C55E] flex items-center justify-center"
               >
                 <CheckCircle2 size={34} />
               </motion.div>
-              <h3 className="text-base font-bold text-[#0F172A]">Akun Berhasil Terhubung!</h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
+              <h3 className="text-base font-bold text-[#2F240E]">Akun Berhasil Terhubung!</h3>
+              <p className="text-xs text-[#736B60] leading-relaxed">
                 Kamu sekarang bisa memantau status keamanan finansial Budi secara read-only.
               </p>
             </Card>
@@ -64,17 +64,17 @@ export const ParentPairingCard: React.FC = () => {
 
               <form onSubmit={handleAccept} className="p-4 space-y-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#0F172A] mb-1">
+                  <label className="block text-xs font-semibold text-[#2F240E] mb-1">
                     Kode Pairing
                   </label>
                   <div className="relative">
-                    <KeyRound size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#94A3B8]" />
+                    <KeyRound size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#817B70]" />
                     <input
                       type="text"
                       value={code}
                       onChange={(e) => setCode(e.target.value)}
                       placeholder={MOCK_PAIRING_CODE}
-                      className="w-full pl-9 pr-3 py-2.5 text-sm font-mono border border-[#E2E8F0] rounded-xl focus:outline-none focus:border-[#00747F]"
+                      className="w-full pl-9 pr-3 py-2.5 text-sm font-mono border border-[#E9E5DD] rounded-xl focus:outline-none focus:border-[#5B410C]"
                       required
                     />
                   </div>

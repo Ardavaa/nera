@@ -18,18 +18,19 @@ export const CampusSidebar: React.FC = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="w-72 shrink-0 min-h-screen bg-white border-r border-[#E2E8F0] flex flex-col">
+    <aside className="hidden w-72 shrink-0 min-h-screen bg-white border-r border-[#E9E5DD] lg:flex lg:flex-col">
       <div className="p-6 space-y-2.5">
         <div className="flex items-center gap-3">
           <Image
-            src="/logos/nera-logo.png"
+            src="/logos/nera-home-logo.png"
             alt="Nera Logo"
-            width={100}
-            height={32}
-            className="h-7 w-auto object-contain"
+            width={112}
+            height={34}
+            className="h-8 w-auto object-contain"
             priority
+            unoptimized
           />
-          <div className="h-5 w-[1.5px] bg-[#CBD5E1]" />
+          <div className="h-5 w-[1.5px] bg-[#D8D3C9]" />
           <Image
             src="/logos/wondr-bni.svg"
             alt="wondr by BNI"
@@ -39,7 +40,7 @@ export const CampusSidebar: React.FC = () => {
             priority
           />
         </div>
-        <span className="block text-[10px] font-bold uppercase tracking-wider text-[#94A3B8]">
+        <span className="block text-[10px] font-bold uppercase tracking-wider text-[#817B70]">
           Campus Financial Safety
         </span>
       </div>
@@ -54,8 +55,8 @@ export const CampusSidebar: React.FC = () => {
               className={cn(
                 "flex items-center gap-3 px-4 py-2.5 rounded-2xl text-sm font-semibold transition-colors",
                 isActive
-                  ? "bg-[#6C5CE7]/10 text-[#6C5CE7]"
-                  : "text-[#64748B] hover:bg-slate-50 hover:text-[#0F172A]"
+                  ? "bg-[#FFF3D6] text-[#5B410C]"
+                  : "text-[#736B60] hover:bg-[#F7F5F0] hover:text-[#2F240E]"
               )}
             >
               <Icon size={18} />
@@ -66,33 +67,55 @@ export const CampusSidebar: React.FC = () => {
       </nav>
 
       <div className="p-4 space-y-2.5">
-        <div className="flex items-center justify-center gap-3 text-[10px] font-medium text-[#94A3B8]">
+        <div className="flex items-center justify-center gap-3 text-[10px] font-medium text-[#817B70]">
           <span>Lihat sebagai:</span>
-          <Link href="/" className="flex items-center gap-1 hover:text-[#6C5CE7] transition-colors">
+          <Link href="/" className="flex items-center gap-1 hover:text-[#76520E] transition-colors">
             <GraduationCap size={11} /> Mahasiswa
           </Link>
           <span>·</span>
-          <Link href="/parent" className="flex items-center gap-1 hover:text-[#6C5CE7] transition-colors">
+          <Link href="/parent" className="flex items-center gap-1 hover:text-[#76520E] transition-colors">
             <Users size={11} /> Orang Tua
           </Link>
         </div>
 
-        <div className="flex items-center gap-3 p-3 rounded-2xl bg-[#F5F3FF] cursor-pointer hover:bg-[#EDE9FE] transition-colors">
+        <div className="flex items-center gap-3 p-3 rounded-2xl bg-[#F7F5F0] cursor-pointer hover:bg-[#FFF3D6] transition-colors">
           <div className="relative shrink-0">
-            <div className="w-10 h-10 rounded-full bg-[#6C5CE7] text-white flex items-center justify-center font-bold text-sm">
+            <div className="w-10 h-10 rounded-full bg-[#FFB900] text-[#352500] flex items-center justify-center font-bold text-sm">
               N
             </div>
-            <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-white border-2 border-[#F5F3FF] flex items-center justify-center">
-              <MapPin size={9} className="text-[#6C5CE7]" />
+            <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-white border-2 border-[#FFF3D6] flex items-center justify-center">
+              <MapPin size={9} className="text-[#76520E]" />
             </div>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-[#0F172A] truncate">{CAMPUS_PROFILE.name}</p>
-            <p className="text-[11px] text-[#64748B] truncate">{CAMPUS_PROFILE.institution}</p>
+            <p className="text-sm font-bold text-[#2F240E] truncate">{CAMPUS_PROFILE.name}</p>
+            <p className="text-[11px] text-[#736B60] truncate">{CAMPUS_PROFILE.institution}</p>
           </div>
-          <ChevronDown size={16} className="text-[#94A3B8] shrink-0" />
+          <ChevronDown size={16} className="text-[#817B70] shrink-0" />
         </div>
       </div>
     </aside>
+  );
+};
+
+export const CampusMobileNav: React.FC = () => {
+  const pathname = usePathname();
+
+  return (
+    <nav className="flex gap-2 overflow-x-auto border-b border-[#E9E5DD] bg-white px-4 py-3 lg:hidden" aria-label="Navigasi kampus">
+      {NAV_ITEMS.map(({ href, label }) => (
+        <Link
+          key={href}
+          href={href}
+          aria-current={pathname === href ? "page" : undefined}
+          className={cn(
+            "shrink-0 rounded-xl px-3 py-2 text-sm font-semibold text-[#5B410C]",
+            pathname === href && "bg-[#FFF3D6]"
+          )}
+        >
+          {label}
+        </Link>
+      ))}
+    </nav>
   );
 };

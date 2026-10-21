@@ -100,7 +100,7 @@ export default function CoachPage() {
               }`}
             >
               {msg.sender === "ai" && (
-                <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-[#6C5CE7] to-[#4EA8FF] flex items-center justify-center text-white shrink-0 mt-1 shadow-xs">
+                <div className="w-7 h-7 rounded-xl bg-[#FFF0BD] flex items-center justify-center text-[#76520E] shrink-0 mt-1">
                   <BotMessageSquare size={16} />
                 </div>
               )}
@@ -108,8 +108,8 @@ export default function CoachPage() {
               <div
                 className={`p-3.5 rounded-[18px] text-xs leading-relaxed max-w-[82%] ${
                   msg.sender === "user"
-                    ? "bg-[#6C5CE7] text-white rounded-tr-xs"
-                    : "bg-white border border-[#E2E8F0] text-[#0F172A] shadow-[0_2px_8px_rgba(15,23,42,0.03)] rounded-tl-xs"
+                    ? "bg-[#FFF0BD] text-[#2F240E] rounded-tr-xs"
+                    : "bg-white border border-[#E9E5DD] text-[#2F240E] rounded-tl-xs"
                 }`}
               >
                 {msg.text}
@@ -118,8 +118,8 @@ export default function CoachPage() {
           ))}
 
           {isLoading && (
-            <div className="flex items-center gap-2 text-xs text-[#64748B] pl-9">
-              <span className="inline-block w-2 h-2 rounded-full bg-[#6C5CE7] animate-ping" />
+            <div className="flex items-center gap-2 text-xs text-[#736B60] pl-9">
+              <span className="inline-block w-2 h-2 rounded-full bg-[#76520E] animate-ping" />
               NerAI sedang menyusun saran terbaik...
             </div>
           )}
@@ -127,15 +127,15 @@ export default function CoachPage() {
 
         {/* QUICK PROMPTS */}
         <div className="space-y-2 pt-1">
-          <div className="flex items-center gap-1.5 text-[11px] text-[#64748B] font-semibold">
-            <Sparkles size={12} className="text-[#6C5CE7]" /> Saran Topik Cepat:
+          <div className="flex items-center gap-1.5 text-[11px] text-[#736B60] font-semibold">
+            <Sparkles size={12} className="text-[#76520E]" /> Saran Topik Cepat:
           </div>
           <div className="flex flex-wrap gap-1.5">
             {quickPrompts.map((prompt, i) => (
               <button
                 key={i}
                 onClick={() => handleSendMessage(prompt)}
-                className="text-[11px] bg-white border border-[#E2E8F0] text-[#0F172A] px-2.5 py-1.5 rounded-full hover:border-[#6C5CE7] transition-all text-left"
+                className="text-[11px] bg-white border border-[#E9E5DD] text-[#2F240E] px-2.5 py-1.5 rounded-full hover:border-[#BA8500] transition-colors text-left"
               >
                 {prompt}
               </button>
@@ -149,14 +149,14 @@ export default function CoachPage() {
             e.preventDefault();
             handleSendMessage(inputText);
           }}
-          className="flex items-center gap-2 pt-2 border-t border-[#E2E8F0]"
+          className="flex items-center gap-2 pt-2 border-t border-[#E9E5DD]"
         >
           <input
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Tanyakan sesuatu pada NerAI..."
-            className="flex-1 px-3.5 py-2.5 text-xs bg-white border border-[#E2E8F0] rounded-full focus:outline-none focus:border-[#6C5CE7]"
+            className="flex-1 px-3.5 py-2.5 text-xs bg-white border border-[#E9E5DD] rounded-full focus:outline-none focus:border-[#76520E]"
           />
           <Button
             type="submit"

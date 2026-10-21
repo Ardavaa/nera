@@ -11,7 +11,7 @@ export interface TrustBannerProps {
 }
 
 /**
- * Shared "read-only / privacy-first" gradient banner used anywhere Nera
+ * Shared "read-only / privacy-first" banner used anywhere Nera
  * explains what data it reads and why (Family Hub consent, Privileges Hub
  * transparency note, Parent pairing screen). Keeping this in one place means
  * a style change only needs to happen once.
@@ -21,24 +21,16 @@ export const TrustBanner: React.FC<TrustBannerProps> = ({
   eyebrow,
   title,
   children,
-  showSparkles = false,
   className,
 }) => {
   return (
     <div
       className={cn(
-        "bg-gradient-to-br from-[#00747F] to-[#0C4A6E] text-white relative overflow-hidden rounded-t-[20px]",
+        "bg-[#3A2800] text-white relative overflow-hidden rounded-t-[22px]",
         eyebrow || title ? "p-5" : "p-4 flex items-start gap-3",
         className
       )}
     >
-      {showSparkles && (
-        <>
-          <span className="absolute top-4 right-8 text-white/20 text-lg animate-pulse">✦</span>
-          <span className="absolute bottom-6 right-16 text-white/10 text-sm">✦</span>
-        </>
-      )}
-
       {eyebrow || title ? (
         <>
           <div className="flex items-center gap-2 mb-2">

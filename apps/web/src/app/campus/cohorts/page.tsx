@@ -9,23 +9,24 @@ export default function CampusCohortsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#0F172A]">Kohort Risiko per Fakultas</h1>
-        <p className="text-sm text-[#64748B] mt-1">
+        <h1 className="text-2xl font-bold text-[#2F240E]">Kohort Risiko per Fakultas</h1>
+        <p className="text-sm text-[#736B60] mt-1">
           Dikelompokkan berdasarkan Fakultas &amp; Angkatan.
         </p>
       </div>
 
-      <div className="flex items-start gap-2.5 bg-[#EAF4FF] border border-[#4EA8FF]/30 rounded-xl p-3.5">
-        <ShieldCheck size={16} className="text-[#00747F] shrink-0 mt-0.5" />
-        <p className="text-xs text-[#0F172A] leading-relaxed">
+      <div className="flex items-start gap-2.5 bg-[#FFF3D6] border border-[#A36A00]/30 rounded-xl p-3.5">
+        <ShieldCheck size={16} className="text-[#5B410C] shrink-0 mt-0.5" />
+        <p className="text-xs text-[#2F240E] leading-relaxed">
           Data pada tabel ini <strong>teragregasi dan anonim</strong> — tidak ada nama mahasiswa, NIM, atau data mutasi individual yang ditampilkan ke pihak kampus.
         </p>
       </div>
 
       <Card className="p-0 overflow-hidden">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+        <table className="min-w-[720px] w-full text-sm">
           <thead>
-            <tr className="bg-slate-50 text-left text-[11px] font-bold uppercase tracking-wider text-[#64748B]">
+            <tr className="bg-[#F7F5F0] text-left text-[11px] font-bold uppercase tracking-wider text-[#736B60]">
               <th className="px-5 py-3">Fakultas</th>
               <th className="px-5 py-3">Angkatan</th>
               <th className="px-5 py-3">Total Mahasiswa</th>
@@ -38,11 +39,11 @@ export default function CampusCohortsPage() {
             {CAMPUS_COHORT_RISK.map((row, idx) => (
               <tr
                 key={row.id}
-                className={idx !== CAMPUS_COHORT_RISK.length - 1 ? "border-b border-[#F1F5F9]" : ""}
+                className={idx !== CAMPUS_COHORT_RISK.length - 1 ? "border-b border-[#F7F5F0]" : ""}
               >
-                <td className="px-5 py-3.5 font-semibold text-[#0F172A]">{row.faculty}</td>
-                <td className="px-5 py-3.5 text-[#64748B]">{row.cohortYear}</td>
-                <td className="px-5 py-3.5 text-[#64748B]">{row.totalStudents}</td>
+                <td className="px-5 py-3.5 font-semibold text-[#2F240E]">{row.faculty}</td>
+                <td className="px-5 py-3.5 text-[#736B60]">{row.cohortYear}</td>
+                <td className="px-5 py-3.5 text-[#736B60]">{row.totalStudents}</td>
                 <td className="px-5 py-3.5">
                   <span className="text-[#15803D] font-bold">{row.amanPct}%</span>
                 </td>
@@ -56,6 +57,7 @@ export default function CampusCohortsPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </Card>
     </div>
   );

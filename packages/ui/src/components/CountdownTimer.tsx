@@ -56,7 +56,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({
       >
         {isExpired ? "00:00:00" : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`}
       </div>
-      <p className="text-[10px] font-semibold text-[#64748B] mt-1 uppercase tracking-wider">
+      <p className="text-[10px] font-semibold text-[#736B60] mt-1 uppercase tracking-wider">
         {isExpired ? "Jeda telah berakhir" : "Sisa Waktu Jeda"}
       </p>
     </div>

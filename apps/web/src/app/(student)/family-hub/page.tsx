@@ -76,8 +76,8 @@ export default function FamilyHubPage() {
             {/* Permission toggles */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Eye size={14} className="text-[#00747F]" />
-                <span className="text-xs font-medium text-[#0F172A]">Baca Kategori Mutasi</span>
+                <Eye size={14} className="text-[#5B410C]" />
+                <span className="text-xs font-medium text-[#2F240E]">Baca Kategori Mutasi</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="text-[10px] font-bold text-[#22C55E] bg-[#DDF0E6] px-2 py-0.5 rounded-full">READ-ONLY</span>
@@ -89,19 +89,19 @@ export default function FamilyHubPage() {
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <EyeOff size={14} className="text-[#64748B]" />
-                <span className="text-xs font-medium text-[#0F172A]">Akses Detail Rekening</span>
+                <EyeOff size={14} className="text-[#736B60]" />
+                <span className="text-xs font-medium text-[#2F240E]">Akses Detail Rekening</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="text-[10px] font-bold text-[#64748B] bg-[#F1F5F9] px-2 py-0.5 rounded-full">DIBLOKIR</span>
-                <div className="w-9 h-5 bg-[#E2E8F0] rounded-full relative">
+                <span className="text-[10px] font-bold text-[#736B60] bg-[#F7F5F0] px-2 py-0.5 rounded-full">DIBLOKIR</span>
+                <div className="w-9 h-5 bg-[#E9E5DD] rounded-full relative">
                   <div className="w-4 h-4 bg-white rounded-full absolute top-0.5 left-0.5 shadow-sm" />
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-1 border-t border-[#E2E8F0]">
-              <span className="text-xs font-medium text-[#0F172A]">Status Proteksi Data</span>
+            <div className="flex items-center justify-between pt-1 border-t border-[#E9E5DD]">
+              <span className="text-xs font-medium text-[#2F240E]">Status Proteksi Data</span>
               <span className="inline-flex items-center gap-1 text-[#22C55E] font-semibold text-xs bg-[#DDF0E6] px-2.5 py-1 rounded-full">
                 <ShieldCheck size={12} /> Terenkripsi BNI
               </span>
@@ -113,12 +113,12 @@ export default function FamilyHubPage() {
         <Card className="p-4 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#6C5CE7] to-[#4EA8FF] flex items-center justify-center text-white shadow-sm">
+              <div className="w-10 h-10 rounded-[12px] bg-[#FFF0BD] flex items-center justify-center text-[#76520E]">
                 <Users size={18} />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-[#0F172A]">Akun Terhubung</h4>
-                <p className="text-[11px] text-[#64748B]">Hendra Pratama (Ayah)</p>
+                <h4 className="text-xs font-bold text-[#2F240E]">Akun Terhubung</h4>
+                <p className="text-[11px] text-[#736B60]">Hendra Pratama (Ayah)</p>
               </div>
             </div>
             <span className="text-[10px] bg-[#DDF0E6] text-[#15803D] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1">
@@ -127,18 +127,18 @@ export default function FamilyHubPage() {
           </div>
 
           {/* Account details */}
-          <div className="p-3 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] space-y-2">
+          <div className="p-3 bg-[#F1F2F4] rounded-xl border border-[#E9E5DD] space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-[#64748B]">Rekening Orang Tua</span>
-              <span className="font-mono font-medium text-[#0F172A]">BNI •••• 7890</span>
+              <span className="text-[#736B60]">Rekening Orang Tua</span>
+              <span className="font-mono font-medium text-[#2F240E]">BNI •••• 7890</span>
             </div>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-[#64748B]">Rekening Anak</span>
-              <span className="font-mono font-medium text-[#0F172A]">wondr •••• 4501</span>
+              <span className="text-[#736B60]">Rekening Anak</span>
+              <span className="font-mono font-medium text-[#2F240E]">wondr •••• 4501</span>
             </div>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-[#64748B]">Tanggal Pairing</span>
-              <span className="font-medium text-[#0F172A]">15 Januari 2026</span>
+              <span className="text-[#736B60]">Tanggal Pairing</span>
+              <span className="font-medium text-[#2F240E]">15 Januari 2026</span>
             </div>
           </div>
 
@@ -166,31 +166,31 @@ export default function FamilyHubPage() {
         <Card className="p-4 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Sliders size={16} className="text-[#6C5CE7]" />
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
+              <Sliders size={16} className="text-[#76520E]" />
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#2F240E]">
                 Smart Allowance Splitter
               </h3>
             </div>
-            <span className="text-xs font-bold text-[#6C5CE7] bg-[#6C5CE7]/10 px-2 py-0.5 rounded-full">
+            <span className="text-xs font-bold text-[#76520E] bg-[#76520E]/10 px-2 py-0.5 rounded-full">
               {splitRatio}% / {100 - splitRatio}%
             </span>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#64748B] mb-1">
+            <label className="block text-xs font-semibold text-[#736B60] mb-1">
               Nominal Uang Saku Bulanan
             </label>
             <input
               type="number"
               value={allowanceInput}
               onChange={(e) => setAllowanceInput(Number(e.target.value))}
-              className="w-full px-3 py-2 text-sm font-bold text-[#0F172A] border border-[#E2E8F0] rounded-xl focus:outline-none focus:border-[#6C5CE7]"
+              className="w-full px-3 py-2 text-sm font-bold text-[#2F240E] border border-[#E9E5DD] rounded-xl focus:outline-none focus:border-[#76520E]"
             />
           </div>
 
           {/* Slider */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs font-medium text-[#64748B]">
+            <div className="flex justify-between text-xs font-medium text-[#736B60]">
               <span>Kebutuhan Harian ({splitRatio}%)</span>
               <span>Life Goals ({100 - splitRatio}%)</span>
             </div>
@@ -201,52 +201,52 @@ export default function FamilyHubPage() {
               step="5"
               value={splitRatio}
               onChange={(e) => setSplitRatio(Number(e.target.value))}
-              className="w-full accent-[#6C5CE7] cursor-pointer"
+              className="w-full accent-[#76520E] cursor-pointer"
             />
           </div>
 
           {/* Auto-routing Visualization */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-[10px] text-[#64748B] font-semibold uppercase tracking-wider">
-              <Sparkles size={10} className="text-[#6C5CE7]" /> Pratinjau Alokasi Otomatis
+            <div className="flex items-center gap-2 text-[10px] text-[#736B60] font-semibold uppercase tracking-wider">
+              <Sparkles size={10} className="text-[#76520E]" /> Pratinjau Alokasi Otomatis
             </div>
 
             {/* Flow visualization */}
             <div className="relative">
               {/* Source */}
-              <div className="p-3 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] flex items-center gap-2.5">
+              <div className="p-3 bg-[#F1F2F4] rounded-xl border border-[#E9E5DD] flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-full bg-[#DDF0E6] flex items-center justify-center">
                   <ArrowDownLeft size={14} className="text-[#22C55E]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-[10px] text-[#64748B]">Uang Saku Masuk</p>
-                  <p className="text-sm font-bold text-[#0F172A]">{formatRupiah(allowanceInput)}</p>
+                  <p className="text-[10px] text-[#736B60]">Uang Saku Masuk</p>
+                  <p className="text-sm font-bold text-[#2F240E]">{formatRupiah(allowanceInput)}</p>
                 </div>
               </div>
 
               {/* Arrow */}
               <div className="flex justify-center py-1.5">
                 <div className="flex flex-col items-center gap-0.5">
-                  <div className="w-0.5 h-3 bg-[#6C5CE7]/30" />
-                  <ArrowRight size={12} className="text-[#6C5CE7] rotate-90" />
+                  <div className="w-0.5 h-3 bg-[#76520E]/30" />
+                  <ArrowRight size={12} className="text-[#76520E] rotate-90" />
                 </div>
               </div>
 
               {/* Destinations */}
               <div className="grid grid-cols-2 gap-2">
-                <div className="p-3 bg-[#EAF4FF] rounded-xl border border-[#4EA8FF]/30 space-y-0.5">
-                  <div className="flex items-center gap-1 text-[11px] text-[#4EA8FF] font-semibold">
+                <div className="p-3 bg-[#FFF3D6] rounded-xl border border-[#A36A00]/30 space-y-0.5">
+                  <div className="flex items-center gap-1 text-[11px] text-[#A36A00] font-semibold">
                     <Wallet size={12} /> Daily Pocket
                   </div>
-                  <p className="text-sm font-black text-[#0F172A]">{formatRupiah(pocketAmount)}</p>
-                  <p className="text-[10px] text-[#64748B]">~{formatRupiah(Math.round(pocketAmount / 30))}/hari</p>
+                  <p className="text-sm font-black text-[#2F240E]">{formatRupiah(pocketAmount)}</p>
+                  <p className="text-[10px] text-[#736B60]">~{formatRupiah(Math.round(pocketAmount / 30))}/hari</p>
                 </div>
 
                 <div className="p-3 bg-[#DDF0E6] rounded-xl border border-[#22C55E]/30 space-y-0.5">
                   <div className="flex items-center gap-1 text-[11px] text-[#15803D] font-semibold">
                     <Lock size={12} /> BNI Life Goals
                   </div>
-                  <p className="text-sm font-black text-[#0F172A]">{formatRupiah(lockAmount)}</p>
+                  <p className="text-sm font-black text-[#2F240E]">{formatRupiah(lockAmount)}</p>
                   <p className="text-[10px] text-[#15803D]">Tabungan Wajib Aman</p>
                 </div>
               </div>
@@ -270,14 +270,14 @@ export default function FamilyHubPage() {
         </Card>
 
         {/* SECTION 4: NEXT MONTH PREVIEW */}
-        <Card className="p-4 space-y-2 bg-gradient-to-br from-[#F8FAFC] to-[#EBF4FF]">
-          <div className="flex items-center gap-1.5 text-[11px] text-[#4EA8FF] font-semibold uppercase tracking-wider">
+        <Card className="p-4 space-y-2 bg-[#FFF8E6] border-[#EEDB9A]">
+          <div className="flex items-center gap-1.5 text-[11px] text-[#A36A00] font-semibold uppercase tracking-wider">
             <Sparkles size={12} /> Pratinjau Bulan Depan
           </div>
-          <p className="text-xs text-[#64748B] leading-relaxed">
-            Saat uang saku <strong className="text-[#0F172A]">{formatRupiah(allowanceInput)}</strong> masuk bulan depan,
+          <p className="text-xs text-[#736B60] leading-relaxed">
+            Saat uang saku <strong className="text-[#2F240E]">{formatRupiah(allowanceInput)}</strong> masuk bulan depan,
             Nera akan otomatis mengalokasikan{" "}
-            <strong className="text-[#2563EB]">{formatRupiah(pocketAmount)}</strong> ke Daily Pocket dan{" "}
+            <strong className="text-[#76520E]">{formatRupiah(pocketAmount)}</strong> ke Daily Pocket dan{" "}
             <strong className="text-[#15803D]">{formatRupiah(lockAmount)}</strong> ke tabungan BNI Life Goals secara instan.
           </p>
         </Card>
@@ -290,12 +290,12 @@ export default function FamilyHubPage() {
         title="QR Code Pairing Ortu-Anak"
       >
         <div className="text-center space-y-4">
-          <div className="w-48 h-48 mx-auto bg-slate-100 rounded-2xl border-2 border-dashed border-[#6C5CE7] flex flex-col items-center justify-center p-4">
-            <QrCode size={110} className="text-[#6C5CE7]" />
-            <span className="text-[10px] font-mono text-[#64748B] mt-2">NERA-PAIR-BUDI-1301</span>
+          <div className="w-48 h-48 mx-auto bg-[#FFF8E6] rounded-2xl border-2 border-dashed border-[#BA8500] flex flex-col items-center justify-center p-4">
+            <QrCode size={110} className="text-[#76520E]" />
+            <span className="text-[10px] font-mono text-[#736B60] mt-2">NERA-PAIR-BUDI-1301</span>
           </div>
-          <p className="text-xs text-[#64748B]">
-            Minta orang tua memindai QR code ini melalui aplikasi <strong className="text-[#00747F]">wondr by BNI</strong> untuk aktivasi pairing dan autodebet allowance.
+          <p className="text-xs text-[#736B60]">
+            Minta orang tua memindai QR code ini melalui aplikasi <strong className="text-[#5B410C]">wondr by BNI</strong> untuk aktivasi pairing dan autodebet allowance.
           </p>
           <Button variant="outline" fullWidth onClick={() => setIsQrModalOpen(false)}>
             Tutup

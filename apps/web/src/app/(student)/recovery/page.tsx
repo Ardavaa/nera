@@ -87,29 +87,29 @@ export default function RecoveryPage() {
       <main className="flex-1 px-4 py-4 space-y-4">
         {/* CRISIS BANNER & INVESTMENT LOCK */}
         <Card className="p-0 overflow-hidden">
-          <div className={`p-4 rounded-t-[20px] ${isKritis ? "bg-gradient-to-r from-[#EF4444] to-[#DC2626]" : "bg-gradient-to-r from-[#FBBF24] to-[#F59E0B]"} text-white space-y-2`}>
+          <div className={`p-4 rounded-t-[22px] ${isKritis ? "bg-[#C43737] text-white" : "bg-[#FFF0BD] text-[#47310A]"} space-y-2`}>
             <div className="flex items-center gap-2">
               <AlertOctagon size={20} />
               <h3 className="text-xs font-bold uppercase tracking-wider">
                 {isKritis ? "Mode Pemulihan Darurat Aktif" : "Mode Pemulihan Aktif"}
               </h3>
             </div>
-            <p className="text-[11px] text-white/90 leading-relaxed">
+            <p className="text-[11px] leading-relaxed">
               Demi melindungi kesehatan finansialmu, <strong>semua penawaran produk investasi BNI dikunci total</strong> hingga siklus cicilan selesai dilunasi.
             </p>
           </div>
 
           {/* Reputation Protection Lock */}
           <div className="p-4 space-y-2 bg-[#FBE4DE]/20">
-            <div className="flex items-center gap-2 text-[#64748B]">
+            <div className="flex items-center gap-2 text-[#736B60]">
               <Ban size={14} />
               <span className="text-[10px] font-bold uppercase tracking-wider">Proteksi Reputasi BNI</span>
             </div>
             <div className="grid grid-cols-3 gap-2">
               {["Reksa Dana", "SBN / Sukuk", "KPR / KKB"].map((product) => (
-                <div key={product} className="flex items-center gap-1.5 px-2 py-1.5 bg-[#F1F5F9] rounded-lg">
+                <div key={product} className="flex items-center gap-1.5 px-2 py-1.5 bg-[#F7F5F0] rounded-lg">
                   <Lock size={10} className="text-[#EF4444]" />
-                  <span className="text-[10px] text-[#64748B] font-medium">{product}</span>
+                  <span className="text-[10px] text-[#736B60] font-medium">{product}</span>
                 </div>
               ))}
             </div>
@@ -119,28 +119,28 @@ export default function RecoveryPage() {
         {/* RECOVERY SUMMARY STATS */}
         <Card className="p-4 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#64748B]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#736B60]">
               Ringkasan Kewajiban
             </span>
             <StatusBadge status={state} />
           </div>
 
           <div className="grid grid-cols-3 gap-2">
-            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
-              <span className="text-[10px] text-[#64748B] block">Total Sisa</span>
+            <div className="p-3 bg-[#F7F5F0] rounded-xl text-center">
+              <span className="text-[10px] text-[#736B60] block">Total Sisa</span>
               <p className="text-sm font-black text-[#EF4444] mt-0.5">
                 {formatRupiah(snowballPlan.totalOutstanding)}
               </p>
             </div>
-            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
-              <span className="text-[10px] text-[#64748B] block">Beban/Bulan</span>
-              <p className="text-sm font-black text-[#0F172A] mt-0.5">
+            <div className="p-3 bg-[#F7F5F0] rounded-xl text-center">
+              <span className="text-[10px] text-[#736B60] block">Beban/Bulan</span>
+              <p className="text-sm font-black text-[#2F240E] mt-0.5">
                 {formatRupiah(snowballPlan.totalMonthlyBurn)}
               </p>
             </div>
-            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
-              <span className="text-[10px] text-[#64748B] block">DTI Ratio</span>
-              <p className={`text-sm font-black mt-0.5 ${Number(dtiPct) > 40 ? "text-[#EF4444]" : "text-[#FBBF24]"}`}>
+            <div className="p-3 bg-[#F7F5F0] rounded-xl text-center">
+              <span className="text-[10px] text-[#736B60] block">DTI Ratio</span>
+              <p className={`text-sm font-black mt-0.5 ${Number(dtiPct) > 40 ? "text-[#C43737]" : "text-[#A36A00]"}`}>
                 {dtiPct}%
               </p>
             </div>
@@ -163,19 +163,19 @@ export default function RecoveryPage() {
         {/* RECOVERY MILESTONES (Step Progress) */}
         <Card className="p-4 space-y-3">
           <div className="flex items-center gap-2">
-            <LifeBuoy size={16} className="text-[#6C5CE7]" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
+            <LifeBuoy size={16} className="text-[#76520E]" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#2F240E]">
               Milestone Pemulihan
             </h3>
           </div>
 
-          <StepProgress steps={stepItems} accentColor="#6C5CE7" />
+          <StepProgress steps={stepItems} accentColor="#76520E" />
         </Card>
 
         {/* DEBT SNOWBALL PRIORITIZATION LIST */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#2F240E]">
               Urutan Pelunasan (Debt Snowball)
             </h3>
             <Button
@@ -189,15 +189,15 @@ export default function RecoveryPage() {
           </div>
 
           {isAddDebtOpen && (
-            <Card className="p-4 space-y-3 border-[#6C5CE7]">
-              <h4 className="text-xs font-bold text-[#0F172A]">Input Kewajiban Pinjaman</h4>
+            <Card className="p-4 space-y-3 border-[#76520E]">
+              <h4 className="text-xs font-bold text-[#2F240E]">Input Kewajiban Pinjaman</h4>
               <form onSubmit={handleAddDebt} className="space-y-3">
                 <input
                   type="text"
                   placeholder="Nama Platform (misal: EasyDana / PayLater)"
                   value={platformName}
                   onChange={(e) => setPlatformName(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border rounded-xl focus:outline-none focus:border-[#6C5CE7]"
+                  className="w-full px-3 py-2 text-xs border rounded-xl focus:outline-none focus:border-[#76520E]"
                   required
                 />
                 <div className="grid grid-cols-2 gap-2">
@@ -206,7 +206,7 @@ export default function RecoveryPage() {
                     placeholder="Sisa Pokok (Rp)"
                     value={principal}
                     onChange={(e) => setPrincipal(Number(e.target.value))}
-                    className="w-full px-3 py-2 text-xs border rounded-xl focus:outline-none focus:border-[#6C5CE7]"
+                    className="w-full px-3 py-2 text-xs border rounded-xl focus:outline-none focus:border-[#76520E]"
                     required
                   />
                   <input
@@ -214,7 +214,7 @@ export default function RecoveryPage() {
                     placeholder="Cicilan / bln"
                     value={monthlyInstallment}
                     onChange={(e) => setMonthlyInstallment(Number(e.target.value))}
-                    className="w-full px-3 py-2 text-xs border rounded-xl focus:outline-none focus:border-[#6C5CE7]"
+                    className="w-full px-3 py-2 text-xs border rounded-xl focus:outline-none focus:border-[#76520E]"
                     required
                   />
                 </div>
@@ -228,8 +228,8 @@ export default function RecoveryPage() {
           {activeDebts.length === 0 ? (
             <Card className="p-6 text-center space-y-2 bg-slate-50">
               <CheckCircle size={36} className="text-[#22C55E] mx-auto" />
-              <h4 className="text-sm font-bold text-[#0F172A]">Bebas Dari Beban Cicilan</h4>
-              <p className="text-xs text-[#64748B]">
+              <h4 className="text-sm font-bold text-[#2F240E]">Bebas Dari Beban Cicilan</h4>
+              <p className="text-xs text-[#736B60]">
                 Tidak ada cicilan terdeteksi. Pertahankan status amanmu dan bangun dana darurat di BNI Life Goals!
               </p>
             </Card>
@@ -239,32 +239,32 @@ export default function RecoveryPage() {
                 <Card
                   key={debt.id}
                   className={`p-3.5 space-y-2 ${
-                    idx === 0 ? "border-2 border-[#6C5CE7] bg-[#6C5CE7]/5" : ""
+                    idx === 0 ? "border-2 border-[#76520E] bg-[#76520E]/5" : ""
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="w-5 h-5 rounded-full bg-[#6C5CE7] text-white text-[10px] font-bold flex items-center justify-center">
+                      <span className="w-5 h-5 rounded-full bg-[#76520E] text-white text-[10px] font-bold flex items-center justify-center">
                         #{debt.payoffPriority}
                       </span>
-                      <h4 className="text-xs font-bold text-[#0F172A]">{debt.platformName}</h4>
+                      <h4 className="text-xs font-bold text-[#2F240E]">{debt.platformName}</h4>
                     </div>
                     {idx === 0 && (
-                      <span className="text-[10px] bg-[#6C5CE7] text-white font-bold px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] bg-[#76520E] text-white font-bold px-2 py-0.5 rounded-full">
                         Target #1
                       </span>
                     )}
                   </div>
 
-                  <div className="flex justify-between items-center text-xs text-[#64748B]">
+                  <div className="flex justify-between items-center text-xs text-[#736B60]">
                     <span>Sisa: {formatRupiah(debt.outstandingPrincipal)}</span>
-                    <span className="font-bold text-[#0F172A]">
+                    <span className="font-bold text-[#2F240E]">
                       {formatRupiah(debt.monthlyInstallment)} / bulan
                     </span>
                   </div>
 
                   {/* Estimated payoff */}
-                  <div className="flex items-center justify-between text-[11px] text-[#64748B] pt-1 border-t border-slate-100">
+                  <div className="flex items-center justify-between text-[11px] text-[#736B60] pt-1 border-t border-slate-100">
                     <span>Estimasi lunas: ~{debt.remainingTenorMonths} bulan</span>
                   </div>
 
@@ -281,14 +281,14 @@ export default function RecoveryPage() {
               ))}
 
               {/* Snowball recommended steps */}
-              <Card className="p-4 space-y-2 bg-[#F8FAFC]">
-                <h4 className="text-xs font-bold text-[#0F172A] flex items-center gap-1.5">
-                  <ArrowRight size={12} className="text-[#6C5CE7]" /> Langkah Rekomendasi
+              <Card className="p-4 space-y-2 bg-[#F1F2F4]">
+                <h4 className="text-xs font-bold text-[#2F240E] flex items-center gap-1.5">
+                  <ArrowRight size={12} className="text-[#76520E]" /> Langkah Rekomendasi
                 </h4>
                 <ul className="space-y-1.5">
                   {snowballPlan.recommendedSteps.map((step, i) => (
-                    <li key={i} className="text-[11px] text-[#64748B] leading-relaxed flex gap-2">
-                      <span className="text-[#6C5CE7] font-bold shrink-0">{i + 1}.</span>
+                    <li key={i} className="text-[11px] text-[#736B60] leading-relaxed flex gap-2">
+                      <span className="text-[#76520E] font-bold shrink-0">{i + 1}.</span>
                       {step}
                     </li>
                   ))}
@@ -299,14 +299,14 @@ export default function RecoveryPage() {
         </div>
 
         {/* CAMPUS COUNSELING REFERRAL */}
-        <Card className="p-4 space-y-3 bg-[#EAF4FF] border-[#4EA8FF]/40">
-          <div className="flex items-center gap-2 text-[#00747F]">
+        <Card className="p-4 space-y-3 bg-[#FFF3D6] border-[#A36A00]/40">
+          <div className="flex items-center gap-2 text-[#5B410C]">
             <Heart size={18} />
             <h3 className="text-xs font-bold uppercase tracking-wider">
               Rujukan Konseling Kampus
             </h3>
           </div>
-          <p className="text-xs text-[#0F172A] leading-relaxed">
+          <p className="text-xs text-[#2F240E] leading-relaxed">
             Jika kamu merasa tertekan oleh tagihan pinjaman, jangan ragu untuk berkonsultasi secara <strong>rahasia dan gratis</strong> dengan Tim Advokasi Mahasiswa Telkom University.
           </p>
           <div className="grid grid-cols-2 gap-2">

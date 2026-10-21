@@ -18,12 +18,12 @@ export const MobileFrame: React.FC<MobileFrameProps> = ({ children, bottomNav })
       className="h-dvh sm:h-auto sm:min-h-screen flex justify-center items-start sm:py-6"
       style={{ backgroundColor: mockupCanvasColor }}
     >
-      <div className="w-full max-w-[430px] h-dvh sm:h-auto sm:min-h-[890px] sm:max-h-[920px] bg-[#F8FAFC] flex flex-col relative sm:rounded-[36px] sm:border-[8px] sm:border-[#1E293B] shadow-2xl overflow-hidden">
+      <div className="w-full max-w-[430px] h-dvh sm:h-auto sm:min-h-[890px] sm:max-h-[920px] bg-[#F1F2F4] flex flex-col relative sm:rounded-[36px] sm:border-[8px] sm:border-[#1E293B] shadow-2xl overflow-hidden">
         
         {/* iOS Status Bar */}
         <div className="w-full bg-white/95 backdrop-blur-md px-6 pt-3 pb-1 flex items-center justify-between z-50 select-none">
           {/* Time */}
-          <span className="text-[13px] font-semibold text-[#0F172A] tracking-tight">
+          <span className="text-[13px] font-semibold text-[#2F240E] tracking-tight">
             9:41
           </span>
 
@@ -34,16 +34,16 @@ export const MobileFrame: React.FC<MobileFrameProps> = ({ children, bottomNav })
           </div>
 
           {/* Status Icons: Signal, WiFi, Battery */}
-          <div className="flex items-center gap-1.5 text-[#0F172A]">
+          <div className="flex items-center gap-1.5 text-[#2F240E]">
             {/* Cellular Signal Bars */}
             <div className="flex items-end gap-[1.5px] h-3">
-              <span className="w-[2.5px] h-1 bg-[#0F172A] rounded-[0.5px]" />
-              <span className="w-[2.5px] h-1.5 bg-[#0F172A] rounded-[0.5px]" />
-              <span className="w-[2.5px] h-2 bg-[#0F172A] rounded-[0.5px]" />
-              <span className="w-[2.5px] h-2.5 bg-[#0F172A] rounded-[0.5px]" />
+              <span className="w-[2.5px] h-1 bg-[#2F240E] rounded-[0.5px]" />
+              <span className="w-[2.5px] h-1.5 bg-[#2F240E] rounded-[0.5px]" />
+              <span className="w-[2.5px] h-2 bg-[#2F240E] rounded-[0.5px]" />
+              <span className="w-[2.5px] h-2.5 bg-[#2F240E] rounded-[0.5px]" />
             </div>
             <Wifi size={13} className="stroke-[2.5]" />
-            <Battery size={16} className="stroke-[2.2] fill-[#0F172A]" />
+            <Battery size={16} className="stroke-[2.2] fill-[#2F240E]" />
           </div>
         </div>
         

@@ -13,11 +13,11 @@ export interface TopAppBarProps {
   homeBrand?: boolean;
 }
 
-export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false, homeBrand = false }) => {
+export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false }) => {
   const router = useRouter();
 
   return (
-    <header className={homeBrand ? "sticky top-0 z-40 bg-white px-4 py-3" : "sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#E2E8F0] px-4 py-3"}>
+    <header className="sticky top-0 z-40 bg-white px-4 py-3">
       <div className="flex items-center justify-between">
         {/* Left: Branding or Title */}
         {title ? (
@@ -25,26 +25,26 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false, h
             {showBack && (
               <button
                 onClick={() => router.back()}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-[#0F172A] hover:bg-slate-100 transition-colors -ml-1"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#2F240E] hover:bg-[#FFF3D6] transition-colors -ml-1"
                 aria-label="Kembali"
               >
                 <ArrowLeft size={20} />
               </button>
             )}
-            <h1 className="text-base font-bold text-[#0F172A]">{title}</h1>
+            <h1 className="text-base font-bold text-[#2F240E]">{title}</h1>
           </div>
         ) : (
           <div className="flex items-center gap-3">
             <Image
-              src={homeBrand ? "/logos/nera-home-logo.png" : "/logos/nera-logo.png"}
+              src="/logos/nera-home-logo.png"
               alt="Nera Logo"
-              width={homeBrand ? 112 : 100}
-              height={homeBrand ? 34 : 32}
-              className={homeBrand ? "h-8 w-auto object-contain" : "h-7.5 w-auto object-contain"}
+              width={112}
+              height={34}
+              className="h-8 w-auto object-contain"
               priority
-              unoptimized={homeBrand}
+              unoptimized
             />
-            <div className="h-5 w-[1.5px] bg-[#CBD5E1]" />
+            <div className="h-5 w-[1.5px] bg-[#D8D3C9]" />
             <Image
               src="/logos/wondr-bni.svg"
               alt="wondr by BNI"
@@ -61,7 +61,7 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false, h
           {/* NerAI Coach Button */}
           <Link
             href="/coach"
-            className={homeBrand ? "w-9 h-9 rounded-full flex items-center justify-center text-[#5B410C] bg-[#F5F5F5] hover:bg-[#FFF3D6] transition-colors" : "w-9 h-9 rounded-full flex items-center justify-center text-[#6C5CE7] hover:bg-[#6C5CE7]/10 transition-colors"}
+            className="w-9 h-9 rounded-full flex items-center justify-center text-[#5B410C] bg-[#F5F5F5] hover:bg-[#FFF3D6] transition-colors"
             aria-label="NerAI Coach"
           >
             <MessageCircle size={20} />
@@ -69,11 +69,11 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false, h
 
           {/* Notification Bell */}
           <button
-            className={homeBrand ? "relative w-9 h-9 rounded-full flex items-center justify-center text-[#2F240E] bg-[#F5F5F5] hover:bg-[#FFF3D6] transition-colors" : "relative w-9 h-9 rounded-full flex items-center justify-center text-[#0F172A] hover:bg-slate-100 transition-colors"}
+            className="relative w-9 h-9 rounded-full flex items-center justify-center text-[#2F240E] bg-[#F5F5F5] hover:bg-[#FFF3D6] transition-colors"
             aria-label="Notifikasi"
           >
-            <Bell size={22} className={homeBrand ? "text-[#2F240E]" : "text-[#0F172A]"} />
-            <span className={homeBrand ? "absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#FFB900] ring-2 ring-white" : "absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#6C5CE7] ring-2 ring-white"} />
+            <Bell size={22} className="text-[#2F240E]" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#FFB900] ring-2 ring-white" />
           </button>
 
           {/* Demo-only: role switcher + persona scenario switcher (judge/demo aid) */}

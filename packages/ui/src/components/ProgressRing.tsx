@@ -15,8 +15,8 @@ export const ProgressRing: React.FC<ProgressRingProps> = ({
   progress,
   size = 80,
   strokeWidth = 6,
-  color = "#6C5CE7",
-  trackColor = "#E2E8F0",
+  color = "#76520E",
+  trackColor = "#E9E5DD",
   children,
   className,
 }) => {
