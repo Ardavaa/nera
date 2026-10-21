@@ -44,11 +44,11 @@ const CATEGORY_ICONS: Record<string, React.ElementType> = {
 const CATEGORY_COLORS: Record<string, string> = {
   allowance: "#22C55E",
   food: "#F59E0B",
-  transport: "#3B82F6",
-  education: "#6C5CE7",
+  transport: "#D77A21",
+  education: "#76520E",
   loan: "#EF4444",
-  saving: "#00747F",
-  other: "#64748B",
+  saving: "#BA8500",
+  other: "#7D766B",
 };
 
 export default function HomePage() {
@@ -183,68 +183,63 @@ export default function HomePage() {
     triggerToast(`Transaksi QRIS ${formatRupiah(amount)} berhasil dicatat!`);
   };
 
-  const mascotSrc = state === "AMAN" ? "/mascots/mascot-okay.svg" : "/mascots/mascot-okay.svg";
-
   return (
-    <div className="flex flex-col min-h-full bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-full bg-[#F1F2F4]">
       {/* 1. TOP APP BAR (Branding + Notification) */}
-      <TopAppBar />
+      <TopAppBar homeBrand />
 
-      <main className="flex-1 px-4 pt-3.5 pb-6 space-y-4">
+      <main className="flex-1 px-4 pb-8 space-y-7">
         {/* 2. HERO CARD: DAILY RUNWAY & SMART POCKET */}
-        <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-b from-[#EBF4FF] via-[#FAF6FE]/40 to-[#FFFFFF] p-4 shadow-xs">
-          {/* Subtle sparkles decoration */}
-          <span className="absolute top-6 right-28 text-[#6C5CE7] text-xs select-none animate-pulse">✦</span>
-          <span className="absolute top-13 right-32 text-[#4EA8FF] text-[9px] select-none animate-pulse delay-500">✦</span>
+        <div className="relative -mx-4 overflow-hidden rounded-b-[32px] bg-white px-6 pt-6 pb-7">
 
           {/* Status Badge */}
-          <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${stateBadge.bg} border ${stateBadge.border} ${stateBadge.text} text-xs font-bold shadow-2xs`}>
+          <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${stateBadge.bg} border ${stateBadge.border} ${stateBadge.text} text-[11px] font-semibold`}>
             <span className={`w-2 h-2 rounded-full ${stateBadge.dot}`} />
             <span className="font-bold">{stateBadge.label}</span>
           </div>
 
           {/* Title & Runway Days */}
-          <div className="mt-2.5 max-w-[210px] relative z-10">
-            <p className="text-sm font-semibold text-[#0F172A]">Uangmu bertahan</p>
-            <h2 className="text-[30px] font-bold text-[#0F172A] tracking-tight leading-tight mt-0.5">
+          <div className="mt-5 max-w-[210px] relative z-10">
+            <p className="text-sm font-medium text-[#766D61]">Uangmu bertahan</p>
+            <h2 className="text-[31px] font-bold text-[#2F240E] tracking-tight leading-tight mt-1">
               {runwayDays} Hari Lagi
             </h2>
-            <p className="text-xs text-[#64748B] mt-0.5">
+            <p className="text-xs text-[#817B70] mt-1">
               Estimasi aman hingga {runwayEndDate}
             </p>
           </div>
 
           {/* Nera Mascot */}
-          <div className="absolute top-2 -right-1 w-36 h-36 pointer-events-none select-none z-0">
+          <div className="absolute top-9 right-2 w-36 h-36 pointer-events-none select-none z-0">
             <Image
-              src={mascotSrc}
+              src="/images/nera-home-mascot.png"
               alt="Nera Bot Mascot"
               width={144}
               height={144}
               className="w-full h-full object-contain"
               priority
+              unoptimized
             />
           </div>
 
-          {/* White Inner Card */}
-          <div className="relative z-10 mt-3.5 -mx-1.5 bg-white rounded-[24px] p-4 space-y-3">
+          <div className="relative z-10 mt-7 space-y-4">
             {/* Runway Progress Bar */}
             <div className="flex items-center gap-3">
-              <div className="flex-1 h-3.5 rounded-full bg-[#E5F0FF] overflow-hidden p-[1.5px]">
+              <div className="flex-1 h-2 rounded-full bg-[#F4ECDD] overflow-hidden">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-[#4EA8FF] to-[#3B82F6] transition-all duration-500"
+                  className="h-full rounded-full bg-[#FFB900] transition-all duration-500"
                   style={{ width: `${runwayPct}%` }}
                 />
               </div>
-              <span className="text-xs font-bold text-[#0F172A]">{runwayPct}%</span>
+              <span className="text-xs font-semibold text-[#473511]">{runwayPct}%</span>
             </div>
 
             {/* Recommendation Info Row */}
-            <div className="flex items-center gap-1.5 text-xs text-[#64748B]">
-              <FileText size={14} className="text-[#3B82F6]" />
+            <div className="flex items-center gap-1.5 text-xs text-[#817B70]">
+              <FileText size={14} className="text-[#A36A00]" />
               <span>
                 Rekomendasi budget:{" "}
-                <strong className="text-[#2563EB] font-bold">
+                <strong className="text-[#533A08] font-semibold">
                   {formatRupiah(dailyBudgetSafe)}
                 </strong>{" "}
                 / hari
@@ -252,10 +247,10 @@ export default function HomePage() {
             </div>
 
             {/* Pockets Grid */}
-            <div className="grid grid-cols-2 gap-2.5 pt-0.5">
+            <div className="grid grid-cols-2 gap-2.5 pt-1">
               {/* Pocket 1: Daily Pocket */}
-              <div className="bg-white border border-[#E8F0FA] rounded-[20px] p-3.5 flex items-center gap-2.5 shadow-2xs">
-                <div className="w-10 h-10 rounded-full bg-[#EBF5FF] flex items-center justify-center text-[#2563EB] shrink-0">
+              <div className="bg-[#F7F7F7] rounded-[19px] p-3.5 flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-[13px] bg-white flex items-center justify-center text-[#76520E] shrink-0">
                   <Wallet size={18} />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -268,8 +263,8 @@ export default function HomePage() {
               </div>
 
               {/* Pocket 2: Lock Pocket */}
-              <div className="bg-white border border-[#F0E8FA] rounded-[20px] p-3.5 flex items-center gap-2.5 shadow-2xs">
-                <div className="w-10 h-10 rounded-full bg-[#F3E8FF] flex items-center justify-center text-[#7C3AED] shrink-0">
+              <div className="bg-[#FFF3D6] rounded-[19px] p-3.5 flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-[13px] bg-white/75 flex items-center justify-center text-[#76520E] shrink-0">
                   <Lock size={18} />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -277,7 +272,7 @@ export default function HomePage() {
                   <span className="text-[10px] text-[#64748B] block mt-0.5">(BNI Life Goals)</span>
                   <p className="text-sm font-bold text-[#0F172A] mt-0.5 flex items-center gap-1" title={formatRupiah(lockPocket)}>
                     <span>{formatRupiahShort(lockPocket)}</span>
-                    <Lock size={12} className="text-[#7C3AED] fill-[#7C3AED] shrink-0" />
+                    <Lock size={12} className="text-[#76520E] shrink-0" />
                   </p>
                 </div>
               </div>
@@ -286,25 +281,25 @@ export default function HomePage() {
         </div>
 
         {/* 3. QUICK ACTION SECTION */}
-        <section className="space-y-2.5 pt-1">
+        <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-[15px] font-bold text-[#0F172A]">Quick Action</h3>
+            <h3 className="text-[16px] font-semibold text-[#2F240E]">Quick Action</h3>
             <button
               onClick={() => setActiveActionModal("Semua Menu Quick Action")}
-              className="text-xs font-bold text-[#6C5CE7] hover:underline cursor-pointer"
+              className="text-xs font-medium text-[#76520E] hover:underline cursor-pointer"
             >
               Lihat Semua
             </button>
           </div>
 
-          <div className="bg-white border border-[#E2E8F0] rounded-[22px] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)]">
+          <div>
             <div className="grid grid-cols-4 gap-2">
               {/* 1. Scan QRIS */}
               <button
                 onClick={() => setIsQuickSpendOpen(true)}
-                className="flex flex-col items-center gap-2 group cursor-pointer"
+                className="flex min-h-[106px] flex-col items-center justify-center gap-2 rounded-[20px] bg-white group cursor-pointer"
               >
-                <div className="w-13 h-13 rounded-full bg-[#EDF6FF] text-[#2563EB] flex items-center justify-center shadow-xs transition-transform active:scale-95 group-hover:bg-[#E0EFFF]">
+                <div className="w-11 h-11 rounded-[14px] bg-[#FFF3D6] text-[#76520E] flex items-center justify-center transition-transform group-active:scale-95">
                   <QrCode size={22} className="stroke-[2]" />
                 </div>
                 <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
@@ -315,9 +310,9 @@ export default function HomePage() {
               {/* 2. Transfer */}
               <button
                 onClick={() => setActiveActionModal("Transfer Saldo BNI")}
-                className="flex flex-col items-center gap-2 group cursor-pointer"
+                className="flex min-h-[106px] flex-col items-center justify-center gap-2 rounded-[20px] bg-white group cursor-pointer"
               >
-                <div className="w-13 h-13 rounded-full bg-[#EDF6FF] text-[#2563EB] flex items-center justify-center shadow-xs transition-transform active:scale-95 group-hover:bg-[#E0EFFF]">
+                <div className="w-11 h-11 rounded-[14px] bg-[#FFF3D6] text-[#76520E] flex items-center justify-center transition-transform group-active:scale-95">
                   <ArrowUpRight size={22} className="stroke-[2.2]" />
                 </div>
                 <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
@@ -328,9 +323,9 @@ export default function HomePage() {
               {/* 3. Bayar Tagihan */}
               <button
                 onClick={() => setIsPayKosOpen(true)}
-                className="flex flex-col items-center gap-2 group cursor-pointer"
+                className="flex min-h-[106px] flex-col items-center justify-center gap-2 rounded-[20px] bg-white group cursor-pointer"
               >
-                <div className="w-13 h-13 rounded-full bg-[#EDF6FF] text-[#2563EB] flex items-center justify-center shadow-xs transition-transform active:scale-95 group-hover:bg-[#E0EFFF]">
+                <div className="w-11 h-11 rounded-[14px] bg-[#FFF3D6] text-[#76520E] flex items-center justify-center transition-transform group-active:scale-95">
                   <FileText size={22} className="stroke-[2]" />
                 </div>
                 <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
@@ -341,9 +336,9 @@ export default function HomePage() {
               {/* 4. Top Up */}
               <button
                 onClick={() => setActiveActionModal("Top Up Saldo Taplus Muda")}
-                className="flex flex-col items-center gap-2 group cursor-pointer"
+                className="flex min-h-[106px] flex-col items-center justify-center gap-2 rounded-[20px] bg-white group cursor-pointer"
               >
-                <div className="w-13 h-13 rounded-full bg-[#EDF6FF] text-[#2563EB] flex items-center justify-center shadow-xs transition-transform active:scale-95 group-hover:bg-[#E0EFFF]">
+                <div className="w-11 h-11 rounded-[14px] bg-[#FFF3D6] text-[#76520E] flex items-center justify-center transition-transform group-active:scale-95">
                   <WalletCards size={22} className="stroke-[2]" />
                 </div>
                 <span className="text-xs font-bold text-[#0F172A] text-center leading-tight">
@@ -355,14 +350,14 @@ export default function HomePage() {
         </section>
 
         {/* 4. INSIGHT NERA (Smart Nudges) */}
-        <section className="space-y-2.5 pt-1">
-          <h3 className="text-[15px] font-bold text-[#0F172A]">Insight Nera</h3>
+        <section className="space-y-3">
+          <h3 className="text-[16px] font-semibold text-[#2F240E]">Insight Nera</h3>
 
-          <div className="space-y-3">
+          <div className="overflow-hidden rounded-[24px] bg-white divide-y divide-[#F0EEE9]">
             {/* Nudge: Kos Payment */}
             {nudges.find((n) => n.category === "BILL_KOS") && (
-              <div className="bg-[#FDF6E9] border border-[#FDE68A]/80 rounded-[22px] p-4 flex gap-3.5 shadow-xs">
-                <div className="w-12 h-12 rounded-full bg-[#FDF0D5] text-[#D97706] flex items-center justify-center shrink-0 mt-0.5">
+              <div className="p-4 flex gap-3.5">
+                <div className="w-10 h-10 rounded-[13px] bg-[#FFF3D6] text-[#A36A00] flex items-center justify-center shrink-0 mt-0.5">
                   <Home size={22} className="stroke-[2.5]" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -378,7 +373,7 @@ export default function HomePage() {
                   <div className="flex justify-end mt-2.5">
                     <button
                       onClick={() => setIsPayKosOpen(true)}
-                      className="bg-[#6C5CE7] hover:bg-[#5B4CD4] text-white text-xs font-bold px-4 py-2 rounded-full shadow-sm transition-all cursor-pointer active:scale-95"
+                      className="bg-[#FFB900] hover:bg-[#F2AE00] text-[#352500] text-xs font-semibold px-4 py-2 rounded-xl transition-colors cursor-pointer"
                     >
                       Bayar via BNI
                     </button>
@@ -389,8 +384,8 @@ export default function HomePage() {
 
             {/* Nudge: UKT */}
             {nudges.find((n) => n.category === "BILL_UKT") && (
-              <div className="bg-[#F0EBFF] border border-[#C4B5FD]/60 rounded-[22px] p-4 flex gap-3.5 shadow-xs">
-                <div className="w-12 h-12 rounded-full bg-[#E8DEFF] text-[#6C5CE7] flex items-center justify-center shrink-0 mt-0.5">
+              <div className="p-4 flex gap-3.5">
+                <div className="w-10 h-10 rounded-[13px] bg-[#FFF3D6] text-[#A36A00] flex items-center justify-center shrink-0 mt-0.5">
                   <GraduationCap size={22} className="stroke-[2.5]" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -398,7 +393,7 @@ export default function HomePage() {
                     <h4 className="text-sm font-bold text-[#0F172A] tracking-tight">
                       UKT Semester Ganjil
                     </h4>
-                    <span className="text-[10px] bg-[#6C5CE7] text-white font-bold px-2 py-0.5 rounded-full shrink-0">
+                    <span className="text-[10px] bg-[#FFF3D6] text-[#6D4C00] font-semibold px-2 py-0.5 rounded-full shrink-0">
                       12 Hari
                     </span>
                   </div>
@@ -411,8 +406,8 @@ export default function HomePage() {
 
             {/* Nudge: End-of-Month Sweep */}
             {nudges.find((n) => n.category === "SWEEP_LEFTOVER") && (
-              <div className="bg-[#ECF8F1] border border-[#86EFAC]/60 rounded-[22px] p-4 flex gap-3.5 shadow-xs">
-                <div className="w-12 h-12 rounded-full bg-[#DCFCE7] text-[#15803D] flex items-center justify-center shrink-0 mt-0.5">
+              <div className="p-4 flex gap-3.5">
+                <div className="w-10 h-10 rounded-[13px] bg-[#FFF3D6] text-[#A36A00] flex items-center justify-center shrink-0 mt-0.5">
                   <ArrowUpFromLine size={22} className="stroke-[2.5]" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -428,7 +423,7 @@ export default function HomePage() {
                   <div className="flex justify-end mt-2.5">
                     <button
                       onClick={() => setSweepModalOpen(true)}
-                      className="bg-[#00747F] hover:bg-[#005F68] text-white text-xs font-bold px-4 py-2 rounded-full shadow-sm transition-all cursor-pointer active:scale-95"
+                      className="bg-[#3A2800] hover:bg-[#5A4009] text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors cursor-pointer"
                     >
                       Sapu ke Life Goals
                     </button>
@@ -438,8 +433,8 @@ export default function HomePage() {
             )}
 
             {/* Weekly Spending Insight */}
-            <div className="bg-[#ECF1FD] border border-[#D9E4FA] rounded-[22px] p-4 flex gap-3.5 shadow-xs">
-              <div className="w-12 h-12 rounded-full bg-[#E0EDFF] text-[#2563EB] flex items-center justify-center shrink-0 mt-0.5">
+            <div className="p-4 flex gap-3.5">
+              <div className="w-10 h-10 rounded-[13px] bg-[#FFF3D6] text-[#A36A00] flex items-center justify-center shrink-0 mt-0.5">
                 <Coffee size={22} className="stroke-[2.5]" />
               </div>
               <div className="flex-1 min-w-0">
@@ -459,31 +454,31 @@ export default function HomePage() {
 
         {/* 4.5. MANFAAT BNI UNTUKMU (Persona-based Privilege Hub entry point) */}
         {topPersona && (
-          <section className="space-y-2.5 pt-1">
-            <h3 className="text-[15px] font-bold text-[#0F172A]">Manfaat BNI Untukmu</h3>
+          <section className="space-y-3">
+            <h3 className="text-[16px] font-semibold text-[#2F240E]">Manfaat BNI Untukmu</h3>
             <Link href="/privileges">
-              <div className="bg-gradient-to-br from-[#6C5CE7] to-[#4EA8FF] rounded-[22px] p-4 flex items-center gap-3.5 shadow-[0_8px_24px_rgba(108,92,231,0.18)] active:scale-[0.99] transition-transform">
-                <div className="w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center shrink-0">
+              <div className="bg-[#FFD568] rounded-[22px] p-4 flex items-center gap-3.5 active:scale-[0.99] transition-transform">
+                <div className="w-12 h-12 rounded-[15px] bg-white/55 text-[#47310A] flex items-center justify-center shrink-0">
                   <Gift size={22} className="stroke-[2]" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-bold text-white tracking-tight">{topPersona.label}</h4>
-                  <p className="text-xs text-white/85 leading-relaxed mt-0.5">{topPersona.tagline}</p>
+                  <h4 className="text-sm font-bold text-[#352500] tracking-tight">{topPersona.label}</h4>
+                  <p className="text-xs text-[#5C471A] leading-relaxed mt-0.5">{topPersona.tagline}</p>
                 </div>
-                <ChevronRight size={20} className="text-white/90 stroke-[2.5] shrink-0" />
+                <ChevronRight size={20} className="text-[#5C471A] stroke-[2] shrink-0" />
               </div>
             </Link>
           </section>
         )}
 
         {/* 5. RECENT TRANSACTIONS */}
-        <section className="space-y-2.5 pt-1">
+        <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-[15px] font-bold text-[#0F172A]">Transaksi Terakhir</h3>
+            <h3 className="text-[16px] font-semibold text-[#2F240E]">Transaksi Terakhir</h3>
             <span className="text-xs font-medium text-[#64748B]">{transactions.length} total</span>
           </div>
 
-          <div className="bg-white border border-[#E2E8F0] rounded-[22px] overflow-hidden shadow-[0_2px_12px_rgba(15,23,42,0.03)]">
+          <div className="bg-white rounded-[24px] overflow-hidden">
             {recentTransactions.map((tx, idx) => {
               const IconComp = CATEGORY_ICONS[tx.category] || ShoppingBag;
               const color = CATEGORY_COLORS[tx.category] || "#64748B";

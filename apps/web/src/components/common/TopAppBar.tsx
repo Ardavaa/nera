@@ -10,13 +10,14 @@ import { DemoControlPanel } from "./DemoControlPanel";
 export interface TopAppBarProps {
   title?: string;
   showBack?: boolean;
+  homeBrand?: boolean;
 }
 
-export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false }) => {
+export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false, homeBrand = false }) => {
   const router = useRouter();
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#E2E8F0] px-4 py-3">
+    <header className={homeBrand ? "sticky top-0 z-40 bg-white px-4 py-3" : "sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#E2E8F0] px-4 py-3"}>
       <div className="flex items-center justify-between">
         {/* Left: Branding or Title */}
         {title ? (
@@ -35,12 +36,13 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false })
         ) : (
           <div className="flex items-center gap-3">
             <Image
-              src="/logos/nera-logo.png"
+              src={homeBrand ? "/logos/nera-home-logo.png" : "/logos/nera-logo.png"}
               alt="Nera Logo"
-              width={100}
-              height={32}
-              className="h-7.5 w-auto object-contain"
+              width={homeBrand ? 112 : 100}
+              height={homeBrand ? 34 : 32}
+              className={homeBrand ? "h-8 w-auto object-contain" : "h-7.5 w-auto object-contain"}
               priority
+              unoptimized={homeBrand}
             />
             <div className="h-5 w-[1.5px] bg-[#CBD5E1]" />
             <Image
@@ -59,7 +61,7 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false })
           {/* NerAI Coach Button */}
           <Link
             href="/coach"
-            className="w-9 h-9 rounded-full flex items-center justify-center text-[#6C5CE7] hover:bg-[#6C5CE7]/10 transition-colors"
+            className={homeBrand ? "w-9 h-9 rounded-full flex items-center justify-center text-[#5B410C] bg-[#F5F5F5] hover:bg-[#FFF3D6] transition-colors" : "w-9 h-9 rounded-full flex items-center justify-center text-[#6C5CE7] hover:bg-[#6C5CE7]/10 transition-colors"}
             aria-label="NerAI Coach"
           >
             <MessageCircle size={20} />
@@ -67,11 +69,11 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false })
 
           {/* Notification Bell */}
           <button
-            className="relative w-9 h-9 rounded-full flex items-center justify-center text-[#0F172A] hover:bg-slate-100 transition-colors"
+            className={homeBrand ? "relative w-9 h-9 rounded-full flex items-center justify-center text-[#2F240E] bg-[#F5F5F5] hover:bg-[#FFF3D6] transition-colors" : "relative w-9 h-9 rounded-full flex items-center justify-center text-[#0F172A] hover:bg-slate-100 transition-colors"}
             aria-label="Notifikasi"
           >
-            <Bell size={22} className="text-[#0F172A]" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#6C5CE7] ring-2 ring-white" />
+            <Bell size={22} className={homeBrand ? "text-[#2F240E]" : "text-[#0F172A]"} />
+            <span className={homeBrand ? "absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#FFB900] ring-2 ring-white" : "absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#6C5CE7] ring-2 ring-white"} />
           </button>
 
           {/* Demo-only: role switcher + persona scenario switcher (judge/demo aid) */}
