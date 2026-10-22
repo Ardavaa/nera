@@ -5,5 +5,5 @@ export default function StudentLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <MobileFrame>{children}</MobileFrame>;
+  return <MobileFrame showFullscreenControl>{children}</MobileFrame>;
 }

@@ -38,6 +38,7 @@ Kartu Kantong Budget (`/pockets`) boleh memakai nada hangat sebagai pembeda anta
 - Jarak, ukuran teks, dan hierarki mengikuti kepentingan informasi. Angka finansial penting ditampilkan lengkap.
 - Status yang dapat ditindaklanjuti harus punya tombol atau tautan yang jelas. Jangan tampilkan chevron untuk konten yang tidak bisa dibuka.
 - Layar mahasiswa dan orang tua memakai frame mobile 430 px; dashboard kampus menyesuaikan lebar layar dan menumpuk panel pada viewport sempit.
+- Frame mobile tidak menampilkan status bar perangkat tiruan. Header mahasiswa menyediakan tombol fullscreen di pojok kanan atas; header orang tua tidak menampilkannya.
 
 ## Interaksi
 

@@ -54,7 +54,7 @@ export const DemoControlPanel: React.FC = () => {
     <div className="relative">
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className="w-9 h-9 rounded-full flex items-center justify-center text-[#817B70] hover:bg-slate-100 hover:text-[#2F240E] transition-colors"
+        className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-[#817B70] hover:bg-slate-100 hover:text-[#2F240E] transition-colors"
         aria-label="Menu Demo"
         title="Menu Demo"
       >
