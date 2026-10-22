@@ -47,15 +47,6 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false })
               priority
               unoptimized
             />
-            <div className="h-5 w-[1.5px] bg-[#D8D3C9]" />
-            <Image
-              src="/logos/wondr-bni.svg"
-              alt="wondr by BNI"
-              width={105}
-              height={28}
-              className="h-5 w-auto shrink-0 object-contain sm:h-6.5"
-              priority
-            />
           </div>
         )}
 

@@ -1,0 +1,47 @@
+
+> @nera/web@1.0.0 dev D:\dave-workspace\0_competition\1_hackathon\bni-ventures\apps\web
+> next dev -p 3000
+
+   ▲ Next.js 15.5.23
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.101:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 2.1s
+ ○ Compiling / ...
+ ✓ Compiled / in 5.9s (848 modules)
+ GET / 200 in 6679ms
+ ○ Compiling /upload-transaction ...
+ ✓ Compiled /upload-transaction in 1693ms (858 modules)
+ GET /upload-transaction 200 in 1989ms
+ ✓ Compiled /pockets in 469ms (885 modules)
+ GET /pockets 200 in 648ms
+ ✓ Compiled /risk-check in 402ms (902 modules)
+ GET /risk-check 200 in 570ms
+ ○ Compiling /coach ...
+ ✓ Compiled /coach in 527ms (921 modules)
+ GET /coach 200 in 738ms
+ GET / 200 in 109ms
+ ○ Compiling /privileges ...
+ ✓ Compiled /privileges in 1197ms (887 modules)
+ ✓ Compiled /pockets in 179ms (518 modules)
+ GET /pockets 200 in 424ms
+ GET /pockets 200 in 318ms
+ GET / 200 in 54ms
+ GET / 200 in 36ms
+ ○ Compiling /onboarding ...
+ ✓ Compiled /onboarding in 727ms (936 modules)
+ GET /pockets 200 in 83ms
+ GET /pockets 200 in 25ms
+ GET / 200 in 41ms
+ GET /onboarding 200 in 55ms
+ GET /privileges 200 in 69ms
+ ○ Compiling /family-hub ...
+ ✓ Compiled /family-hub in 733ms (951 modules)
+ GET /family-hub 200 in 831ms
+ ○ Compiling /wealth-engine ...
+ ✓ Compiled /wealth-engine in 602ms (970 modules)
+ GET /wealth-engine 200 in 559ms
+ ✓ Compiled /upload-transaction in 299ms (564 modules)
+ GET /upload-transaction 200 in 592ms
