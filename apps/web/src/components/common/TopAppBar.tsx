@@ -52,9 +52,9 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false })
 
         {/* Right: NerAI Coach + Notification Bell */}
         <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
-          {/* NerAI Coach Button */}
+          {/* NeraAI Chat Button */}
           <Link
-            href="/coach"
+            href="/recovery"
             className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-[#5B410C] bg-[#F5F5F5] hover:bg-[#FFF3D6] transition-colors"
             aria-label="NerAI Coach"
           >

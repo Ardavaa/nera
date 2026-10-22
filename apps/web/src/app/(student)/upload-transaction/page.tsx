@@ -15,16 +15,14 @@ import {
   FileSpreadsheet,
   Images,
   Loader2,
-  MessageCircle,
 } from "lucide-react";
 
-type TabId = "manual" | "nera" | "upload";
+type TabId = "manual" | "upload";
 
 type AnalysisStage = "idle" | "analyzing" | "done";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "manual", label: "Manual" },
-  { id: "nera", label: "NerAI" },
   { id: "upload", label: "Upload" },
 ];
 
@@ -161,7 +159,7 @@ export default function UploadTransactionPage() {
 
       <main className="flex-1 px-4 py-4 space-y-3.5">
         {/* Segmented input-mode switcher */}
-        <div className="grid grid-cols-3 gap-1 rounded-[16px] border border-[#E9E5DD] bg-white p-1">
+        <div className="grid grid-cols-2 gap-1 rounded-[16px] border border-[#E9E5DD] bg-white p-1">
           {TABS.map((tab) => (
             <button
               key={tab.id}
@@ -418,27 +416,6 @@ export default function UploadTransactionPage() {
           </Card>
         )}
 
-        {/* NERAI TAB */}
-        {activeTab === "nera" && (
-          <Card className="animate-overlay-in space-y-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#FFF3D6] text-[#76520E]">
-              <MessageCircle size={22} strokeWidth={2.1} />
-            </span>
-            <div>
-              <p className="text-[14px] font-bold text-[#2F240E]">Mau tempel teks mutasi?</p>
-              <p className="mt-0.5 text-[12px] leading-relaxed text-[#736B60]">
-                Salin teks mutasi rekening, rincian QRIS, atau catatan cicilan dari mana saja, lalu
-                tempel ke chat NerAI — dibaca dan dihitung otomatis.
-              </p>
-            </div>
-            <Link
-              href="/coach"
-              className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-[14px] bg-[#FFB900] px-4 text-sm font-medium text-[#352500] transition-colors hover:bg-[#E6A700]"
-            >
-              Buka NerAI Coach
-            </Link>
-          </Card>
-        )}
       </main>
     </div>
   );

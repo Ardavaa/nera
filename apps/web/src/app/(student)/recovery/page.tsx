@@ -14,7 +14,6 @@ import {
   RotateCcw,
   PlusCircle,
   X,
-  Bot,
 } from "lucide-react";
 import { Button } from "@nera/ui";
 
@@ -262,7 +261,7 @@ export default function RecoveryPage() {
           <div className="flex flex-col items-center text-center py-6 space-y-2">
             <div className="relative w-16 h-16 rounded-full bg-[#FFF0BD] border-2 border-[#BA8500]/30 flex items-center justify-center shadow-xs">
               <Image
-                src="/images/nera-home-mascot.webp"
+                src="/mascots/mascot-standing.png"
                 alt="Nera AI Mascot"
                 width={56}
                 height={56}
@@ -290,12 +289,18 @@ export default function RecoveryPage() {
             >
               {/* If assistant, show small bot avatar row */}
               {msg.role === "assistant" && (
-                <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#76520E] mb-1 pl-1">
-                  <div className="w-5 h-5 rounded-full bg-[#FFF0BD] flex items-center justify-center text-[#76520E]">
-                    <Bot size={12} />
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#76520E] mb-1 pl-1">
+                    <div className="h-5 w-5 shrink-0 overflow-hidden rounded-full bg-[#FFF0BD]">
+                      <Image
+                        src="/mascots/mascot-standing.png"
+                        alt="Nera AI"
+                        width={20}
+                        height={24}
+                        className="h-full w-full object-contain"
+                      />
+                    </div>
+                    <span>Nera</span>
                   </div>
-                  <span>Nera</span>
-                </div>
               )}
 
               {/* Message Bubble */}

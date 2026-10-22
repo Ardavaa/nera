@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, ShieldAlert, UploadCloud, X } from "lucide-react";
+import { ArrowRight, MessageCircle, ShieldAlert, UploadCloud, X } from "lucide-react";
 
 export interface CenterActionSheetProps {
   open: boolean;
@@ -89,6 +89,24 @@ export const CenterActionSheet: React.FC<CenterActionSheetProps> = ({ open, onCl
                 </span>
                 <span className="mt-0.5 block text-[11px] leading-relaxed text-[#736B60]">
                   Impor mutasi rekening atau struk untuk dianalisis
+                </span>
+              </span>
+              <ArrowRight
+                size={18}
+                className="shrink-0 text-[#A89F90] transition-transform duration-150 group-hover:translate-x-0.5 group-hover:text-[#76520E]"
+              />
+            </Link>
+
+            <Link href="/recovery" onClick={onClose} className={CARD_CLASS}>
+              <span className={ICON_WRAP_CLASS}>
+                <MessageCircle size={22} strokeWidth={2.1} />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-[14px] font-bold leading-tight text-[#2F240E]">
+                  Ngobrol dengan NerAI
+                </span>
+                <span className="mt-0.5 block text-[11px] leading-relaxed text-[#736B60]">
+                  Tanya kondisi keuanganmu ke konsultan AI Nera
                 </span>
               </span>
               <ArrowRight
