@@ -45,3 +45,9 @@
  GET /wealth-engine 200 in 559ms
  ✓ Compiled /upload-transaction in 299ms (564 modules)
  GET /upload-transaction 200 in 592ms
+ ✓ Compiled in 1066ms (958 modules)
+ GET /family-hub 200 in 155ms
+ ✓ Compiled in 257ms (430 modules)
+ GET /family-hub 200 in 52ms
+ ✓ Compiled /onboarding in 453ms (544 modules)
+ GET /onboarding 200 in 757ms

@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
+import { FullscreenButton } from "../common/FullscreenButton";
 
 export interface OnboardingChromeProps {
   step: number;
@@ -64,19 +65,22 @@ export const OnboardingChrome: React.FC<OnboardingChromeProps> = ({
             )}
           </div>
 
-          {onSkip ? (
-            <button
-              type="button"
-              onClick={onSkip}
-              className="rounded-full px-3 py-1.5 text-xs font-semibold text-[#817B70] transition-colors hover:bg-[#FFF3D6] hover:text-[#5B410C]"
-            >
-              {skipLabel}
-            </button>
-          ) : (
-            <span className="text-[11px] font-semibold tabular-nums text-[#A79F92]">
-              {step + 1}/{totalSteps}
-            </span>
-          )}
+          <div className="flex items-center gap-2">
+            {onSkip ? (
+              <button
+                type="button"
+                onClick={onSkip}
+                className="rounded-full px-3 py-1.5 text-xs font-semibold text-[#817B70] transition-colors hover:bg-[#FFF3D6] hover:text-[#5B410C]"
+              >
+                {skipLabel}
+              </button>
+            ) : (
+              <span className="text-[11px] font-semibold tabular-nums text-[#A79F92]">
+                {step + 1}/{totalSteps}
+              </span>
+            )}
+            <FullscreenButton />
+          </div>
         </div>
 
         <div className="mt-4 flex gap-1.5" aria-hidden>
