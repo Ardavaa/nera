@@ -25,7 +25,9 @@ Panduan ini mencatat gaya aplikasi yang digunakan di beranda, layar mahasiswa, o
 | Waspada | `#A36A00` / `#FFF3D6` | Peringatan sedang |
 | Kritis | `#C43737` / `#FBE4DE` | Peringatan mendesak |
 
-Gunakan kuning sebagai aksen, bukan sebagai latar seluruh halaman. Merah dan hijau dipakai untuk makna status, bukan dekorasi.
+Gunakan kuning sebagai aksen, bukan sebagai latar seluruh halaman.
+
+Kartu Kantong Budget (`/pockets`) boleh memakai nada hangat sebagai pembeda antar kantong: kuning `#FFF0BD`, pasir `#F3EBDD`, peach `#FBE7D3`, gading `#F7F5F0`, dan cokelat `#3A2800` (teks putih). Bar pemakaian berubah merah hanya saat budget terpakai 90% atau lebih. Merah dan hijau dipakai untuk makna status, bukan dekorasi.
 
 ## Bentuk dan tata letak
 

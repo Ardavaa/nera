@@ -262,6 +262,38 @@ export interface CampusInterventionAlert {
   detectedAt: string;
 }
 
+export type BudgetPocketKind = "spending" | "saving";
+
+export type BudgetPocketIcon =
+  | "food"
+  | "transport"
+  | "education"
+  | "fun"
+  | "shopping"
+  | "health"
+  | "travel"
+  | "gadget"
+  | "gift"
+  | "home";
+
+export type BudgetPocketTone = "yellow" | "sand" | "peach" | "cream" | "brown";
+
+// Kantong budget ala "Kantong" Bank Jago: dana dipisah dari Daily Pocket
+// (Kantong Utama) agar tiap pos pengeluaran/tabungan punya batasnya sendiri.
+export interface BudgetPocket {
+  id: string;
+  name: string;
+  kind: BudgetPocketKind;
+  icon: BudgetPocketIcon;
+  tone: BudgetPocketTone;
+  balance: number;
+  // spending: batas belanja per bulan; saving: target tabungan
+  targetAmount: number;
+  // Hanya untuk kantong belanja: total yang sudah dipakai bulan ini
+  spentThisMonth: number;
+  createdAt: string;
+}
+
 // Zod Schemas for validation
 export const LoanSimulationInputSchema = z.object({
   loanAmount: z.number().positive(),

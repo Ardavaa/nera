@@ -1,4 +1,4 @@
-import { FinancialStateData, UserProfile, WealthTier, SaferAlternative, PredatoryPattern, RecoveryMilestone, PersonaId, BniOffer } from "../types";
+import { FinancialStateData, UserProfile, WealthTier, SaferAlternative, PredatoryPattern, RecoveryMilestone, PersonaId, BniOffer, BudgetPocket } from "../types";
 
 export const DEFAULT_MOCK_STATE: FinancialStateData = {
   userName: "Budi",
@@ -319,5 +319,63 @@ export const INITIAL_RECOVERY_MILESTONES: RecoveryMilestone[] = [
     description: "Skor risiko kembali ke zona hijau (0–39). Selamat, kamu pulih!",
     isCompleted: false,
     order: 5,
+  },
+];
+
+export const INITIAL_BUDGET_POCKETS: BudgetPocket[] = [
+  {
+    id: "pocket_makan",
+    name: "Makan & Jajan",
+    kind: "spending",
+    icon: "food",
+    tone: "yellow",
+    balance: 280000,
+    targetAmount: 750000,
+    spentThisMonth: 470000,
+    createdAt: "2026-08-01T08:10:00Z",
+  },
+  {
+    id: "pocket_transport",
+    name: "Transport",
+    kind: "spending",
+    icon: "transport",
+    tone: "sand",
+    balance: 95000,
+    targetAmount: 200000,
+    spentThisMonth: 105000,
+    createdAt: "2026-08-01T08:10:00Z",
+  },
+  {
+    id: "pocket_kuliah",
+    name: "Keperluan Kuliah",
+    kind: "spending",
+    icon: "education",
+    tone: "cream",
+    balance: 38000,
+    targetAmount: 150000,
+    spentThisMonth: 112000,
+    createdAt: "2026-08-01T08:10:00Z",
+  },
+  {
+    id: "pocket_laptop",
+    name: "Laptop Baru",
+    kind: "saving",
+    icon: "gadget",
+    tone: "brown",
+    balance: 1250000,
+    targetAmount: 7000000,
+    spentThisMonth: 0,
+    createdAt: "2026-06-12T09:00:00Z",
+  },
+  {
+    id: "pocket_mudik",
+    name: "Mudik Lebaran",
+    kind: "saving",
+    icon: "travel",
+    tone: "peach",
+    balance: 420000,
+    targetAmount: 1200000,
+    spentThisMonth: 0,
+    createdAt: "2026-07-03T09:00:00Z",
   },
 ];
