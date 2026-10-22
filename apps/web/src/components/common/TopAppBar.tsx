@@ -2,8 +2,7 @@
 
 import React, { useContext } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { Bell, ArrowLeft, MessageCircle } from "lucide-react";
+import { Bell, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { DemoControlPanel } from "./DemoControlPanel";
 import { FullscreenButton } from "./FullscreenButton";
@@ -50,17 +49,8 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false })
           </div>
         )}
 
-        {/* Right: NerAI Coach + Notification Bell */}
+        {/* Right: Notification Bell */}
         <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
-          {/* NeraAI Chat Button */}
-          <Link
-            href="/recovery"
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-[#5B410C] bg-[#F5F5F5] hover:bg-[#FFF3D6] transition-colors"
-            aria-label="NerAI Coach"
-          >
-            <MessageCircle size={20} />
-          </Link>
-
           {/* Notification Bell */}
           <button
             className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-[#2F240E] bg-[#F5F5F5] hover:bg-[#FFF3D6] transition-colors"

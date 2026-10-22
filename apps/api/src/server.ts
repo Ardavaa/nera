@@ -3,7 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { riskRouter } from "./routes/risk";
 import { simulationRouter } from "./routes/simulation";
-import { coachRouter } from "./routes/coach";
 import { bniMockRouter } from "./routes/bni-mock";
 
 dotenv.config();
@@ -17,7 +16,6 @@ app.use(express.json());
 // API Routes
 app.use("/api/risk", riskRouter);
 app.use("/api/simulation", simulationRouter);
-app.use("/api/coach", coachRouter);
 app.use("/api/bni", bniMockRouter);
 
 app.get("/health", (_req, res) => {

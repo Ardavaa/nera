@@ -35,7 +35,6 @@ import {
   EyeOff,
   Info,
   SlidersHorizontal,
-  Sparkles,
   Layers,
   PiggyBank,
   ArrowRight,
@@ -203,13 +202,12 @@ const QUICK_AMOUNTS = [25000, 50000, 100000, 250000];
 
 type DetailMode = "topup" | "spend" | "withdraw";
 
-type FilterId = "all" | "mine" | "investment" | "sharia";
+type FilterId = "all" | "mine" | "investment";
 
 const FILTERS: { id: FilterId; label: string }[] = [
   { id: "all", label: "Semua" },
   { id: "mine", label: "Kantong Saya" },
   { id: "investment", label: "Investasi" },
-  { id: "sharia", label: "Syariah" },
 ];
 
 type PocketCardItem = { type: "main" } | { type: "pocket"; pocket: BudgetPocket };
@@ -312,8 +310,6 @@ export default function PocketsPage() {
     budgetPockets.forEach((pocket) => items.push({ type: "pocket", pocket }));
 
     return items.filter((item) => {
-      if (activeFilter === "sharia") return false;
-
       if (item.type === "main") {
         if (activeFilter === "investment") return false;
       } else {
@@ -519,27 +515,7 @@ export default function PocketsPage() {
 
         {/* POCKET GRID */}
         <section>
-          {activeFilter === "sharia" ? (
-            <div className="rounded-[22px] bg-white px-5 py-8 text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[18px] bg-[#FFF3D6] text-[#76520E]">
-                <Sparkles size={26} />
-              </div>
-              <p className="mt-3 text-sm font-semibold text-[#2F240E]">Kantong Syariah segera hadir</p>
-              <p className="mx-auto mt-1 max-w-[240px] text-xs leading-relaxed text-[#736B60]">
-                Kantong berbasis akad syariah sedang disiapkan. Sementara itu, kelola kantongmu di tab
-                Kantong Saya.
-              </p>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="mt-4"
-                onClick={() => setActiveFilter("mine")}
-              >
-                Lihat Kantong Saya
-              </Button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3">
               {visibleCards.map((item) => {
                 if (item.type === "main") {
                   return (
@@ -650,11 +626,10 @@ export default function PocketsPage() {
                 <span className="text-xs font-semibold">Kantong Baru</span>
               </button>
             </div>
-          )}
-        </section>
+          </section>
 
         {/* BUDGET SUMMARY */}
-        {spendingPockets.length > 0 && activeFilter !== "sharia" && (
+        {spendingPockets.length > 0 && (
           <section className="rounded-[20px] bg-white px-4 py-3.5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
