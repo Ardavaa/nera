@@ -29,6 +29,7 @@ import {
   Banknote,
   PiggyBank,
   Gift,
+  Layers,
 } from "lucide-react";
 
 const CATEGORY_ICONS: Record<string, React.ElementType> = {
@@ -70,6 +71,7 @@ export default function HomePage() {
     executeEndOfMonthSweep,
     addTransaction,
     resolveNudge,
+    budgetPockets,
   } = useFinancialStore();
 
   const [isPayKosOpen, setIsPayKosOpen] = useState(false);
@@ -277,6 +279,24 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+
+            {/* Budget Pockets entry point */}
+            <Link
+              href="/pockets"
+              className="flex items-center gap-2.5 rounded-[19px] border border-[#F0EEE9] px-3.5 py-3 transition-colors duration-150 hover:bg-[#FFFBF0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#BA8500]"
+            >
+              <div className="w-10 h-10 rounded-[13px] bg-[#FFF0BD] flex items-center justify-center text-[#6D4C00] shrink-0">
+                <Layers size={18} />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-bold text-[#2F240E] leading-tight">Kantong Budget</p>
+                <p className="text-[11px] text-[#736B60] mt-0.5">
+                  {budgetPockets.length} kantong ·{" "}
+                  {formatRupiah(budgetPockets.reduce((sum, p) => sum + p.balance, 0))}
+                </p>
+              </div>
+              <ChevronRight size={18} className="text-[#76520E] shrink-0" />
+            </Link>
           </div>
         </div>
 

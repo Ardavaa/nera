@@ -12,7 +12,9 @@ import {
   RecoveryMilestone,
   PersonaId,
   EmergencyTopUpRequest,
+  BudgetPocket,
   DEFAULT_MOCK_STATE,
+  INITIAL_BUDGET_POCKETS,
   INITIAL_WEALTH_TIERS,
   INITIAL_RECOVERY_MILESTONES,
   DEMO_PERSONA_SCENARIOS,
@@ -32,6 +34,7 @@ export interface FinancialStoreState extends FinancialStateData {
   isSweepModalOpen: boolean;
   isParentPaired: boolean;
   emergencyTopUpRequests: EmergencyTopUpRequest[];
+  budgetPockets: BudgetPocket[];
 
   // Actions
   recalculateState: () => void;
@@ -52,7 +55,28 @@ export interface FinancialStoreState extends FinancialStateData {
   applyPersonaDemoScenario: (personaId: PersonaId) => void;
   completeParentPairing: () => void;
   resolveEmergencyTopUp: (id: string, action: "approved" | "dismissed") => void;
+  createBudgetPocket: (
+    pocket: Omit<BudgetPocket, "id" | "balance" | "spentThisMonth" | "createdAt">,
+    initialAmount?: number
+  ) => void;
+  moveToBudgetPocket: (pocketId: string, amount: number) => void;
+  withdrawFromBudgetPocket: (pocketId: string, amount: number) => void;
+  spendFromBudgetPocket: (pocketId: string, amount: number, title: string) => void;
+  deleteBudgetPocket: (pocketId: string) => void;
 }
+
+const POCKET_TX_CATEGORY: Record<BudgetPocket["icon"], Transaction["category"]> = {
+  food: "food",
+  transport: "transport",
+  education: "education",
+  fun: "other",
+  shopping: "other",
+  health: "other",
+  travel: "other",
+  gadget: "other",
+  gift: "other",
+  home: "other",
+};
 
 const INITIAL_TRANSACTIONS: Transaction[] = [
   {
@@ -187,6 +211,7 @@ export const useFinancialStore = create<FinancialStoreState>()(
       isSweepModalOpen: false,
       isParentPaired: false,
       emergencyTopUpRequests: INITIAL_EMERGENCY_TOPUP_REQUESTS,
+      budgetPockets: INITIAL_BUDGET_POCKETS,
 
       recalculateState: () => {
         const state = get();
@@ -441,6 +466,94 @@ export const useFinancialStore = create<FinancialStoreState>()(
         }
       },
 
+      // Dana kantong diambil dari dan dikembalikan ke Daily Pocket (Kantong Utama),
+      // jadi runway ikut menyesuaikan lewat recalculateState.
+      createBudgetPocket: (pocket, initialAmount = 0) => {
+        const amount = Math.min(Math.max(0, initialAmount), get().dailyPocket);
+        const newPocket: BudgetPocket = {
+          ...pocket,
+          id: `pocket_${Date.now()}`,
+          balance: amount,
+          spentThisMonth: 0,
+          createdAt: new Date().toISOString(),
+        };
+
+        set((s) => ({
+          budgetPockets: [...s.budgetPockets, newPocket],
+          dailyPocket: s.dailyPocket - amount,
+        }));
+
+        if (amount > 0) get().recalculateState();
+      },
+
+      moveToBudgetPocket: (pocketId: string, amount: number) => {
+        const s = get();
+        if (amount <= 0 || amount > s.dailyPocket) return;
+        if (!s.budgetPockets.some((p) => p.id === pocketId)) return;
+
+        set({
+          budgetPockets: s.budgetPockets.map((p) =>
+            p.id === pocketId ? { ...p, balance: p.balance + amount } : p
+          ),
+          dailyPocket: s.dailyPocket - amount,
+        });
+
+        get().recalculateState();
+      },
+
+      withdrawFromBudgetPocket: (pocketId: string, amount: number) => {
+        const s = get();
+        const pocket = s.budgetPockets.find((p) => p.id === pocketId);
+        if (!pocket || amount <= 0 || amount > pocket.balance) return;
+
+        set({
+          budgetPockets: s.budgetPockets.map((p) =>
+            p.id === pocketId ? { ...p, balance: p.balance - amount } : p
+          ),
+          dailyPocket: s.dailyPocket + amount,
+        });
+
+        get().recalculateState();
+      },
+
+      spendFromBudgetPocket: (pocketId: string, amount: number, title: string) => {
+        const s = get();
+        const pocket = s.budgetPockets.find((p) => p.id === pocketId);
+        if (!pocket || pocket.kind !== "spending" || amount <= 0 || amount > pocket.balance) return;
+
+        set({
+          budgetPockets: s.budgetPockets.map((p) =>
+            p.id === pocketId
+              ? { ...p, balance: p.balance - amount, spentThisMonth: p.spentThisMonth + amount }
+              : p
+          ),
+          transactions: [
+            {
+              id: `tx_${Date.now()}`,
+              title: `${title} · Kantong ${pocket.name}`,
+              category: POCKET_TX_CATEGORY[pocket.icon],
+              amount,
+              type: "expense",
+              timestamp: new Date().toISOString(),
+              source: "QRIS_BNI",
+            },
+            ...s.transactions,
+          ],
+        });
+      },
+
+      deleteBudgetPocket: (pocketId: string) => {
+        const pocket = get().budgetPockets.find((p) => p.id === pocketId);
+        if (!pocket) return;
+
+        set((s) => ({
+          budgetPockets: s.budgetPockets.filter((p) => p.id !== pocketId),
+          dailyPocket: s.dailyPocket + pocket.balance,
+        }));
+
+        if (pocket.balance > 0) get().recalculateState();
+      },
+
       resetToDefault: () => {
         set({
           ...DEFAULT_MOCK_STATE,
@@ -454,6 +567,7 @@ export const useFinancialStore = create<FinancialStoreState>()(
           isSweepModalOpen: false,
           isParentPaired: false,
           emergencyTopUpRequests: INITIAL_EMERGENCY_TOPUP_REQUESTS,
+          budgetPockets: INITIAL_BUDGET_POCKETS,
         });
       },
     }),
