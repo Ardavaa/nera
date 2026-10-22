@@ -20,7 +20,7 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ title, showBack = false })
   const { showFullscreenControl } = useContext(MobileFrameContext);
 
   return (
-    <header className="sticky top-0 z-40 bg-white px-4 py-3">
+    <header className="sticky top-0 z-40 bg-white px-4 pb-3 pt-[calc(4.5rem+env(safe-area-inset-top))] sm:pt-[3.75rem]">
       <div className="flex items-center justify-between">
         {/* Left: Branding or Title */}
         {title ? (
